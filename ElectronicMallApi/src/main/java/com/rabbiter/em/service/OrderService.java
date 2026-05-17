@@ -91,17 +91,17 @@ public class OrderService extends ServiceImpl<OrderMapper, Order> {
             try {
                 goodId = Long.parseLong(goodIdObj.toString());
             } catch (NumberFormatException e) {
-                throw new ServiceException(Constants.CODE_500, "商品ID不正确");
+                throw new ServiceException(Constants.CODE_500, "Invalid product ID");
             }
         }
 
         if(goodId == null) {
-            throw new ServiceException(Constants.CODE_500, "商品ID不存在");
+            throw new ServiceException(Constants.CODE_500, "Product ID does not exist");
         }
         String standard = (String) orderMap.get("standard");
         int store = standardMapper.getStore(goodId, standard);
         if (store < count) {
-            throw new ServiceException(Constants.CODE_500, "库存不足");
+            throw new ServiceException(Constants.CODE_500, "Insufficient stock");
         }
         standardMapper.deductStore(goodId, standard, store - count);
 
@@ -137,7 +137,7 @@ public class OrderService extends ServiceImpl<OrderMapper, Order> {
     public void delivery(String orderNo) {
         LambdaUpdateWrapper<Order> orderLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
         orderLambdaUpdateWrapper.eq(Order::getOrderNo, orderNo)
-                .set(Order::getState, "已发货");
+                .set(Order::getState, "Shipped");
         update(orderLambdaUpdateWrapper);
     }
 }

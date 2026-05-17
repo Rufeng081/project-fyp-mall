@@ -42,7 +42,7 @@ public class AddressController {
         if(b){
             return Result.success();
         }else{
-            return Result.error(Constants.CODE_500,"保存地址失败");
+            return Result.error(Constants.CODE_500,"Address save failed");
         }
 
     }

@@ -1,50 +1,50 @@
 <template>
   <div>
     <div class="demo-input-size">
-      <el-input placeholder="请输入文件名" prefix-icon="el-icon-a-042" style="width: 250px;padding-right: 5px" v-model="fileName"></el-input>
+      <el-input placeholder="Enter file name" prefix-icon="el-icon-a-042" style="width: 250px;padding-right: 5px" v-model="fileName"></el-input>
       <el-button type="primary" @click="search">
         <i class="el-icon-a-042" style="padding-right: 6px"></i>
-        搜索
+        Search
       </el-button>
       <el-button type="danger" @click="reload">
         <i class="el-icon-a-031" style="padding-right: 6px"></i>
-        重置
+        Reset
       </el-button>
 
     </div>
-    <!--          按钮栏-->
+    <!--          Button bar-->
     <div style="padding-top: 10px">
 
       <el-upload action="http://localhost:9191/file/upload" :show-file-list="false" :on-success="handleFileUploadSuccess" style="display: inline-block">
-        <el-button type="primary"><i class="el-icon-a-032" style="padding-right: 6px"></i>上传</el-button>
+        <el-button type="primary"><i class="el-icon-a-032" style="padding-right: 6px"></i>Upload</el-button>
       </el-upload>
-      <el-button type="danger" @click="delBatch" style="margin-left: 10px"><i class="el-icon-a-022" style="padding-right: 6px"></i>批量删除</el-button>
+      <el-button type="danger" @click="delBatch" style="margin-left: 10px"><i class="el-icon-a-022" style="padding-right: 6px"></i>Delete Selected</el-button>
     </div>
-    <!--          表格-->
+    <!--          Table-->
     <el-table :data="tableData" background-color="black" @selection-change="handleSelectionChange" >
       <el-table-column type="selection" ></el-table-column>
-      <el-table-column prop="name" label="文件名" width="350" ></el-table-column>
-      <el-table-column prop="type" label="文件类型" width="180" ></el-table-column>
-      <el-table-column prop="size" label="文件大小" width="180" ></el-table-column>
-      <el-table-column label="操作">
+      <el-table-column prop="name" label="File Name" width="350" ></el-table-column>
+      <el-table-column prop="type" label="File Type" width="180" ></el-table-column>
+      <el-table-column prop="size" label="File Size" width="180" ></el-table-column>
+      <el-table-column label="Actions">
         <template slot-scope="scope">
 
-<!--          下载-->
+<!--          Download-->
           <a :href="baseApi + scope.row.url">
             <el-button
               type="success"
               >
               <i class="el-icon-a-061"></i>
-              下载
+              Download
             </el-button>
           </a>
-<!--          删除-->
+<!--          Delete-->
           <el-button
               type="danger"
               style="margin-left: 10px"
               @click="handleDelete(scope.row.id)">
               <i class="el-icon-a-022"></i>
-              删除
+              Delete
             </el-button>
         </template>
       </el-table-column>
@@ -95,7 +95,7 @@ export default {
       this.multipleSelection = val
     },
     handleFileUploadSuccess() {
-      this.$message.success("上传成功");
+      this.$message.success("Uploaded successfully");
       this.load();
     },
     handleEnable(row){
@@ -103,7 +103,7 @@ export default {
         if(res.code==='200'){
           this.$message({
             type: "success",
-            message: "修改成功",
+            message: "Updated successfully",
             duration: 3000
           });
           this.load();
@@ -145,25 +145,25 @@ export default {
       this.fileName='';
       this.load()
     },
-    // //编辑
+    // //Edit
     // handleEdit(row){
     //   this.user = JSON.parse(JSON.stringify(row));
-    //   this.dialogTitle='编辑用户';
+    //   this.dialogTitle='Edit User';
     //   this.dialogFormVisible = true;
     // },
 
-    //删除
+    //Delete
     handleDelete(id){
-      this.$confirm('确认删除该文件吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Delete this file?', 'Notice', {
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         this.request.delete("/file/"+id).then(res=>{
           if(res.code==='200'){
             this.$message({
               type: "success",
-              message: "删除成功",
+              message: "Deleted successfully",
               duration: 3000
             });
             this.load();
@@ -173,19 +173,19 @@ export default {
         })
       })
     },
-    //批量删除
+    //Delete Selected
     delBatch(){
       let ids = this.multipleSelection.map(v => v.id);
-      this.$confirm('确认删除这些用户吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Delete selected users?', 'Notice', {
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         this.request.post("/file/del/batch",ids).then(res=>{
           if(res.code==='200'){
             this.$message({
               type: "success",
-              message: "删除成功",
+              message: "Deleted successfully",
               duration: 3000
             });
             this.load();

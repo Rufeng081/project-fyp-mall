@@ -40,7 +40,7 @@ public class FileController {
         if(i == 1){
             return Result.success();
         }else{
-            return Result.error(Constants.CODE_500,"删除失败");
+            return Result.error(Constants.CODE_500,"Delete failed");
         }
     }
     //批量删除文件
@@ -50,7 +50,7 @@ public class FileController {
         for (Integer id : ids) {
             int i = fileService.fakeDelete(id);
             if(i != 1){
-                return Result.error(Constants.CODE_500,"删除文件："+fileService.getById(id).getName()+"时失败，删除已终止");
+                return Result.error(Constants.CODE_500,"Failed to delete file: "+fileService.getById(id).getName()+". Batch delete stopped.");
             }
         }
         return Result.success();
@@ -61,7 +61,7 @@ public class FileController {
     public Result changeEnable(@RequestParam int id,@RequestParam boolean enable){
         int i = fileService.changeEnable(id, enable);
         if(i == 0){
-            return Result.error(Constants.CODE_500,"修改失败");
+            return Result.error(Constants.CODE_500,"Update failed");
         }else {
             return Result.success();
         }

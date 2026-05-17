@@ -40,7 +40,7 @@ public class AvatarController {
         if(i == 1){
             return Result.success();
         }else{
-            return Result.error(Constants.CODE_500,"删除失败");
+            return Result.error(Constants.CODE_500,"Delete failed");
         }
     }
     //查询

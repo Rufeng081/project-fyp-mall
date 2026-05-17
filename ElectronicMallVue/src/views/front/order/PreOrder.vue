@@ -1,7 +1,7 @@
 <template>
   <div style="margin-top: 10px; width: 90%; margin: 10px auto">
     <div style="background-color: white; padding: 10px; border-radius: 12px">
-      <!--收货地址-->
+      <!--Delivery Address-->
       <div
         style="
           padding: 10px;
@@ -17,7 +17,7 @@
             margin-bottom: 20px;
           "
         >
-          收货地址
+          Delivery Address
           <el-button style="height: 25px; padding: 5px" @click="addAddress"
             >+</el-button
           >
@@ -34,16 +34,16 @@
           ></address-box>
         </template>
       </div>
-      <!--      地址弹窗-->
-      <el-dialog title="地址信息" :visible.sync="dialogFormVisible">
+      <!--      AddressDialog-->
+      <el-dialog title="Address Information" :visible.sync="dialogFormVisible">
         <el-form label-width="90px" style="padding: 0 60px">
-          <el-form-item label="联系人">
+          <el-form-item label="Full Name">
             <el-input v-model="address.linkUser" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="联系电话">
+          <el-form-item label="Phone Number">
             <el-input v-model="address.linkPhone" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="地址">
+          <el-form-item label="Address">
             <el-input
               v-model="address.linkAddress"
               autocomplete="off"
@@ -51,14 +51,14 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="saveAddress">确 定</el-button>
+          <el-button @click="dialogFormVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="saveAddress">Confirm</el-button>
         </div>
       </el-dialog>
 
-      <!--        商品确认-->
+      <!--        Product confirmation-->
       <el-table :data="goods" stripe style="width: 100%">
-        <el-table-column label="商品图片" width="150">
+        <el-table-column label="Product Image" width="150">
           <template slot-scope="scope">
             <el-image
               :src="baseApi + scope.row.imgs"
@@ -67,11 +67,15 @@
             ></el-image>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="商品名称"></el-table-column>
-        <el-table-column prop="standard" label="规格"></el-table-column>
-        <el-table-column prop="realPrice" label="单价"></el-table-column>
-        <el-table-column prop="num" label="数量"></el-table-column>
-        <el-table-column label="价格">
+        <el-table-column prop="name" label="Product Name"></el-table-column>
+        <el-table-column prop="standard" label="Variant"></el-table-column>
+        <el-table-column label="Unit Price">
+          <template slot-scope="scope">
+            {{ Number(scope.row.realPrice).toFixed(2) }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="num" label="Quantity"></el-table-column>
+        <el-table-column label="Price">
           <template slot-scope="scope">
             {{ (scope.row.realPrice * scope.row.num).toFixed(2) }}
           </template>
@@ -82,17 +86,17 @@
         <div style="background-color: white; padding: 10px">
           <div style="color: red; text-align: right">
             <div>
-              <span>总价：</span>
-              <span>￥ {{ sumPrice }}</span>
+              <span>Total:</span>
+              <span> RM {{ sumPrice }}</span>
             </div>
             <div style="text-align: right; color: #999; font-size: 12px">
-              优惠： ￥{{ sumDiscount }}
+              Discount: RM {{ sumDiscount }}
             </div>
             <div style="padding: 10px 0">
               <el-button
                 style="background-color: red; color: white; width: 100px"
                 @click="submitOrder"
-                >提交订单</el-button
+                >Place Order</el-button
               >
             </div>
           </div>
@@ -112,7 +116,7 @@ export default {
       baseApi: this.$store.state.baseApi,
       userId: 0,
       addressData: [],
-      //临时存储地址信息
+      //Temporary address data
       address: {},
       checkedIndex: 0,
       dialogFormVisible: false,
@@ -161,19 +165,19 @@ export default {
       this.dialogFormVisible = true;
     },
     editAddress(item) {
-      //深拷贝
+      //Deep copy
       this.address = JSON.parse(JSON.stringify(item));
       this.dialogFormVisible = true;
     },
     deleteAddress(item) {
-      this.$confirm("您确认删除该地址吗?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm("Delete this address?", "Notice", {
+        confirmButtonText: "Confirm",
+        cancelButtonText: "Cancel",
         type: "warning",
       }).then(() => {
         API.delete("api/address/" + item.id).then((res) => {
           if (res.code === "200") {
-            this.$message.success("删除地址成功");
+            this.$message.success("Address deleted successfully");
             this.loadAddress();
           }
         });
@@ -183,7 +187,7 @@ export default {
       this.address.userId = this.userId;
       API.post("/api/address", this.address).then((res) => {
         if (res.code === "200") {
-          this.$message.success("保存成功");
+          this.$message.success("Saved successfully");
           this.loadAddress();
           this.dialogFormVisible = false;
         } else {
@@ -209,24 +213,24 @@ export default {
       if (!address) {
         this.$message({
           type: "warning",
-          message: "请选择收货地址！",
+          message: "Please select a delivery address!",
         });
         return;
       }
       console.log(JSON.stringify(this.good));
-      // 提交订单
+      // Place Order
       API.post("/api/order", {
         totalPrice: this.sumPrice,
         linkUser: address.linkUser,
         linkPhone: address.linkPhone,
         linkAddress: address.linkAddress,
-        state: "待付款",
+        state: "Pending Payment",
         goods: JSON.stringify(this.goods),
         cartId: this.cartId,
       }).then((res) => {
         if (res.code === "200") {
           let orderNo = res.data;
-          //跳转到支付页面
+          //Navigate to payment page
           this.$router.replace({
             path: "pay",
             query: { money: this.sumPrice, orderNo: orderNo },

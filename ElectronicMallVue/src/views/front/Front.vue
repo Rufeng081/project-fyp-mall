@@ -39,9 +39,9 @@ export default {
     getUser() {
       let username = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).username : ""
       if (username) {
-        // 从后台获取User数据
+        // Get user data from the API
         this.request.get("/userinfo/" + username).then(res => {
-          // 重新赋值后台的最新User数据
+          // Refresh user data from the API
           this.user = res.data
           console.log(this.user.role)
         })
@@ -64,13 +64,13 @@ export default {
             this.loginStatus = true;
           }
         } else {
-          this.user = {nickname: '您未登录', avatarUrl: null};
+          this.user = {nickname: 'Not logged in', avatarUrl: null};
           localStorage.removeItem('user')
           this.loginStatus = false;
         }
       })
     }else{
-      this.user = {nickname: '您未登录', avatarUrl: null};
+      this.user = {nickname: 'Not logged in', avatarUrl: null};
       this.loginStatus = false;
     }
 

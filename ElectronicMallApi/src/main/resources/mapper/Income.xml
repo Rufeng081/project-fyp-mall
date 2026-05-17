@@ -14,6 +14,6 @@
         select sum(sale_money)  from good
     </select>
     <select id="getDayIncome" resultType="java.math.BigDecimal">
-        SELECT sum(total_price) FROM `t_order` WHERE state != '待付款' AND create_time >= #{thisDay} AND create_time &lt; #{nextDay}
+        SELECT sum(total_price) FROM `t_order` WHERE state != 'Pending Payment' AND create_time >= #{thisDay} AND create_time &lt; #{nextDay}
     </select>
 </mapper>

@@ -55,6 +55,19 @@ Password: root
 Redis: 127.0.0.1:6379
 ```
 
+The seed data is localized for the FYP demo:
+
+- Product, category, user, address, and order sample values are in English.
+- Address and phone examples use Malaysia-style values.
+- Prices are displayed by the frontend with the `RM` prefix.
+
+Default demo accounts:
+
+| Role | Username | Password |
+| --- | --- | --- |
+| Admin | `admin` | `123456` |
+| User | `user` | `123456` |
+
 ## Run the Backend
 
 ```bash

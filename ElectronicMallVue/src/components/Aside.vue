@@ -10,38 +10,38 @@
       <router-link to="/manage/home">
         <img src="../resource/logo.png" style="width: 32px;position: relative; top: 7px;right: 6px;">
       </router-link>
-      <span slot="title" style="color: aliceblue;font-size: 20px" v-show="!isCollapse">在线商城后台管理</span>
+      <span slot="title" style="color: aliceblue;font-size: 20px" v-show="!isCollapse">Admin Dashboard</span>
     </div>
     <el-menu-item index="/manage/home">
-      <i class="el-icon-a-011" style="font-size: 22px;color: white;"></i><span slot="title">主页</span>
+      <i class="el-icon-a-011" style="font-size: 22px;color: white;"></i><span slot="title">Dashboard</span>
     </el-menu-item>
     <el-menu-item index="/">
-      <i class="el-icon-a-02" style="font-size: 22px;color: white;"></i><span slot="title">前台</span>
+      <i class="el-icon-a-02" style="font-size: 22px;color: white;"></i><span slot="title">Storefront</span>
     </el-menu-item>
 
     <el-submenu index="2">
       <template slot="title" >
-        <i class="el-icon-a-031" style="font-size: 22px;color: white;"></i><span slot="title">系统管理</span></template>
+        <i class="el-icon-a-031" style="font-size: 22px;color: white;"></i><span slot="title">System</span></template>
       <el-submenu v-show="userGroup" index="user" >
-        <template slot="title" ><i class="el-icon-a-01" style="font-size: 22px;color: white;"></i>用户</template>
-        <el-menu-item index="/manage/user" v-if="menuFlags.userMenu"> 用户管理</el-menu-item>
+        <template slot="title" ><i class="el-icon-a-01" style="font-size: 22px;color: white;"></i>User</template>
+        <el-menu-item index="/manage/user" v-if="menuFlags.userMenu"> User Management</el-menu-item>
       </el-submenu>
       <el-submenu v-if="fileGroup" index="file">
-        <template slot="title"><i class="el-icon-a-061" style="font-size: 22px;color: white;"></i>文件</template>
-        <el-menu-item index="/manage/file" v-if="menuFlags.fileMenu">文件管理</el-menu-item>
-        <el-menu-item index="/manage/avatar" v-if="menuFlags.avatarMenu">头像管理</el-menu-item>
+        <template slot="title"><i class="el-icon-a-061" style="font-size: 22px;color: white;"></i>File</template>
+        <el-menu-item index="/manage/file" v-if="menuFlags.fileMenu">File Management</el-menu-item>
+        <el-menu-item index="/manage/avatar" v-if="menuFlags.avatarMenu">Avatar Management</el-menu-item>
       </el-submenu>
       <el-submenu v-if="GoodGroup" index="good">
-        <template slot="title"><i class="el-icon-a-041" style="font-size: 22px;color: white;"></i>商品</template>
-        <el-menu-item index="/manage/category" v-if="menuFlags.categoryMenu">商品分类管理</el-menu-item>
-        <el-menu-item index="/manage/carousel" v-if="menuFlags.carouselMenu">轮播图管理</el-menu-item>
-        <el-menu-item index="/manage/good" v-if="menuFlags.goodMenu">商品管理</el-menu-item>
-        <el-menu-item index="/manage/order" v-if="menuFlags.orderMenu">订单管理</el-menu-item>
+        <template slot="title"><i class="el-icon-a-041" style="font-size: 22px;color: white;"></i>Product</template>
+        <el-menu-item index="/manage/category" v-if="menuFlags.categoryMenu">Category Management</el-menu-item>
+        <el-menu-item index="/manage/carousel" v-if="menuFlags.carouselMenu">Carousel Management</el-menu-item>
+        <el-menu-item index="/manage/good" v-if="menuFlags.goodMenu">Product Management</el-menu-item>
+        <el-menu-item index="/manage/order" v-if="menuFlags.orderMenu">Order Management</el-menu-item>
       </el-submenu>
       <el-submenu v-if="incomeGroup" index="income">
-        <template slot="title"><i class="el-icon-a-021" style="font-size: 22px;color: white;"></i>营收</template>
-        <el-menu-item index="/manage/incomeChart" v-if="menuFlags.incomeChartMenu">图表分析</el-menu-item>
-        <el-menu-item index="/manage/incomeRank" v-if="menuFlags.incomeRankMenu">收入排行榜</el-menu-item>
+        <template slot="title"><i class="el-icon-a-021" style="font-size: 22px;color: white;"></i>Revenue</template>
+        <el-menu-item index="/manage/incomeChart" v-if="menuFlags.incomeChartMenu">Charts</el-menu-item>
+        <el-menu-item index="/manage/incomeRank" v-if="menuFlags.incomeRankMenu">Revenue Ranking</el-menu-item>
       </el-submenu>
     </el-submenu>
   </el-menu>

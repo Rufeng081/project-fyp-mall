@@ -19,17 +19,17 @@
                         user-drag: none;
                     "
                 />
-                <b style="font-size: 28px"> 登录在线商城 </b>
+                <b style="font-size: 28px">Login - Online Mall</b>
             </div>
             <div style="margin-top: 30px">
                 <el-form label-width="70px">
-                    <el-form-item label="用户名">
+                    <el-form-item label="Username">
                         <el-input
                             v-model.trim="user.username"
                             aria-required="true"
                         ></el-input>
                     </el-form-item>
-                    <el-form-item label="密码" style="margin-top: 25px">
+                    <el-form-item label="Password" style="margin-top: 25px">
                         <el-input
                             v-model.trim="user.password"
                             show-password
@@ -46,7 +46,7 @@
                                 class="iconfont icon-r-yes"
                                 style="font-size: 22px"
                             ></i
-                            >登录</el-button
+                            >Login</el-button
                         >
                         <el-button
                             @click="$router.push('/register')"
@@ -56,7 +56,7 @@
                                 class="iconfont icon-r-add"
                                 style="font-size: 22px"
                             ></i
-                            >注册</el-button
+                            >Register</el-button
                         >
                     </el-form-item>
                 </el-form>
@@ -72,8 +72,11 @@ export default {
     name: "Login",
     data() {
         return {
-            to: "/", //登陆成功跳转的页面
-            user: {},
+            to: "/", //Login success redirect target
+            user: {
+                username: "",
+                password: "",
+            },
         };
     },
     created() {
@@ -82,7 +85,7 @@ export default {
     methods: {
         onSubmit() {
             if (this.user.username === "" || this.user.password === "") {
-                this.$message.error("账号或密码不能为空");
+                this.$message.error("Account and password are required");
                 return false;
             }
             let form = {};
@@ -91,7 +94,7 @@ export default {
             this.request.post("/login", form).then((res) => {
                 if (res.code === "200") {
                     this.$message.success({
-                        message: "登陆成功",
+                        message: "Login successful",
                         showClose: true,
                     });
                     this.$router.push(this.to);

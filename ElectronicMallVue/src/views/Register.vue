@@ -7,24 +7,24 @@
     <div id="bk" class="wrapper">
         <div class="login-box">
             <div class="title">
-                <b>注 册</b>
+                <b>Register</b>
             </div>
             <div style="margin-top: 30px">
                 <el-form label-width="70px">
-                    <el-form-item label="用户名">
+                    <el-form-item label="Username">
                         <el-input
                             v-model.trim="user.username"
                             aria-required="true"
                         ></el-input>
                     </el-form-item>
-                    <el-form-item label="密码" style="margin-top: 25px">
+                    <el-form-item label="Password" style="margin-top: 25px">
                         <el-input
                             v-model.trim="user.password"
                             show-password
                             aria-required="true"
                         ></el-input>
                     </el-form-item>
-                    <el-form-item label="确认密码" style="margin-top: 25px">
+                    <el-form-item label="Confirm Password" style="margin-top: 25px">
                         <el-input
                             v-model.trim="user.confirmPassword"
                             show-password
@@ -41,7 +41,7 @@
                                 class="iconfont icon-r-add"
                                 style="font-size: 22px"
                             ></i
-                            >注册</el-button
+                            >Register</el-button
                         >
                         <el-button
                             @click="$router.push('/login')"
@@ -51,7 +51,7 @@
                                 class="iconfont icon-r-left"
                                 style="font-size: 22px"
                             ></i
-                            >返回</el-button
+                            >Back</el-button
                         >
                     </el-form-item>
                 </el-form>
@@ -64,10 +64,14 @@
 import md5 from "js-md5";
 
 export default {
-    name: "Login",
+    name: "Register",
     data() {
         return {
-            user: {},
+            user: {
+                username: "",
+                password: "",
+                confirmPassword: "",
+            },
         };
     },
     methods: {
@@ -77,17 +81,20 @@ export default {
                 this.user.password === "" ||
                 this.user.confirmPassword === ""
             ) {
-                this.$message.error("账号或密码不能为空");
+                this.$message.error("Account and password are required");
                 return false;
             }
             if (this.user.password !== this.user.confirmPassword) {
-                this.$message.error("两次密码不一致");
+                this.$message.error("Passwords do not match");
                 return false;
             }
-            this.user.password = md5(this.user.password);
-            this.request.post("/register", this.user).then((res) => {
+            const form = {
+                username: this.user.username,
+                password: md5(this.user.password),
+            };
+            this.request.post("/register", form).then((res) => {
                 if (res.code === "200") {
-                    this.$message.success("注册成功");
+                    this.$message.success("Registered successfully");
                     this.$router.push("/login");
                 } else {
                     this.$message.error(res.msg);

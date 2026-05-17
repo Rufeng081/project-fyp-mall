@@ -1,36 +1,36 @@
 <template>
   <div>
-    <!--          表格-->
+    <!--          Table-->
     <el-table :data="tableData" background-color="black" @selection-change="handleSelectionChange" >
       <el-table-column type="selection" ></el-table-column>
-      <el-table-column  label="头像" width="150" >
+      <el-table-column  label="Avatar" width="150" >
         <template   slot-scope="scope">
           <img :src="baseApi + scope.row.url"  min-width="100" height="100" />
         </template>
       </el-table-column>
 
-      <el-table-column prop="type" label="文件类型" width="180" ></el-table-column>
-      <el-table-column prop="size" label="文件大小" width="180" ></el-table-column>
+      <el-table-column prop="type" label="File Type" width="180" ></el-table-column>
+      <el-table-column prop="size" label="File Size" width="180" ></el-table-column>
 
-      <el-table-column label="操作">
+      <el-table-column label="Actions">
         <template slot-scope="scope">
 
-<!--          下载-->
+<!--          Download-->
           <a :href="baseApi + scope.row.url">
             <el-button
               type="success"
               >
               <i class="el-icon-a-061"></i>
-              下载
+              Download
             </el-button>
           </a>
-<!--          删除-->
+<!--          Delete-->
           <el-button
               type="danger"
               style="margin-left: 10px"
               @click="handleDelete(scope.row.id)">
               <i class="el-icon-a-022"></i>
-              删除
+              Delete
             </el-button>
         </template>
       </el-table-column>
@@ -106,25 +106,25 @@ export default {
       this.currentPage = 1;
       this.load();
     },
-    // //编辑
+    // //Edit
     // handleEdit(row){
     //   this.user = JSON.parse(JSON.stringify(row));
-    //   this.dialogTitle='编辑用户';
+    //   this.dialogTitle='Edit User';
     //   this.dialogFormVisible = true;
     // },
 
-    //删除
+    //Delete
     handleDelete(id){
-      this.$confirm('确认删除该文件吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Delete this file?', 'Notice', {
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         this.request.delete("/avatar/"+id).then(res=>{
           if(res.code==='200'){
             this.$message({
               type: "success",
-              message: "删除成功",
+              message: "Deleted successfully",
               duration: 3000
             });
             this.load();

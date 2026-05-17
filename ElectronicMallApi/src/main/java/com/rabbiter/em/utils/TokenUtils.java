@@ -42,7 +42,7 @@ public class TokenUtils {
                 return false;
             }
         }catch (Exception e){
-            throw new ServiceException(Constants.CODE_401,"登录状态失效！");
+            throw new ServiceException(Constants.CODE_401,"Login session expired!");
         }
     }
 
@@ -55,7 +55,7 @@ public class TokenUtils {
         }catch (Exception e){
             return false;
         }
-        throw new ServiceException(Constants.CODE_403,"无权限！");
+        throw new ServiceException(Constants.CODE_403,"Permission denied!");
     }
 
 }

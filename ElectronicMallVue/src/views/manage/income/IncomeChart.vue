@@ -10,31 +10,31 @@
           font-size: 22px;
           color: #ffb02a;
         "
-        >￥总计：{{ total | numFilter }}</el-card
+        >RM Total：{{ total | numFilter }}</el-card
       >
-      <!--      柱状图-->
-      <el-tab-pane label="各类收入柱状图" name="bar">
+      <!--      bar chart-->
+      <el-tab-pane label="Revenue by Category Bar Chart" name="bar">
         <div
           id="bar"
           style="width: 1200px; height: 500px; margin: auto auto"
         ></div>
       </el-tab-pane>
-      <!--      饼图-->
-      <el-tab-pane label="各类收入饼图" name="pie">
+      <!--      pie chart-->
+      <el-tab-pane label="Revenue by Category Pie Chart" name="pie">
         <div
           id="pie"
           style="width: 600px; height: 600px; margin: 10px auto"
         ></div>
       </el-tab-pane>
-      <!--  本周收入折线图-->
-      <el-tab-pane label="本周收入" name="line1">
+      <!--  This Week Revenue line chart-->
+      <el-tab-pane label="This Week Revenue" name="line1">
         <div
           id="weekLine"
           style="width: 900px; height: 500px; margin: 10px auto"
         ></div>
       </el-tab-pane>
-      <!-- 本月收入折线图-->
-      <el-tab-pane label="本月收入" name="line2">
+      <!-- This Month Revenue line chart-->
+      <el-tab-pane label="This Month Revenue" name="line2">
         <div
           id="monthLine"
           style="width: 1500px; height: 500px; margin: 10px auto"
@@ -90,11 +90,11 @@ export default {
         trigger: "item",
       },
       title: {
-        text: "收入统计柱状图",
+        text: "Revenue Bar Chart",
         x: "center",
       },
       label: {
-        show: true, //是否显示
+        show: true, //whether to show
         position: "top",
       },
       xAxis: {
@@ -117,7 +117,7 @@ export default {
       },
 
       title: {
-        text: "收入统计饼图",
+        text: "Revenue Pie Chart",
         x: "center",
       },
       series: [
@@ -132,15 +132,15 @@ export default {
         trigger: "item",
       },
       label: {
-        show: true, //是否显示
+        show: true, //whether to show
       },
       title: {
-        text: "本周收入",
+        text: "This Week Revenue",
         x: "center",
       },
       xAxis: {
         type: "category",
-        data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+        data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
       },
       yAxis: {
         type: "value",
@@ -157,10 +157,10 @@ export default {
         trigger: "item",
       },
       label: {
-        show: true, //是否显示
+        show: true, //whether to show
       },
       title: {
-        text: "本月收入",
+        text: "This Month Revenue",
         x: "center",
       },
       xAxis: {
@@ -177,7 +177,7 @@ export default {
         },
       ],
     };
-    //渲染柱状图和饼图
+    //Render bar and pie charts
     this.request.get("/api/income/chart").then((res) => {
       if (res.code === "200") {
         let categoryIncomes = res.data.categoryIncomes;
@@ -196,7 +196,7 @@ export default {
           pieOption.series[0].data.push(item);
         }
         pieChart.setOption(pieOption);
-        //计算总和
+        //Calculate total
         let sum = 0;
         incomes.forEach((item) => {
           sum += item;
@@ -205,14 +205,14 @@ export default {
         this.totalAll = sum;
       }
     });
-    //渲染本周折线图
+    //Render this week line chart
     this.request.get("/api/income/week").then((res) => {
       if (res.code === "200") {
         // lineOption1.xAxis.data = res.data.weekDays;
         let weekIncome = res.data.weekIncome;
         lineOption1.series[0].data = weekIncome;
         lineChart1.setOption(lineOption1);
-        //计算本周总营收
+        //Calculate this week revenue
         let sum = 0;
         weekIncome.forEach((item) => {
           sum += item;
@@ -220,14 +220,14 @@ export default {
         this.totalWeek = sum;
       }
     });
-    //渲染本月折线图
+    //Render this month line chart
     this.request.get("/api/income/month").then((res) => {
       if (res.code === "200") {
         lineOption2.xAxis.data = res.data.monthDays;
         let monthIncome = res.data.monthIncome;
         lineOption2.series[0].data = monthIncome;
         lineChart2.setOption(lineOption2);
-        //计算本月总营收
+        //Calculate this month revenue
         let sum = 0;
         monthIncome.forEach((item) => {
           sum += item;
@@ -238,11 +238,11 @@ export default {
   },
   filters: {
     numFilter(value) {
-      // 截取当前数据到小数点后两位
+      // Round current value to two decimal places
 
       let realVal = Number(value).toFixed(2);
 
-      // num.toFixed(2)获取的是字符串
+      // num.toFixed(2) returns a string
 
       return Number(realVal);
     },

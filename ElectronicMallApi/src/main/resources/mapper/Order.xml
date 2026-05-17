@@ -11,7 +11,22 @@
         <result property="img" column="imgs"></result>
     </resultMap>
     <select id="selectByUserId" parameterType="int" resultType="java.util.HashMap">
-        SELECT o.*, og.good_id,good.`name` as good_name, og.count, og.standard, good.imgs
+        SELECT o.id,
+               o.order_no,
+               o.total_price,
+               o.user_id,
+               o.link_user,
+               o.link_phone,
+               o.link_address,
+               o.create_time,
+               CASE o.state
+                   WHEN '待付款' THEN 'Pending Payment'
+                   WHEN '已支付' THEN 'Paid'
+                   WHEN '已发货' THEN 'Shipped'
+                   WHEN '已收货' THEN 'Received'
+                   ELSE o.state
+               END AS state,
+               og.good_id, good.`name` as good_name, og.count, og.standard, good.imgs
         FROM t_order o, order_goods og ,good
         WHERE o.id = og.order_id AND o.user_id = #{userId} AND og.good_id = good.id
         ORDER BY o.create_time DESC

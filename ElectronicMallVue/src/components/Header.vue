@@ -6,17 +6,17 @@
 <template>
   <div style="display: flex;">
     <div style="flex: 1;">
-    <!--          收缩按钮-->
+    <!--          Collapse button-->
     <span style="font-size: 25px;cursor: pointer" :class="collapseIcon" v-on:click="$emit('collapse')" :title="collapseTitle"></span>
-    <!--          收缩按钮-->
-    <span style="font-size: 25px;cursor: pointer;margin-left: 10px" class='iconfont icon-r-left' v-on:click="back" title="返回"></span>
-<!--    页签-->
+    <!--          Collapse button-->
+    <span style="font-size: 25px;cursor: pointer;margin-left: 10px" class='iconfont icon-r-left' v-on:click="back" title="Back"></span>
+<!--    Breadcrumb-->
     <el-breadcrumb style="display: inline-block; margin-left: 30px;font-size: 22px">
-      <el-breadcrumb-item :to="{ path: '/manage/home' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/manage/home' }">Home</el-breadcrumb-item>
       <el-breadcrumb-item>{{routePath}}</el-breadcrumb-item>
     </el-breadcrumb>
     </div>
-    <!--          设置按钮-->
+    <!--          Settings button-->
     <el-dropdown style="margin-right: 40px;cursor: pointer">
     <span class="el-dropdown-link">
       <div style="display: inline-block;font-size: 22px;font-weight: 600;">
@@ -27,10 +27,10 @@
     </span>
       <el-dropdown-menu slot="dropdown" style="text-align: center">
         <el-dropdown-item>
-          <div @click="$router.push('/manage/person')">个人信息</div>
+          <div @click="$router.push('/manage/person')">Profile</div>
         </el-dropdown-item>
         <el-dropdown-item>
-          <div @click="logout">退出</div>
+          <div @click="logout">Logout</div>
         </el-dropdown-item>
 
 
@@ -54,7 +54,7 @@ export default {
     logout() {
       localStorage.removeItem("user");
       this.$router.push('/login');
-      this.$message.success("退出成功");
+      this.$message.success("Logged out successfully");
     },
     back(){
       this.$router.go(-1)
@@ -67,18 +67,18 @@ export default {
       baseApi: this.$store.state.baseApi,
 
 
-      // user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {nickname:'登录已失效'}
+      // user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {nickname:'Login expired'}
     }
   },
   watch: {
-    //面包屑
+    //Breadcrumb
     '$route': function (){
       this.routePath=this.$route.meta.path
     },
 
   },
   created() {
-    // this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {nickname:'登录已失效'};
+    // this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {nickname:'Login expired'};
     this.routePath=this.$route.meta.path;
   }
 }

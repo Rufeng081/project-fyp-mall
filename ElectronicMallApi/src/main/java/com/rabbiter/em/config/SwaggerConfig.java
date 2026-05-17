@@ -17,8 +17,8 @@ public class SwaggerConfig {
     public Docket createRestApi(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(new ApiInfoBuilder()
-                        .title("SpringBoot整合Swagger")
-                        .description("详细信息")
+                        .title("Spring Boot Swagger Integration")
+                        .description("API documentation")
                         .version("1.0")
                         .license("The Apache License")
                         .build()

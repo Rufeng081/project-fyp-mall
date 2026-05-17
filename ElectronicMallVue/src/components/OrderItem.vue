@@ -2,28 +2,28 @@
 <div>
   <div class="header" style="padding-left: 25px;">
     <span style="line-height: 40px"><b>{{order.create_time}}</b></span>
-    <span style="line-height: 40px;margin-left: 30px"><b>订单编号： {{order.order_no}}</b></span>
+    <span style="line-height: 40px;margin-left: 30px"><b>Order No.: {{order.order_no}}</b></span>
   </div>
   <div class="body">
     <div style="display: inline-block;">
-      <router-link :to="'goodview/'+order.good_id">
+      <router-link :to="'/goodView/'+order.good_id">
         <img :src="baseApi + order.imgs" style="width: 100px;height:100px">
       </router-link>
     </div>
     <div style="display: inline-block;line-height: 40px" >
       <table>
         <tr>
-          <th>商品</th>
-          <th>规格</th>
-          <th>数量</th>
-          <th>总价</th>
-          <th>收货人</th>
-          <th>订单状态</th>
+          <th>Product</th>
+          <th>Variant</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th>Recipient</th>
+          <th>Order Status</th>
         </tr>
         <tr>
-          <a :href="'goodview/'+order.good_id">
-            <td>{{order.good_name}}</td>
-          </a>
+          <td>
+            <router-link :to="'/goodView/'+order.good_id">{{order.good_name}}</router-link>
+          </td>
           <td>{{order.standard}}</td>
           <td>{{order.count}}</td>
           <td>{{order.total_price}}</td>
@@ -34,29 +34,29 @@
               :content=address>
             <td slot="reference" style="color: #42b983">{{ order.link_user }}</td>
           </el-popover>
-<!--          订单状态-->
-          <template v-if="order.state==='已发货'">
+<!--          Order Status-->
+          <template v-if="order.state==='Shipped'">
             <td style="color: #42b983">{{order.state}}</td>
             <td>
-              <el-button style="margin-left: 20px;font-size: 15px;" type="primary" @click="receive">确认收货</el-button>
+              <el-button style="margin-left: 20px;font-size: 15px;" type="primary" @click="receive">Confirm Receipt</el-button>
             </td>
           </template>
 
-          <template v-else-if="order.state==='已收货'">
+          <template v-else-if="order.state==='Received'">
             <td style="color: #42b983"><a class="el-icon-check"></a>{{order.state}}</td>
           </template>
 
-          <template v-else-if="order.state==='已支付'">
+          <template v-else-if="order.state==='Paid'">
             <td style="color: #3b62f8"> {{order.state}}</td>
             <td>
-              <el-button style="font-size: 15px;" type="info" plain disabled>等待发货</el-button>
+              <el-button style="font-size: 15px;" type="info" plain disabled>Waiting for shipment</el-button>
             </td>
           </template>
 
           <template v-else>
             <td>{{order.state}}</td>
             <td>
-              <el-button style="margin-left: 20px;font-size: 15px;" type="success" @click="pay">去支付</el-button>
+              <el-button style="margin-left: 20px;font-size: 15px;" type="success" @click="pay">Pay Now</el-button>
             </td>
           </template>
 
@@ -78,28 +78,28 @@ export default {
   },
   data(){
     return{
-      address: '电话:'+this.order.link_phone+' 地址:'+this.order.link_address,
+      address: 'Phone: '+this.order.link_phone+' Address: '+this.order.link_address,
       baseApi: this.$store.state.baseApi,
     }
   },
   methods:{
-    //跳转到支付页面
+    //Navigate to payment page
     pay(){
-      this.$router.push({path: 'pay',query:{money: this.order.total_price,orderNo: this.order.order_no}})
+      this.$router.push({name: 'pay', query: {money: this.order.total_price, orderNo: this.order.order_no}})
     },
-    //确认收货
+    //Confirm Receipt
     receive(){
 
-      this.$confirm('是否确认收货?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Confirm receipt?', 'Notice', {
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
         type: 'info'
       }).then(() => {
 
         this.request.get("/api/order/received/"+this.order.order_no).then(res=>{
           if(res.code==='200'){
-            this.$message.success("收货成功");
-            this.order.state='已收货'
+            this.$message.success("Order received successfully");
+            this.order.state='Received'
           }
         })
       })

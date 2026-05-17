@@ -37,7 +37,7 @@ public class IconService extends ServiceImpl<IconMapper, Icon> {
                 new QueryWrapper<IconCategory>().eq("icon_id", id)
         );
         if (count > 0) {
-            return BaseApi.error("该上级分类存在下级分类，请删除所有下级分类再尝试删除");
+            return BaseApi.error("This category group still has subcategories. Delete all subcategories first.");
         }
         super.removeById(id);
         return BaseApi.success();

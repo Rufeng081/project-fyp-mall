@@ -75,7 +75,7 @@ public class GoodController {
         for (Standard standard : standards) {
             standard.setGoodId(goodId);
             if(!standardService.save(standard)){
-                return Result.error(Constants.CODE_500,"保存失败");
+                return Result.error(Constants.CODE_500,"Save failed");
             }
         }
         return Result.success();
@@ -89,7 +89,7 @@ public class GoodController {
         if(delete) {
             return Result.success();
         }else {
-            return Result.error(Constants.CODE_500,"删除失败");
+            return Result.error(Constants.CODE_500,"Delete failed");
         }
     }
 

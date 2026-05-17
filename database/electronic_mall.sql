@@ -22,34 +22,34 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `address`;
 CREATE TABLE `address`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `link_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '联系人',
-  `link_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '地址',
-  `link_phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '电话',
-  `user_id` bigint(0) NULL DEFAULT NULL COMMENT '所属用户',
+  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
+  `link_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Contact name',
+  `link_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Address',
+  `link_phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Phone',
+  `user_id` bigint(0) NULL DEFAULT NULL COMMENT 'Owner user',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '地址表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'Address table' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of address
 -- ----------------------------
-INSERT INTO `address` VALUES (1, '张三', '北京市', '13333333333', 1);
-INSERT INTO `address` VALUES (2, '张三', '北京市', '15888888888', 2);
-INSERT INTO `address` VALUES (3, '张三', '上海市', '15555555555', 2);
-INSERT INTO `address` VALUES (4, '张三', '新疆', '15888888888', 2);
+INSERT INTO `address` VALUES (1, 'LI RUFENG', 'Kolej Keris Mas, Universiti Kebangsaan Malaysia, Bangi, Selangor 43600, Malaysia', '+60 12-345 6789', 1);
+INSERT INTO `address` VALUES (2, 'Aisha Rahman', 'No. 12, Jalan Reko, Kajang, Selangor 43000, Malaysia', '+60 11-1234 5678', 2);
+INSERT INTO `address` VALUES (3, 'Daniel Tan', 'Block B, Taman Universiti, Skudai, Johor 81300, Malaysia', '+60 16-234 5678', 2);
+INSERT INTO `address` VALUES (4, 'Nur Iman', 'Jalan Tun Razak, Kuala Lumpur 50400, Malaysia', '+60 17-987 6543', 2);
 
 -- ----------------------------
 -- Table structure for avatar
 -- ----------------------------
 DROP TABLE IF EXISTS `avatar`;
 CREATE TABLE `avatar`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
   `type` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
   `size` bigint(0) NULL DEFAULT NULL,
   `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
   `md5` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '头像表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'Avatar table' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of avatar
@@ -63,11 +63,11 @@ INSERT INTO `avatar` VALUES (4, 'jpg', 175, '/avatar/09cd5add81ff4abfbd1ccf91b2e
 -- ----------------------------
 DROP TABLE IF EXISTS `carousel`;
 CREATE TABLE `carousel`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `good_id` bigint(0) NULL DEFAULT NULL COMMENT '对应的商品id',
-  `show_order` int(0) NULL DEFAULT NULL COMMENT '播放顺序',
+  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
+  `good_id` bigint(0) NULL DEFAULT NULL COMMENT 'Related product ID',
+  `show_order` int(0) NULL DEFAULT NULL COMMENT 'Display order',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '轮播图表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'Carousel table' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of carousel
@@ -81,122 +81,122 @@ INSERT INTO `carousel` VALUES (6, 7, 4);
 -- ----------------------------
 DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `count` int(0) NULL DEFAULT NULL COMMENT '数量',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '加入时间',
-  `good_id` bigint(0) NULL DEFAULT NULL COMMENT '商品id',
+  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
+  `count` int(0) NULL DEFAULT NULL COMMENT 'Quantity',
+  `create_time` datetime NULL DEFAULT NULL COMMENT 'Added time',
+  `good_id` bigint(0) NULL DEFAULT NULL COMMENT 'Product ID',
   `standard` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
-  `user_id` bigint(0) NULL DEFAULT NULL COMMENT '用户id',
+  `user_id` bigint(0) NULL DEFAULT NULL COMMENT 'User ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '购物车表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'Cart table' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cart
 -- ----------------------------
-INSERT INTO `cart` VALUES (2, 1, '2023-07-15 13:48:00', 2, 'M 中码', 2);
-INSERT INTO `cart` VALUES (3, 1, '2023-07-15 13:48:04', 5, '白色', 2);
-INSERT INTO `cart` VALUES (4, 1, '2023-07-15 13:48:08', 7, '43码', 2);
+INSERT INTO `cart` VALUES (2, 1, '2023-07-15 13:48:00', 2, 'M', 2);
+INSERT INTO `cart` VALUES (3, 1, '2023-07-15 13:48:04', 5, 'White', 2);
+INSERT INTO `cart` VALUES (4, 1, '2023-07-15 13:48:08', 7, 'EU 43', 2);
 
 -- ----------------------------
 -- Table structure for category
 -- ----------------------------
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '类别名称',
+  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Category name',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '分类表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'Category table' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of category
 -- ----------------------------
-INSERT INTO `category` VALUES (1, '女装');
-INSERT INTO `category` VALUES (2, '男装');
-INSERT INTO `category` VALUES (10, '运动鞋');
-INSERT INTO `category` VALUES (11, '休闲鞋');
-INSERT INTO `category` VALUES (12, '靴子');
-INSERT INTO `category` VALUES (13, '办公用品');
-INSERT INTO `category` VALUES (14, '书籍');
-INSERT INTO `category` VALUES (15, '笔记本');
-INSERT INTO `category` VALUES (16, '手机');
-INSERT INTO `category` VALUES (17, '平板电脑');
-INSERT INTO `category` VALUES (18, '烹饪食材');
-INSERT INTO `category` VALUES (19, '白酒');
-INSERT INTO `category` VALUES (20, '茶叶');
-INSERT INTO `category` VALUES (21, '咖啡');
-INSERT INTO `category` VALUES (22, '宠物用品');
-INSERT INTO `category` VALUES (23, '宠物饲料');
+INSERT INTO `category` VALUES (1, 'Clothing');
+INSERT INTO `category` VALUES (2, 'Men Clothing');
+INSERT INTO `category` VALUES (10, 'Sports Shoes');
+INSERT INTO `category` VALUES (11, 'Casual Shoes');
+INSERT INTO `category` VALUES (12, 'Boots');
+INSERT INTO `category` VALUES (13, 'Stationery');
+INSERT INTO `category` VALUES (14, 'Books');
+INSERT INTO `category` VALUES (15, 'Laptops');
+INSERT INTO `category` VALUES (16, 'Smartphones');
+INSERT INTO `category` VALUES (17, 'Tablets');
+INSERT INTO `category` VALUES (18, 'Food and Beverages');
+INSERT INTO `category` VALUES (19, 'Beverages');
+INSERT INTO `category` VALUES (20, 'Tea');
+INSERT INTO `category` VALUES (21, 'Coffee');
+INSERT INTO `category` VALUES (22, 'Daily Essentials');
+INSERT INTO `category` VALUES (23, 'Household Supplies');
 
 -- ----------------------------
 -- Table structure for good
 -- ----------------------------
 DROP TABLE IF EXISTS `good`;
 CREATE TABLE `good`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '商品名称',
-  `description` varchar(1600) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '描述',
-  `discount` double(10, 2) NOT NULL DEFAULT 1.00 COMMENT '折扣',
-  `sales` bigint(0) NOT NULL DEFAULT 0 COMMENT '销量',
-  `sale_money` double(10, 2) NULL DEFAULT 0.00 COMMENT '销售额',
-  `category_id` bigint(0) NULL DEFAULT NULL COMMENT '分类id',
-  `imgs` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '商品图片',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `recommend` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否推荐。0不推荐，1推荐',
-  `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除，0未删除，1删除',
+  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Product name',
+  `description` varchar(1600) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Description',
+  `discount` double(10, 2) NOT NULL DEFAULT 1.00 COMMENT 'Discount',
+  `sales` bigint(0) NOT NULL DEFAULT 0 COMMENT 'Sales',
+  `sale_money` double(10, 2) NULL DEFAULT 0.00 COMMENT 'Sales amount',
+  `category_id` bigint(0) NULL DEFAULT NULL COMMENT 'Category ID',
+  `imgs` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Product image',
+  `create_time` datetime NULL DEFAULT NULL COMMENT 'Created time',
+  `recommend` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Recommended flag. 0 no, 1 yes',
+  `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Deleted flag. 0 active, 1 deleted',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '商品表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'Product table' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of good
 -- ----------------------------
-INSERT INTO `good` VALUES (2, '衬衫', '鳄鱼夹克男春季新款休闲百搭翻领外套男中青年时尚潮流夹克衫男装上衣 绿色 XL(130-145斤)', 0.95, 35, 13700.50, 2, '/file/74488020672944968462e9e4a9c89096.png', '2023-03-27 13:32:44', 1, 0);
-INSERT INTO `good` VALUES (3, '桌椅套装', '这款桌椅套装是您家庭和办公室的理想选择。精心设计的桌子和舒适的椅子，完美结合，给您带来了坐姿舒适和优雅的工作环境。优质材料和坚固的结构确保您享受长久的使用寿命。', 0.98, 0, 0.00, 13, '/file/b4ac53ed62c74c298366619399c39f99.jpg', '2023-03-31 20:44:00', 1, 0);
-INSERT INTO `good` VALUES (4, '威士忌 大瓶', '这款洋酒是一款精心酿造的上乘佳酿，给您带来无与伦比的品尝享受。精选优质的原料，经过精心的发酵和蒸馏工艺，使得这款洋酒口感柔和，回味悠长。', 0.80, 0, 0.00, 19, '/file/be9d2d6a17c5436fb0b8c2f7927484b2.jpg', '2023-03-31 20:46:37', 1, 0);
-INSERT INTO `good` VALUES (5, '女上衣', '酒红色圆领短袖T恤女休闲2023年新款上衣修身拼色女装S8220334 白色 XL', 0.80, 1, 116.00, 1, '/file/15cb9fc604984dfa97e0e968eb1d196d.jpg', '2023-03-31 20:47:59', 1, 0);
-INSERT INTO `good` VALUES (6, '《PSALMS》英文版 图书', '《PSALMS》英文版是一本精美的图书，专门收录了许多有趣的诗篇。这本书为读者带来了感人至深的心灵之旅。', 1.00, 0, 0.00, 14, '/file/8dc5354c7332454796c614bb4a0572fb.jpg', '2023-03-31 20:48:51', 1, 0);
-INSERT INTO `good` VALUES (7, '休闲鞋', '男士运动休闲鞋软底网面鞋健步鞋黑灰色42', 0.96, 1, 110.40, 11, '/file/0afa4eb1c51943808f6e83cd9ced25e8.jpg', '2023-03-31 20:49:36', 1, 0);
-INSERT INTO `good` VALUES (8, '123', '123', 1.00, 43, 5289.00, 1, '/file/09bb6edab07a4c68a44cce41a3300d97.jpg', '2023-06-12 00:55:57', 0, 1);
-INSERT INTO `good` VALUES (9, '儿童简笔画册', '适合儿童简笔画上色的底稿', 1.00, 0, 0.00, 13, '/file/2e2a1df657324a3293642344327310cb.png', '2023-08-10 20:28:58', 1, 0);
-INSERT INTO `good` VALUES (10, '墨镜', '抵抗紫外线', 1.00, 0, 0.00, 13, '/file/449ab0163ba648c08cb4a76b40a9dcec.jpg', '2023-08-10 20:29:47', 1, 0);
+INSERT INTO `good` VALUES (2, 'Men Casual Shirt', 'Lightweight casual shirt suitable for daily wear and campus activities.', 0.95, 35, 1370.50, 2, '/file/74488020672944968462e9e4a9c89096.png', '2023-03-27 13:32:44', 1, 0);
+INSERT INTO `good` VALUES (3, 'Study Desk and Chair Set', 'Compact desk and chair set for dormitory study spaces and home offices.', 0.98, 0, 0.00, 13, '/file/b4ac53ed62c74c298366619399c39f99.jpg', '2023-03-31 20:44:00', 1, 0);
+INSERT INTO `good` VALUES (4, 'Premium Malt Beverage', 'A premium bottled beverage suitable for gift sets and small gatherings.', 0.80, 0, 0.00, 19, '/file/be9d2d6a17c5436fb0b8c2f7927484b2.jpg', '2023-03-31 20:46:37', 1, 0);
+INSERT INTO `good` VALUES (5, 'Women Cotton T-Shirt', 'Comfortable cotton T-shirt with a clean white design for casual wear.', 0.80, 1, 116.00, 1, '/file/15cb9fc604984dfa97e0e968eb1d196d.jpg', '2023-03-31 20:47:59', 1, 0);
+INSERT INTO `good` VALUES (6, 'English Psalms Book', 'A compact English reading book suitable for personal study and gifting.', 1.00, 0, 0.00, 14, '/file/8dc5354c7332454796c614bb4a0572fb.jpg', '2023-03-31 20:48:51', 1, 0);
+INSERT INTO `good` VALUES (7, 'Men Casual Sneakers', 'Breathable black-grey casual sneakers with a comfortable walking sole.', 0.96, 1, 110.40, 11, '/file/0afa4eb1c51943808f6e83cd9ced25e8.jpg', '2023-03-31 20:49:36', 1, 0);
+INSERT INTO `good` VALUES (8, 'Archived Demo Product', 'Archived product retained for delete-state testing.', 1.00, 43, 528.90, 1, '/file/09bb6edab07a4c68a44cce41a3300d97.jpg', '2023-06-12 00:55:57', 0, 1);
+INSERT INTO `good` VALUES (9, 'Children Drawing Book', 'Simple line-art practice book for children to colour and draw.', 1.00, 0, 0.00, 13, '/file/2e2a1df657324a3293642344327310cb.png', '2023-08-10 20:28:58', 1, 0);
+INSERT INTO `good` VALUES (10, 'UV Protection Sunglasses', 'Lightweight sunglasses with UV protection for outdoor activities.', 1.00, 0, 0.00, 22, '/file/449ab0163ba648c08cb4a76b40a9dcec.jpg', '2023-08-10 20:29:47', 1, 0);
 
 -- ----------------------------
 -- Table structure for good_standard
 -- ----------------------------
 DROP TABLE IF EXISTS `good_standard`;
 CREATE TABLE `good_standard`  (
-  `good_id` bigint(0) NULL DEFAULT NULL COMMENT '商品id',
-  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '规格',
-  `price` decimal(10, 2) NULL DEFAULT NULL COMMENT '价格',
-  `store` bigint(0) NULL DEFAULT NULL COMMENT '库存'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '商品规格表' ROW_FORMAT = Dynamic;
+  `good_id` bigint(0) NULL DEFAULT NULL COMMENT 'Product ID',
+  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Variant',
+  `price` decimal(10, 2) NULL DEFAULT NULL COMMENT 'Price',
+  `store` bigint(0) NULL DEFAULT NULL COMMENT 'Stock'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'Product variant table' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of good_standard
 -- ----------------------------
 INSERT INTO `good_standard` VALUES (8, '123', 123.00, 80);
-INSERT INTO `good_standard` VALUES (5, '白色', 145.00, 299);
-INSERT INTO `good_standard` VALUES (7, '43码', 115.00, 149);
-INSERT INTO `good_standard` VALUES (6, '英文版', 99.00, 500);
-INSERT INTO `good_standard` VALUES (4, '单瓶', 2600.00, 500);
-INSERT INTO `good_standard` VALUES (4, '三瓶送礼套装', 6100.00, 900);
-INSERT INTO `good_standard` VALUES (3, '桌子', 90.00, 600);
-INSERT INTO `good_standard` VALUES (3, '椅子', 50.00, 500);
-INSERT INTO `good_standard` VALUES (3, '桌子+椅子', 150.00, 500);
-INSERT INTO `good_standard` VALUES (2, 'S 小码', 129.00, 498);
-INSERT INTO `good_standard` VALUES (2, 'M 中码', 129.00, 496);
-INSERT INTO `good_standard` VALUES (2, 'L 大码', 129.00, 496);
-INSERT INTO `good_standard` VALUES (9, '标准版', 50.00, 600);
-INSERT INTO `good_standard` VALUES (10, '标准30cm', 60.00, 500);
+INSERT INTO `good_standard` VALUES (5, 'White', 145.00, 299);
+INSERT INTO `good_standard` VALUES (7, 'EU 43', 115.00, 149);
+INSERT INTO `good_standard` VALUES (6, 'English Edition', 99.00, 500);
+INSERT INTO `good_standard` VALUES (4, 'Single Bottle', 260.00, 500);
+INSERT INTO `good_standard` VALUES (4, 'Gift Set of 3', 610.00, 900);
+INSERT INTO `good_standard` VALUES (3, 'Desk', 90.00, 600);
+INSERT INTO `good_standard` VALUES (3, 'Chair', 50.00, 500);
+INSERT INTO `good_standard` VALUES (3, 'Desk + Chair', 150.00, 500);
+INSERT INTO `good_standard` VALUES (2, 'S', 129.00, 498);
+INSERT INTO `good_standard` VALUES (2, 'M', 129.00, 496);
+INSERT INTO `good_standard` VALUES (2, 'L', 129.00, 496);
+INSERT INTO `good_standard` VALUES (9, 'Standard Edition', 50.00, 600);
+INSERT INTO `good_standard` VALUES (10, '30 cm', 60.00, 500);
 
 -- ----------------------------
 -- Table structure for icon
 -- ----------------------------
 DROP TABLE IF EXISTS `icon`;
 CREATE TABLE `icon`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '图标的识别码',
+  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
+  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Icon code',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '图标表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'Icon table' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of icon
@@ -214,10 +214,10 @@ INSERT INTO `icon` VALUES (21, '&#xe606;');
 -- ----------------------------
 DROP TABLE IF EXISTS `icon_category`;
 CREATE TABLE `icon_category`  (
-  `category_id` bigint(0) NOT NULL COMMENT '分类id',
-  `icon_id` bigint(0) NOT NULL COMMENT '图标id',
+  `category_id` bigint(0) NOT NULL COMMENT 'Category ID',
+  `icon_id` bigint(0) NOT NULL COMMENT 'Icon ID',
   PRIMARY KEY (`category_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '商品分类 - 图标关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'Product category icon relation table' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of icon_category
@@ -244,20 +244,20 @@ INSERT INTO `icon_category` VALUES (23, 21);
 -- ----------------------------
 DROP TABLE IF EXISTS `order_goods`;
 CREATE TABLE `order_goods`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `order_id` bigint(0) NULL DEFAULT NULL COMMENT '订单id',
-  `good_id` bigint(0) NULL DEFAULT NULL COMMENT '商品id',
-  `count` int(0) NULL DEFAULT NULL COMMENT '数量',
-  `standard` varchar(1600) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '规格',
+  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
+  `order_id` bigint(0) NULL DEFAULT NULL COMMENT 'Order ID',
+  `good_id` bigint(0) NULL DEFAULT NULL COMMENT 'Product ID',
+  `count` int(0) NULL DEFAULT NULL COMMENT 'Quantity',
+  `standard` varchar(1600) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Variant',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of order_goods
 -- ----------------------------
-INSERT INTO `order_goods` VALUES (9, 9, 2, 3, 'M 中码');
-INSERT INTO `order_goods` VALUES (10, 10, 2, 3, 'L 大码');
-INSERT INTO `order_goods` VALUES (11, 11, 2, 1, 'S 小码');
+INSERT INTO `order_goods` VALUES (9, 9, 2, 3, 'M');
+INSERT INTO `order_goods` VALUES (10, 10, 2, 3, 'L');
+INSERT INTO `order_goods` VALUES (11, 11, 2, 1, 'S');
 INSERT INTO `order_goods` VALUES (12, 12, 8, 1, '123');
 INSERT INTO `order_goods` VALUES (13, 13, 8, 12, '123');
 INSERT INTO `order_goods` VALUES (14, 14, 8, 1, '123');
@@ -266,39 +266,39 @@ INSERT INTO `order_goods` VALUES (16, 16, 8, 15, '123');
 INSERT INTO `order_goods` VALUES (17, 17, 8, 1, '123');
 INSERT INTO `order_goods` VALUES (18, 18, 8, 1, '123');
 INSERT INTO `order_goods` VALUES (19, 19, 8, 11, '123');
-INSERT INTO `order_goods` VALUES (20, 20, 2, 1, 'M 中码');
-INSERT INTO `order_goods` VALUES (21, 21, 2, 1, 'L 大码');
-INSERT INTO `order_goods` VALUES (22, 22, 7, 1, '43码');
-INSERT INTO `order_goods` VALUES (23, 23, 2, 1, 'S 小码');
-INSERT INTO `order_goods` VALUES (24, 24, 5, 1, '白色');
+INSERT INTO `order_goods` VALUES (20, 20, 2, 1, 'M');
+INSERT INTO `order_goods` VALUES (21, 21, 2, 1, 'L');
+INSERT INTO `order_goods` VALUES (22, 22, 7, 1, 'EU 43');
+INSERT INTO `order_goods` VALUES (23, 23, 2, 1, 'S');
+INSERT INTO `order_goods` VALUES (24, 24, 5, 1, 'White');
 
 -- ----------------------------
 -- Table structure for standard
 -- ----------------------------
 DROP TABLE IF EXISTS `standard`;
 CREATE TABLE `standard`  (
-  `goodId` bigint(0) NOT NULL COMMENT '商品id',
-  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '商品规格',
-  `price` decimal(10, 2) NULL DEFAULT NULL COMMENT '该规格的价格',
-  `store` bigint(0) NULL DEFAULT NULL COMMENT '该规格的库存',
+  `goodId` bigint(0) NOT NULL COMMENT 'Product ID',
+  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Product variant',
+  `price` decimal(10, 2) NULL DEFAULT NULL COMMENT 'Variant price',
+  `store` bigint(0) NULL DEFAULT NULL COMMENT 'Variant stock',
   PRIMARY KEY (`goodId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '规格表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'Variant table' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for sys_file
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_file`;
 CREATE TABLE `sys_file`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '文件名称',
-  `type` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '文件类型',
-  `size` bigint(0) NULL DEFAULT NULL COMMENT '大小',
-  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '文件路径',
-  `is_delete` tinyint(1) NULL DEFAULT NULL COMMENT '是否删除',
-  `enable` tinyint(1) NULL DEFAULT NULL COMMENT '是否启用',
-  `md5` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'md5值',
+  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'File name',
+  `type` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'File type',
+  `size` bigint(0) NULL DEFAULT NULL COMMENT 'Size',
+  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'File path',
+  `is_delete` tinyint(1) NULL DEFAULT NULL COMMENT 'Deleted flag',
+  `enable` tinyint(1) NULL DEFAULT NULL COMMENT 'Enabled flag',
+  `md5` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'MD5 value',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '系统文件表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'System file table' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_file
@@ -336,45 +336,45 @@ INSERT INTO `sys_file` VALUES (33, '03.jpg', 'jpg', 31, '/file/449ab0163ba648c08
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '用户名',
-  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '密码',
-  `nickname` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '昵称',
-  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '邮箱',
-  `phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '手机号码',
-  `address` varchar(1600) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '地址',
-  `avatar_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '头像链接',
-  `role` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '角色',
+  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
+  `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Username',
+  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Password',
+  `nickname` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Nickname',
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Email',
+  `phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Phone number',
+  `address` varchar(1600) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Address',
+  `avatar_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Avatar URL',
+  `role` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Role',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '用户表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'User table' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', '管理员', '123@qq.com', '13333333333', NULL, '/avatar/09cd5add81ff4abfbd1ccf91b2e9c820.jpg', 'admin');
-INSERT INTO `sys_user` VALUES (2, 'user', 'e10adc3949ba59abbe56e057f20f883e', '新用户', '1234@qq.com', '15888888888', NULL, '/avatar/978418fbe75243b4ba38da389a468b78.jpg', 'user');
+INSERT INTO `sys_user` VALUES (1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'Administrator', 'admin@example.com', '+60 12-345 6789', 'Kolej Keris Mas, Universiti Kebangsaan Malaysia, Bangi, Selangor 43600, Malaysia', '/avatar/09cd5add81ff4abfbd1ccf91b2e9c820.jpg', 'admin');
+INSERT INTO `sys_user` VALUES (2, 'user', 'e10adc3949ba59abbe56e057f20f883e', 'Demo User', 'user@example.com', '+60 11-1234 5678', 'No. 12, Jalan Reko, Kajang, Selangor 43000, Malaysia', '/avatar/978418fbe75243b4ba38da389a468b78.jpg', 'user');
 
 -- ----------------------------
 -- Table structure for t_order
 -- ----------------------------
 DROP TABLE IF EXISTS `t_order`;
 CREATE TABLE `t_order`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `order_no` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '订单号',
-  `total_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '总价',
-  `user_id` bigint(0) NULL DEFAULT NULL COMMENT '用户id',
-  `link_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '联系人',
-  `link_phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '联系电话',
-  `link_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '地址',
-  `state` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '订单状态',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
+  `order_no` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Order number',
+  `total_price` decimal(10, 2) NULL DEFAULT NULL COMMENT 'Total price',
+  `user_id` bigint(0) NULL DEFAULT NULL COMMENT 'User ID',
+  `link_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Contact name',
+  `link_phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Phone number',
+  `link_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Address',
+  `state` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Order status',
+  `create_time` datetime NULL DEFAULT NULL COMMENT 'Created time',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '订单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'Order table' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_order
 -- ----------------------------
-INSERT INTO `t_order` VALUES (9, '20230331223822860904', 367.65, 2, '张三', '15888888888', '新疆', '已收货', '2023-03-31 22:38:22');
-INSERT INTO `t_order` VALUES (24, '20230805014642654151', 116.00, 2, '张三', '15888888888', '北京市', '已支付', '2023-08-05 01:46:42');
+INSERT INTO `t_order` VALUES (9, '20230331223822860904', 367.65, 2, 'Aisha Rahman', '+60 11-1234 5678', 'No. 12, Jalan Reko, Kajang, Selangor 43000, Malaysia', 'Received', '2023-03-31 22:38:22');
+INSERT INTO `t_order` VALUES (24, '20230805014642654151', 116.00, 2, 'Aisha Rahman', '+60 11-1234 5678', 'No. 12, Jalan Reko, Kajang, Selangor 43000, Malaysia', 'Paid', '2023-08-05 01:46:42');
 
 SET FOREIGN_KEY_CHECKS = 1;

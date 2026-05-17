@@ -8,7 +8,7 @@
     <el-row>
       <el-col :span="3">
         <div style="font-size: 20px; font-weight: bold; text-align: center">
-          <a href="/"><i class="el-icon-a-011"></i> 在线商城</a>
+          <a href="/"><i class="el-icon-a-011"></i> Online Mall</a>
         </div>
       </el-col>
       <el-col :span="17">
@@ -18,27 +18,27 @@
           mode="horizontal"
           router
         >
-          <el-menu-item index="/" class="menu-item">商城首页</el-menu-item>
+          <el-menu-item index="/" class="menu-item">Home</el-menu-item>
           
           <el-menu-item index="/goodList" class="menu-item"
-            >商品分类</el-menu-item
+            >Category</el-menu-item
           >
           <el-menu-item index="/cart" class="menu-item"
-            >我的购物车</el-menu-item
+            >My Cart</el-menu-item
           >
-          <el-menu-item index="/orderlist" class="menu-item"
-            >我的订单</el-menu-item
+          <el-menu-item index="/orderList" class="menu-item"
+            >My Orders</el-menu-item
           >
           <el-menu-item
             index="/manage"
             class="menu-item"
             v-if="role === 'admin'"
-            >后台管理</el-menu-item
+            >Admin</el-menu-item
           >
         </el-menu>
       </el-col>
       <el-col :span="4">
-        <!--         右上角个人信息-->
+        <!--         Top-right profile-->
         <el-dropdown style="cursor: pointer; float: right; margin-right: 60px">
           <span class="el-dropdown-link">
             <div style="display: inline-block">
@@ -54,22 +54,22 @@
               ></i>
             </div>
           </span>
-          <!--          下拉菜单-->
+          <!--          Dropdown menu-->
           <el-dropdown-menu slot="dropdown" style="text-align: center">
             <el-dropdown-item>
-              <!--              传给前端，登录后跳转页面的path为 "/"-->
+              <!--              After login, redirect to the storefront path-->
               <div
                 @click="$router.push({ path: '/login', query: { to: '/' } })"
                 v-show="!loginStatus"
               >
-                登录
+                Login
               </div>
             </el-dropdown-item>
             <el-dropdown-item v-show="loginStatus">
-              <div @click="$router.push('/person')">个人信息</div>
+              <div @click="$router.push('/person')">Profile</div>
             </el-dropdown-item>
             <el-dropdown-item v-show="loginStatus">
-              <div @click="logout">退出</div>
+              <div @click="logout">Logout</div>
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -98,7 +98,7 @@ export default {
     logout() {
       localStorage.removeItem("user");
       this.$router.go(0);
-      this.$message.success("退出成功");
+      this.$message.success("Logged out successfully");
     },
   },
 };

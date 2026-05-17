@@ -7,8 +7,8 @@
   <span> {{address.linkPhone}}</span>
   <span> {{address.linkAddress}}</span>
   <div style="margin-top: 5px">
-    <a @click="$emit('edit')" style="color: #710a0a;cursor: pointer;position:absolute;bottom: 10px">修改</a>
-    <a @click="$emit('delete')" style="color: #710a0a;cursor: pointer;float: right;position:absolute;bottom: 10px;right: 10px">删除</a>
+    <a @click="$emit('edit')" style="color: #710a0a;cursor: pointer;position:absolute;bottom: 10px">Update</a>
+    <a @click="$emit('delete')" style="color: #710a0a;cursor: pointer;float: right;position:absolute;bottom: 10px;right: 10px">Delete</a>
   </div>
 </div>
 </template>

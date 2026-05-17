@@ -40,13 +40,13 @@ public class JwtInterceptor implements HandlerInterceptor {
         }
         //验证是否有token
         if(!StringUtils.hasLength(token)){
-            throw  new ServiceException(Constants.TOKEN_ERROR,"token失效,请重新登陆");
+            throw  new ServiceException(Constants.TOKEN_ERROR,"Session expired. Please log in again");
         }
         //通过token，将redis中的user存到threadlocal（UserHolder）
         User user = redisTemplate.opsForValue().get(RedisConstants.USER_TOKEN_KEY + token);
 
         if(user == null){
-            throw  new ServiceException(Constants.TOKEN_ERROR,"token失效,请重新登陆");
+            throw  new ServiceException(Constants.TOKEN_ERROR,"Session expired. Please log in again");
         }
         UserHolder.saveUser(user);
         //重置过期时间
@@ -56,7 +56,7 @@ public class JwtInterceptor implements HandlerInterceptor {
         try {
             jwtVerifier.verify(token);
         }catch (JWTVerificationException e){
-            throw new ServiceException(Constants.TOKEN_ERROR,"token验证失败，请重新登陆");
+            throw new ServiceException(Constants.TOKEN_ERROR,"Token verification failed. Please log in again");
         }
         return true;
     }

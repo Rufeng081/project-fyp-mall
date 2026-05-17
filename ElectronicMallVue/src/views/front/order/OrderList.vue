@@ -7,7 +7,7 @@
 <div class="list" style="width: 55%;height:100%;margin: 20px auto">
   
   <div v-if="orders.length === 0" class="empty-box">
-    <span style="font-family: 华文彩云;font-size: 40px" >没有订单记录</span>
+    <span style="font-family: Georgia;font-size: 40px" >No order records</span>
   </div>
   <template v-for="order in orders">
     <order-item :order="order" :key="order.id" style="margin-bottom: 5px"></order-item>
@@ -25,7 +25,7 @@ export default {
   },
   data() {
     return{
-      orders: {},
+      orders: [],
     }
   },
   created() {

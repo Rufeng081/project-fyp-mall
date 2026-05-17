@@ -1,7 +1,7 @@
 <template>
     <div class="main-box">
         <div>
-            <!--    左侧的图片-->
+            <!--    Left image-->
             <!-- <div class="image-box">
         <img :src="baseApi + good.imgs" class="image" />
       </div> -->
@@ -9,9 +9,9 @@
             <div class="image-container">
                 <img :src="baseApi + good.imgs" alt="Your Image" />
             </div>
-            <!--    右侧盒子-->
+            <!--    Right detail panel-->
             <div class="detail-box">
-                <!--      商品名与描述-->
+                <!--      Product name and description-->
                 <div>
                     <span style="font-size: 22px"
                         ><strong>{{ good.name }}</strong></span
@@ -20,26 +20,24 @@
                 <div style="margin-top: 20px">
                     <span style="font-size: 17px">{{ good.description }}</span>
                 </div>
-                <!--      价格盒子-->
+                <!--      Price panel-->
 
                 <div class="price-box" v-if="good.discount < 1">
                     <dl>
                         <div>
-                            <dt>原价</dt>
+                            <dt>Original Price</dt>
                             <dd style="text-decoration: line-through">
-                                <b>{{ price }}</b
-                                >元
+                                RM <b>{{ price }}</b>
                             </dd>
                         </div>
                         <div>
-                            <dt>折扣</dt>
+                            <dt>Discount</dt>
                             <dd>{{ discount }}</dd>
                         </div>
                         <div>
-                            <dt>现价</dt>
+                            <dt>Sale Price</dt>
                             <dd style="color: red; font-size: 25px">
-                                <b>{{ realPrice }}</b
-                                >元
+                                RM <b>{{ realPrice }}</b>
                             </dd>
                         </div>
                     </dl>
@@ -47,23 +45,23 @@
                 <div class="price-box" v-if="good.discount === 1">
                     <dl>
                         <div>
-                            <dt>价格</dt>
+                            <dt>Price</dt>
                             <dd style="color: red; font-size: 25px">
-                                ￥ <b>{{ price }}</b>
+                                RM  <b>{{ price }}</b>
                             </dd>
                         </div>
                     </dl>
                 </div>
-                <!--      月销量-->
+                <!--      Monthly Sales-->
                 <div style="margin-top: 20px">
-                    <span>月销量：</span>
+                    <span>Monthly Sales:</span>
                     <span>{{ good.sales }}</span
                     ><br />
                     <span style="height: 40px" v-if="showStore"
-                        >库存：{{ store }}</span
+                        >Stock: {{ store }}</span
                     >
                 </div>
-                <!--      选择规格-->
+                <!--      Select variant-->
                 <div
                     style="margin-top: 15px; height: 50px"
                     v-if="standards.length !== 0"
@@ -80,7 +78,7 @@
                         ></el-radio-button>
                     </el-radio-group>
                 </div>
-                <!--      选择数量-->
+                <!--      Select quantity-->
                 <div style="margin-top: 20px">
                     <el-input-number
                         v-model="count"
@@ -89,16 +87,16 @@
                         :max="store"
                     ></el-input-number>
                 </div>
-                <!--      购买按钮组-->
+                <!--      Purchase buttons-->
                 <div style="margin-top: 30px">
                     <el-button type="success" @click="goToOrder"
-                        >购买</el-button
+                        >Buy Now</el-button
                     >
                     <el-button
                         type="primary"
                         @click="addToCart"
                         icon="el-icon-shopping-cart-1"
-                        >加入购物车</el-button
+                        >Add to Cart</el-button
                     >
                 </div>
             </div>
@@ -131,12 +129,12 @@ export default {
             let arr = standards.map((item) => {
                 return item.price;
             });
-            //选择排序
+            //Selection sort
             for (let i = 0; i < arr.length; i++) {
-                // 第一次循环，假设第一个值为最小值，后面i++依此类推
+                // Assume the current item is the minimum and scan the rest
                 let min = i;
                 for (let j = i + 1; j < arr.length; j++) {
-                    // 将第一个值循环与后面的值比较，如果后面的值比第一个值小，则将索引赋值给min，直到找到最小值
+                    // Compare with later values and keep the minimum index
                     if (arr[j] < arr[min]) {
                         min = j;
                     }
@@ -146,7 +144,7 @@ export default {
             if (arr[0] === arr[arr.length - 1]) {
                 return arr[0];
             } else {
-                return arr[0] + "元 ~ " + arr[arr.length - 1];
+                return arr[0] + " ~ " + arr[arr.length - 1];
             }
         },
         change(standard) {
@@ -157,7 +155,7 @@ export default {
         goToOrder() {
             if (this.standards.length !== 0) {
                 if (this.checkedStandard === "") {
-                    this.$message.warning("请选择规格");
+                    this.$message.warning("Please select a variant");
                     return false;
                 }
             }
@@ -174,16 +172,17 @@ export default {
             });
         },
         addToCart() {
-            //未登录，拦截
+            //Redirect guests to login
             console.log(localStorage.getItem("user"));
             if (!localStorage.getItem("user")) {
                 this.$router.push("/login");
-            }
-            if (!this.checkedStandard) {
-                this.$message.error("请选择规格");
                 return false;
             }
-            // 从服务器获取当前用户的id，保证安全
+            if (!this.checkedStandard) {
+                this.$message.error("Please select a variant");
+                return false;
+            }
+            // Get current user ID from the server
             this.request.get("/userid").then((res) => {
                 let userId = res;
                 let cart = {
@@ -194,7 +193,7 @@ export default {
                 };
                 this.request.post("/api/cart", cart).then((res) => {
                     if (res.code === "200") {
-                        this.$message.success("成功添加购物车");
+                        this.$message.success("Added to cart successfully");
                     }
                 });
             });
@@ -202,7 +201,7 @@ export default {
     },
 
     created() {
-        //初始化商品信息
+        //Initialize product information
         // this.good = JSON.parse(this.$route.query.good)
         this.goodId = this.$route.params.goodId;
         this.request.get("/api/good/" + this.goodId).then((res) => {
@@ -211,21 +210,21 @@ export default {
                 let discount = this.good.discount;
                 if (discount < 1) {
                     this.isDiscount = true;
-                    this.discount = discount * 10 + "折";
+                    this.discount = (discount * 100).toFixed(0) + "% of original price";
                 }
             } else {
                 this.$router.go(0);
             }
         });
-        //从服务器获取商品规格信息
+        //Get product variant information from the server
         this.request.get("/api/good/standard/" + this.goodId).then((res) => {
             if (res.code === "200") {
                 let standards = JSON.parse(res.data);
                 this.standards = standards;
-                //默认选择第一个标准
+                //Select the first variant by default
                 this.price = this.getPriceRange(standards);
             } else {
-                //没有规格
+                //No variants
                 this.price = this.good.price;
                 this.store = this.good.store;
                 this.showStore = true;
@@ -234,18 +233,15 @@ export default {
     },
     mounted() {},
     computed: {
-        //折后价，小数点后2位
+        // Discounted price with two decimal places.
         realPrice: function () {
             if (this.good.discount < 1) {
-                //价格为范围，即不是数字，则返回一个范围
+                //When price is a range, calculate both bounds
                 if (isNaN(this.price)) {
-                    let down =
-                        this.price.substring(0, this.price.indexOf("元")) *
-                        this.good.discount;
-                    let up =
-                        this.price.substring(this.price.lastIndexOf(" ")) *
-                        this.good.discount;
-                    return down.toFixed(2) + "元 ~ " + up.toFixed(2);
+                    let prices = this.price.split(" ~ ");
+                    let down = Number(prices[0]) * this.good.discount;
+                    let up = Number(prices[1]) * this.good.discount;
+                    return down.toFixed(2) + " ~ " + up.toFixed(2);
                 } else {
                     return (this.price * this.good.discount).toFixed(2);
                 }
@@ -270,9 +266,9 @@ export default {
     width: 350px;
 }
 .image-container {
-    width: 420px; /* 设置容器的固定宽度 */
-    height: 420px; /* 设置容器的固定高度 */
-    overflow: hidden; /* 隐藏超出容器尺寸的部分 */
+    width: 420px; /* Set fixed container width */
+    height: 420px; /* Set fixed container height */
+    overflow: hidden; /* Hide overflow */
     text-align: center;
     margin-left: 80px;
     margin-top: 30px;
@@ -281,10 +277,10 @@ export default {
 }
 
 .image-container img {
-    display: block; /* 将图片显示为块级元素 */
-    width: 100%; /* 图片宽度设置为100%，使其填满容器的宽度 */
-    height: auto; /* 根据图片的宽高比，自动调整高度 */
-    object-fit: cover; /* 将图片按比例缩放，以覆盖整个容器尺寸 */
+    display: block; /* Display image as a block element */
+    width: 100%; /* Image width fills the container */
+    height: auto; /* Auto-adjust height by aspect ratio */
+    object-fit: cover; /* Scale image to cover the container */
 }
 
 .detail-box {

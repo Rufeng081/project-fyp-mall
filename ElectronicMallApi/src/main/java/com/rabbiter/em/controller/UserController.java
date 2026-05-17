@@ -72,7 +72,7 @@ public class UserController {
         if (isSuccessful) {
             return Result.success();
         } else {
-            return Result.error(Constants.CODE_500, "删除失败");
+            return Result.error(Constants.CODE_500, "Delete failed");
         }
     }
 
@@ -83,7 +83,7 @@ public class UserController {
         if (isSuccessful) {
             return Result.success();
         } else {
-            return Result.error(Constants.CODE_500, "删除失败");
+            return Result.error(Constants.CODE_500, "Delete failed");
         }
     }
 

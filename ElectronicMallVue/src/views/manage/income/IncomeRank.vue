@@ -21,12 +21,12 @@ export default {
     'income-item': incomeItem,
   },
   created() {
-    //先查询分类id和名称
+    //Load category IDs and names first
     this.request.get("/api/category").then(res=> {
       if (res.code === '200') {
         this.categories = res.data;
       }
-      //获取排行数据
+      //Load ranking data
       this.request.get("/api/good/rank/",{params:{num: this.num}}).then(res=>{
         if(res.code==='200'){
           this.good = res.data;

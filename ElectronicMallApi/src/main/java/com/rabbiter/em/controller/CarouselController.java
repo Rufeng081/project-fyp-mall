@@ -57,7 +57,7 @@ public class CarouselController {
     public Result save(@RequestBody Carousel carousel) {
         Good good = goodService.getById(carousel.getGoodId());
         if(good == null) {
-            return Result.error("400", "商品id错误，未查询到商品id = " + carousel.getGoodId());
+            return Result.error("400", "Invalid product ID. Product not found: " + carousel.getGoodId());
         }
         carouselService.saveOrUpdate(carousel);
         return Result.success();
@@ -67,7 +67,7 @@ public class CarouselController {
     public Result update(@RequestBody Carousel carousel) {
         Good good = goodService.getById(carousel.getGoodId());
         if(good == null) {
-            return Result.error("400", "商品id错误，未查询到商品id = " + carousel.getGoodId());
+            return Result.error("400", "Invalid product ID. Product not found: " + carousel.getGoodId());
         }
         carouselService.updateById(carousel);
         return Result.success();

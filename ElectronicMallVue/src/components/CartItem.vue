@@ -1,30 +1,30 @@
 <template>
   <div>
     <div class="header" style="padding-left: 25px;">
-      <span style="line-height: 40px"><b>订单时间：{{ cart.createTime }}</b></span>
+      <span style="line-height: 40px"><b>Order Time：{{ cart.createTime }}</b></span>
     </div>
     <div class="body">
-<!--      图片-->
+<!--      Image-->
       <div style="display: inline-block;margin-right: 20px">
-        <router-link :to="'goodview/'+cart.goodId">
+        <router-link :to="'/goodView/'+cart.goodId">
           <img :src="baseApi + cart.img" style="width: 100px;height:100px">
         </router-link>
       </div>
-<!--      商品信息-->
+<!--      Product Information-->
       <div style="display: inline-block;line-height: 40px" >
         <table>
           <tr>
-            <th>商品</th>
-            <th>规格</th>
-            <th>价格</th>
-            <th>数量</th>
-            <th>总价</th>
-            <th>操作</th>
+            <th>Product</th>
+            <th>Variant</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Actions</th>
           </tr>
           <tr>
-            <a :href="'goodview/'+cart.goodId">
-              <td>{{ cart.goodName }}</td>
-            </a>
+            <td>
+              <router-link :to="'/goodView/'+cart.goodId">{{ cart.goodName }}</router-link>
+            </td>
             <td>{{cart.standard}}</td>
             <td>{{realPrice.toFixed(2)}}</td>
             <td>
@@ -36,14 +36,14 @@
             <td>{{totalPrice}}</td>
             <td>
               <el-button type="success" @click="pay" icon="el-icon-a-07">
-                支付
+                Pay
               </el-button>
               <el-popconfirm
                   @confirm="del"
-                  title="确定删除？"
+                  title="Delete?"
               >
                 <el-button type="danger" icon="el-icon-a-022" slot="reference">
-                  移除
+                  Remove
                 </el-button>
               </el-popconfirm>
             </td>
@@ -82,16 +82,16 @@ export default {
     }
   },
   methods:{
-    //从购物车移除
+    //Remove from cart
     del(id){
       this.request.delete("/api/cart/"+this.cart.id).then(res=>{
         if(res.code==='200'){
-          this.$message.success("删除成功")
+          this.$message.success("Deleted successfully")
           this.$emit('delete',this.cart.id)
         }
       })
     },
-    //跳转到支付页面
+    //Navigate to payment page
     pay(){
       let good = {id: this.cart.goodId,name: this.cart.goodName,imgs: this.cart.img,discount: this.cart.discount}
       this.$router.push({name: 'preOrder',query: {good: JSON.stringify(good), realPrice: this.realPrice, num: this.cart.count, standard: this.cart.standard, cartId: this.cart.id}})

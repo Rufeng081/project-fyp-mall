@@ -3,67 +3,67 @@
     <div class="demo-input-size">
       <el-select
         v-model="searchMode"
-        placeholder="请选择"
+        placeholder="Select"
         style="width: 150px; margin-right: 10px"
       >
-        <el-option value="id" label="用户id"></el-option>
-        <el-option value="username" label="账号"></el-option>
-        <el-option value="nickname" label="昵称"></el-option>
+        <el-option value="id" label="User ID"></el-option>
+        <el-option value="username" label="Account"></el-option>
+        <el-option value="nickname" label="Nickname"></el-option>
       </el-select>
       <el-input
         v-if="searchMode === 'id'"
-        placeholder="请输入用户id"
+        placeholder="Enter user ID"
         prefix-icon="el-icon-search"
         style="width: 250px; padding-right: 5px"
         v-model="searchParams.id"
       ></el-input>
       <el-input
         v-if="searchMode === 'username'"
-        placeholder="请输入账号"
+        placeholder="Enter account"
         prefix-icon="el-icon-search"
         style="width: 250px; padding-right: 5px"
         v-model="searchParams.username"
       ></el-input>
       <el-input
         v-if="searchMode === 'nickname'"
-        placeholder="请输入昵称"
+        placeholder="Enter nickname"
         prefix-icon="el-icon-search"
         style="width: 250px; padding-right: 5px"
         v-model="searchParams.nickname"
       ></el-input>
       <el-button type="primary" @click="search">
         <i class="el-icon-a-042" style="padding-right: 6px"></i>
-        搜索
+        Search
       </el-button>
       <el-button type="danger" @click="reload">
-        <i class="el-icon-a-031" style="padding-right: 6px"></i>重置
+        <i class="el-icon-a-031" style="padding-right: 6px"></i>Reset
       </el-button>
     </div>
-    <!--          按钮栏-->
+    <!--          Button bar-->
     <div style="padding-top: 10px">
       <el-button type="primary" @click="handleAdd"
         ><i class="el-icon-a-07" style="padding-right: 6px"></i
-        >新增</el-button
+        >Add</el-button
       >
       <el-button type="danger" @click="delBatch"
         ><i class="el-icon-a-022" style="padding-right: 6px"></i
-        >批量删除</el-button
+        >Delete Selected</el-button
       >
     </div>
-    <!--          弹窗-->
+    <!--          Dialog-->
     <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible">
       <el-form label-width="50px" style="padding: 0 60px">
-        <el-form-item label="账号" v-if="dialogTitle == '新增用户'">
+        <el-form-item label="Account" v-if="dialogTitle == 'Add User'">
           <el-input v-model="user.username" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="密码" v-if="dialogTitle == '新增用户'">
+        <el-form-item label="Password" v-if="dialogTitle == 'Add User'">
           123456
         </el-form-item>
-        <el-form-item label="昵称">
+        <el-form-item label="Nickname">
           <el-input v-model="user.nickname" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="身份">
-          <el-select v-model="user.role" placeholder="请选择">
+        <el-form-item label="Role">
+          <el-select v-model="user.role" placeholder="Select">
             <el-option
               v-for="item in roleOptions"
               :key="item.value"
@@ -74,23 +74,23 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="电话">
+        <el-form-item label="Phone">
           <el-input v-model="user.phone" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱">
+        <el-form-item label="Email">
           <el-input v-model="user.email" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="地址">
+        <el-form-item label="Address">
           <el-input v-model="user.address" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="save">确 定</el-button>
+        <el-button @click="dialogFormVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="save">Confirm</el-button>
       </div>
     </el-dialog>
 
-    <!--          表格-->
+    <!--          Table-->
     <el-table
       :data="tableData"
       background-color="black"
@@ -100,33 +100,33 @@
       <el-table-column prop="id" label="id" width="100"></el-table-column>
       <el-table-column
         prop="username"
-        label="账号"
+        label="Account"
         width="150"
       ></el-table-column>
-      <el-table-column label="身份" width="150">
+      <el-table-column label="Role" width="150">
         <template slot-scope="scope">
-          <span v-if="scope.row.role === 'user'">用户</span>
-          <span v-if="scope.row.role === 'admin'">管理员</span>
+          <span v-if="scope.row.role === 'user'">User</span>
+          <span v-if="scope.row.role === 'admin'">Administrator</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="nickname"
-        label="昵称"
+        label="Nickname"
         width="180"
       ></el-table-column>
-      <el-table-column prop="phone" label="电话" width="180"></el-table-column>
-      <el-table-column prop="email" label="邮箱" width="180"></el-table-column>
+      <el-table-column prop="phone" label="Phone" width="180"></el-table-column>
+      <el-table-column prop="email" label="Email" width="180"></el-table-column>
       <el-table-column
         prop="address"
-        label="地址"
+        label="Address"
         width="350"
       ></el-table-column>
-      <el-table-column label="操作" width="250" fixed="right">
+      <el-table-column label="Actions" width="250" fixed="right">
         <template slot-scope="scope">
           <el-button style="font-size: 15px;" type="success" @click="handleEdit(scope.row)"
             >
             <i class="el-icon-a-032"></i>
-            编辑
+            Edit
             </el-button
           >
           <el-button
@@ -135,7 +135,7 @@
             @click="handleDelete(scope.row.id)"
             >
             <i class="el-icon-a-022"></i>
-            删除
+            Delete
             </el-button
           >
         </template>
@@ -170,11 +170,11 @@ export default {
       roleOptions: [
         {
           value: "admin",
-          label: "管理员",
+          label: "Administrator",
         },
         {
           value: "user",
-          label: "用户",
+          label: "User",
         },
       ],
       roleValue: "",
@@ -242,35 +242,35 @@ export default {
       this.searchParams.nickname = "";
       this.load();
     },
-    //插入或修改
+    //Create or update
     save() {
-      if (this.dialogTitle == "新增用户") {
+      if (this.dialogTitle == "Add User") {
         if (this.user.username.trim() == "") {
-          this.$message.error("账号不能为空");
+          this.$message.error("Account is required");
           return;
         }
         this.user.newPassword = md5("123456");
       }
       if (this.user.nickname.trim() == "") {
-        this.$message.error("昵称不能为空");
+        this.$message.error("Nickname is required");
         return;
       }
       if (this.user.role.trim() == "") {
-        this.$message.error("身份不能为空");
+        this.$message.error("Role is required");
         return;
       }
       if (this.user.phone.trim() == "") {
-        this.$message.error("电话不能为空");
+        this.$message.error("Phone is required");
         return;
       }
       if (this.user.email.trim() == "") {
-        this.$message.error("邮箱不能为空");
+        this.$message.error("Email is required");
         return;
       }
-      this.dialogTitle = "新增用户";
+      this.dialogTitle = "Add User";
       this.request.post("/user", this.user).then((res) => {
         if (res.code === "200") {
-          this.$message.success("保存成功");
+          this.$message.success("Saved successfully");
           this.dialogFormVisible = false;
           this.load();
         } else {
@@ -279,7 +279,7 @@ export default {
       });
     },
     handleAdd() {
-      this.dialogTitle = "新增用户";
+      this.dialogTitle = "Add User";
       this.dialogFormVisible = true;
       this.user = {
         username: "",
@@ -291,24 +291,24 @@ export default {
         address: "",
       };
     },
-    //编辑
+    //Edit
     handleEdit(row) {
       this.user = JSON.parse(JSON.stringify(row));
-      this.dialogTitle = "编辑用户";
+      this.dialogTitle = "Edit User";
       this.dialogFormVisible = true;
     },
-    //删除
+    //Delete
     handleDelete(id) {
-      this.$confirm("确认删除该用户吗?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm("Delete this user?", "Notice", {
+        confirmButtonText: "Confirm",
+        cancelButtonText: "Cancel",
         type: "warning",
       }).then(() => {
         this.request.delete("/user/" + id).then((res) => {
           if (res.code === "200") {
             this.$message({
               type: "success",
-              message: "删除成功",
+              message: "Deleted successfully",
             });
             this.load();
           } else {
@@ -317,20 +317,20 @@ export default {
         });
       });
     },
-    //批量删除
+    //Delete Selected
     delBatch() {
       let ids = this.multipleSelection.map((v) => v.id);
       console.log(ids);
-      this.$confirm("确认删除这些用户吗?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm("Delete selected users?", "Notice", {
+        confirmButtonText: "Confirm",
+        cancelButtonText: "Cancel",
         type: "warning",
       }).then(() => {
         this.request.post("/user/del/batch", ids).then((res) => {
           if (res.code === "200") {
             this.$message({
               type: "success",
-              message: "删除成功",
+              message: "Deleted successfully",
               duration: 3000,
             });
             this.load();

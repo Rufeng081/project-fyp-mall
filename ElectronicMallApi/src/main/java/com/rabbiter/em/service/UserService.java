@@ -33,7 +33,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         queryWrapper.eq("password",loginForm.getPassword());
         User user = getOne(queryWrapper);
         if(user == null) {
-            throw new ServiceException(Constants.CODE_403,"用户名或密码错误");
+            throw new ServiceException(Constants.CODE_403,"Username or password is incorrect");
         }
         String token = TokenUtils.genToken(user.getId().toString(), user.getUsername());
         //把用户存到redis中
@@ -53,11 +53,11 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         queryWrapper.eq("username",loginForm.getUsername());
         User user = getOne(queryWrapper);
         if(user!=null){
-            throw new ServiceException(Constants.CODE_403,"用户名已被使用");
+            throw new ServiceException(Constants.CODE_403,"Username is already in use");
         }else{
             user = new User();
             BeanUtils.copyProperties(loginForm,user);
-            user.setNickname("新用户");
+            user.setNickname("New User");
             user.setRole("user");
             save(user);
             return user;
@@ -81,15 +81,15 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             old.setEmail(ObjectUtils.isEmpty(user.getEmail()) ? old.getEmail() : user.getEmail());
             old.setAddress(ObjectUtils.isEmpty(user.getAddress()) ? old.getAddress() : user.getAddress());
             super.updateById(old);
-            return Result.success("修改成功");
+            return Result.success("Updated successfully");
         } else {
             // 新增
             if(!ObjectUtils.isEmpty(this.getOne(user.getUsername()))) {
-                return Result.error("400", "用户名已存在");
+                return Result.error("400", "Username already exists");
             }
             user.setPassword(user.getNewPassword());
             super.save(user);
-            return Result.success("新增成功");
+            return Result.success("Added successfully");
         }
     }
 

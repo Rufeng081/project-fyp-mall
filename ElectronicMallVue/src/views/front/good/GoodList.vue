@@ -5,9 +5,9 @@
       <div style="margin: 20px auto">
         <h2>
           <i class="el-icon-a-041"></i>
-          商品分类
+          Category
         </h2>
-        <!--      类别菜单-->
+        <!--      Category menu-->
         <el-row :gutter="20" style="font-size: 18px;">
           <el-col v-for="(item, index) in icons" :key="index" :span="6">
             <i class="iconfont" v-html="item.value"></i>
@@ -36,8 +36,8 @@
             :key="good.id"
             style="margin-bottom: 20px"
           >
-            <!--            商品格子-->
-            <router-link :to="'goodview/' + good.id">
+            <!--            Product card-->
+            <router-link :to="'/goodView/' + good.id">
               <el-card :body-style="{ padding: '0px', background: '#e3f5f4' }">
                 <img
                   :src="baseApi + good.imgs"
@@ -47,7 +47,7 @@
                   <span style="font-size: 18px">{{ good.name }}</span
                   ><br />
                   <span style="color: red; font-size: 15px"
-                    >￥{{ good.price }}</span
+                    >RM {{ good.price }}</span
                   >
                 </div>
               </el-card>
@@ -55,7 +55,7 @@
           </el-col>
         </el-row>
       </div>
-      <!--      分页-->
+      <!--      Pagination-->
       <div class="block" style="text-align: center">
         <el-pagination
           background
@@ -78,14 +78,14 @@ export default {
   name: "GoodList",
   data() {
     return {
-      //分类icon，每个icon包含id、value、categories对象数组.category：id，name
+      //Each category icon includes id, value, and category items
       icons: [],
       total: 0,
       pageSize: 9,
       currentPage: 1,
-      //选择的分类
+      //Selected category
       categoryId: Number,
-      //搜索的内容
+      //Search text
       searchText: "",
       good: [],
       baseApi: this.$store.state.baseApi,
@@ -95,7 +95,7 @@ export default {
     search,
   },
   created() {
-    //二者一般不同时存在
+    //Search text and category ID are usually not both present
     this.searchText = this.$route.query.searchText;
     this.categoryId = this.$route.query.categoryId;
 
@@ -123,7 +123,7 @@ export default {
         this.categoryId = categoryId;
 
         this.$router.push({
-          path: "/goodlist",
+          path: "/goodList",
           query: { categoryId: this.categoryId },
         });
       }

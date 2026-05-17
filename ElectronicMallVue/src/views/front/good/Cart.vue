@@ -6,7 +6,7 @@
 <template>
 <div style="width: 55%;height:100%;margin: 20px auto">
   <div v-if="carts.length === 0" class="empty-box">
-    <span style="font-family: 华文彩云;font-size: 40px" >购物车是空的哦</span>
+    <span style="font-family: Georgia;font-size: 40px" >Your cart is empty</span>
   </div>
   <template v-for="cart in carts">
     <cart-item :cart="cart" @delete="delItem" :key="cart.id" style="margin-bottom: 10px"></cart-item>

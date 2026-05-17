@@ -41,13 +41,13 @@ public class AvatarService {
             String type = originalFilename.substring(originalFilename.lastIndexOf(".")+1);  //文件后缀
             System.out.println(originalFilename+"   "+type);
             long size = uploadFile.getSize() / 1024; //文件大小，单位kb
-            //文件不存在，则保存文件
+            //File does not exist，则保存文件
             File folder = new File(Constants.avatarFolderPath);
             if(!folder.exists()){
                 folder.mkdir();
             }
             String folderPath = folder.getAbsolutePath()+"/";   //文件存储文件夹的位置
-            System.out.println("文件存储地址"+folderPath);
+            System.out.println("File storage path: "+folderPath);
 
 
             //将文件保存为UUID的名字，通过uuid生成url
@@ -71,7 +71,7 @@ public class AvatarService {
     public void download(String fileName, HttpServletResponse response){
         File file = new File(Constants.avatarFolderPath+fileName);
         if(!file.exists()){
-            throw new ServiceException(Constants.CODE_500,"文件不存在");
+            throw new ServiceException(Constants.CODE_500,"File does not exist");
         }
         try {
             ServletOutputStream os = response.getOutputStream();
@@ -98,7 +98,7 @@ public class AvatarService {
 
                 boolean delete1 = file.delete();
                 if(delete1){
-                    System.out.println("删除成功");
+                    System.out.println("Deleted successfully");
                 }
             }
         }

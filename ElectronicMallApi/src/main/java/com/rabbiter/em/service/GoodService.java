@@ -60,14 +60,14 @@ public class GoodService extends ServiceImpl<GoodMapper, Good> {
             return dbGood;
         }
         //数据库中没有则返回异常
-        throw new ServiceException(Constants.NO_RESULT,"无结果");
+        throw new ServiceException(Constants.NO_RESULT,"No result");
 
     }
     //查询商品的规格
     public String getStandard(int id){
         List<GoodStandard> standards = goodMapper.getStandardById(id);
         if(standards.size()==0){
-            throw new ServiceException(Constants.NO_RESULT,"无结果");
+            throw new ServiceException(Constants.NO_RESULT,"No result");
         }
         return JSON.toJSONString(standards);
     }

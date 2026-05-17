@@ -6,7 +6,7 @@
 <template>
   <div style="height: 100%">
     <el-container style="height: 100%">
-      <!--      侧边栏-->
+      <!--      Sidebar-->
       <el-aside
         :width="sideWidth + 'px'"
         style="background-color: rgb(238, 241, 246); height: 100%"
@@ -15,7 +15,7 @@
       </el-aside>
 
       <el-container>
-        <!--        导航栏-->
+        <!--        Header-->
         <el-header
           style="border-bottom: 1px solid #ccc; background-color: aliceblue;height: 80px;"
         >
@@ -63,7 +63,7 @@ export default {
       isCollapse: false,
       sideWidth: 250,
       collapseIcon: "el-icon-s-fold",
-      collapseTitle: "收缩",
+      collapseTitle: "Collapse",
     };
   },
 
@@ -75,15 +75,15 @@ export default {
     handleCollapse() {
       this.isCollapse = !this.isCollapse;
       if (this.isCollapse) {
-        //点击收缩按钮
+        //Collapse button clicked
         this.sideWidth = 64;
         this.collapseIcon = "el-icon-s-unfold";
-        this.collapseTitle = "展开";
+        this.collapseTitle = "Expand";
       } else {
-        //点击展开按钮
+        //Expand button clicked
         this.sideWidth = 250;
         this.collapseIcon = "el-icon-s-fold";
-        this.collapseTitle = "收缩";
+        this.collapseTitle = "Collapse";
       }
     },
     getUser() {
@@ -91,9 +91,9 @@ export default {
         ? JSON.parse(localStorage.getItem("user")).username
         : "";
       if (username) {
-        // 从后台获取User数据
+        // Get user data from the API
         this.request.get("/userinfo/" + username).then((res) => {
-          // 重新赋值后台的最新User数据
+          // Refresh user data from the API
           this.user = res.data;
           console.log(this.user.role);
         });

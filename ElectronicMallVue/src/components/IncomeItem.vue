@@ -6,27 +6,27 @@
 <template>
   <div>
     <div class="header">
-      销量第{{index}}
+      Sales Rank {{index}}
     </div>
     <div class="body">
       <div style="display: inline-block;margin-left: 40px">
-        <router-link :to="'/goodview/'+good.id">
+        <router-link :to="'/goodView/'+good.id">
           <img :src="baseApi + good.imgs" style="width: 120px;height:120px">
         </router-link>
       </div>
       <div style="display: inline-block;line-height: 40px;padding: 20px" >
         <table>
           <tr>
-            <th>商品id</th>
-            <th style="width: 300px">商品名称</th>
-            <th>销售额</th>
+            <th>Product ID</th>
+            <th style="width: 300px">Product Name</th>
+            <th>Revenue</th>
           </tr>
           <tr>
             <td>{{good.id}}</td>
-            <router-link :to="'/goodview/'+good.id">
+            <router-link :to="'/goodView/'+good.id">
               <td style="width: 300px">{{good.name}}</td>
             </router-link>
-            <td><b>￥{{good.saleMoney}}</b></td>
+            <td><b>RM {{good.saleMoney}}</b></td>
           </tr>
         </table>
       </div>

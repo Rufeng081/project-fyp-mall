@@ -2,50 +2,50 @@
   <div>
     <div>
       <el-table :data="tableData" border stripe style="width: 80%;margin: 2px auto">
-        <el-table-column label="商品">
+        <el-table-column label="Product">
           <template slot-scope="scope">
             <a :href="'/goodView/'+scope.row.goodId">{{scope.row.goodName}}</a>
           </template>
         </el-table-column>
-        <el-table-column  label="图片" >
+        <el-table-column  label="Image" >
           <template   slot-scope="scope">
             <img :src="baseApi + scope.row.img" width="300" height="185" />
           </template>
         </el-table-column>
-        <el-table-column prop="showOrder" label="轮播顺序"></el-table-column>
+        <el-table-column prop="showOrder" label="Carousel Order"></el-table-column>
 
         <el-table-column
             fixed="right"
-            label="操作"
+            label="Actions"
             width="250">
           <template slot-scope="scope">
-            <el-button type="primary" icon="el-icon-a-032"  @click="edit(scope.row)">编辑</el-button>
+            <el-button type="primary" icon="el-icon-a-032"  @click="edit(scope.row)">Edit</el-button>
             <el-popconfirm
                 @confirm="del(scope.row.id)"
-                title="确定删除？"
+                title="Delete?"
             >
-              <el-button type="danger" icon="el-icon-a-022" slot="reference" style="margin-left: 10px">删除</el-button>
+              <el-button type="danger" icon="el-icon-a-022" slot="reference" style="margin-left: 10px">Delete</el-button>
             </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
     </div>
-<!--新增按钮-->
+<!--Add button-->
     <div style="text-align: center">
       <el-button @click="add" type="primary" style="margin: 30px;width: 150px; font-size: 20px;">
         <i class="el-icon-a-07"></i>
-        新增
+        Add
       </el-button>
     </div>
-    <!-- 弹窗   -->
+    <!-- Dialog   -->
 
-    <el-dialog title="信息" :visible.sync="dialogFormVisible" width="30%"
+    <el-dialog title="Information" :visible.sync="dialogFormVisible" width="30%"
                :close-on-click-modal="false">
       <el-form :model="entity">
-        <el-form-item label="商品id" label-width="150px">
+        <el-form-item label="Product ID" label-width="150px">
           <el-input v-model="entity.goodId" autocomplete="off" style="width: 80%"></el-input>
         </el-form-item>
-        <el-form-item label="轮播顺序" label-width="150px">
+        <el-form-item label="Carousel Order" label-width="150px">
 <!--          <el-input v-model="entity.showOrder" autocomplete="off" style="width: 80%"></el-input>-->
           <el-select v-model="entity.showOrder">
             <el-option v-for="index in tableData.length" :key="index" :label="index" :value="index">
@@ -54,8 +54,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="save">确 定</el-button>
+        <el-button @click="dialogFormVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="save">Confirm</el-button>
       </div>
     </el-dialog>
 
@@ -110,17 +110,17 @@ export default {
     },
     save() {
       if(this.entity.goodId == undefined || this.entity.goodId === "") {
-          this.$message.error("商品id不能为空")
+          this.$message.error("Product ID is required")
           return;
       }
       if(this.entity.showOrder == undefined) {
-          this.$message.error("轮播顺序不能为空")
+          this.$message.error("Carousel order is required")
           return;
       }
 
       API.post(url, this.entity).then(res => {
         if (res.code === '200') {
-          this.$message.success("保存成功")
+          this.$message.success("Saved successfully")
           this.load()
           this.dialogFormVisible = false
         } else {
@@ -134,7 +134,7 @@ export default {
         if(res.code==='200'){
           this.$message({
             type: "success",
-            message: "删除成功",
+            message: "Deleted successfully",
           });
           this.load();
         }else {

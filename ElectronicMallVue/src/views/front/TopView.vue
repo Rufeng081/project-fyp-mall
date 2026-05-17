@@ -4,26 +4,19 @@
 
         <div class="main-box">
             <div class="block" style="margin: 10px auto">
-                <!--      类别菜单-->
+                <!--      Category menu-->
                 <div class="good-menu">
                     <ul v-for="(item, index) in icons" :key="index">
                         <li>
                             <i class="iconfont" v-html="item.value"></i>
-                            <!--              跳转到goodList页面，参数为类别id-->
-                            <span
-                                v-for="(category, index2) in item.categories"
-                                :key="index2"
-                            >
+                            <!--              Navigate to goodList with category ID-->
+                            <span v-for="(category, index2) in item.categories" :key="index2">
                                 <router-link
                                     :to="{
-                                        path: '/goodlist',
+                                        path: '/goodList',
                                         query: { categoryId: category.id },
                                     }"
-                                >
-                                    <a href="/person"
-                                        ><span>{{ category.name }}</span></a
-                                    >
-                                </router-link>
+                                >{{ category.name }}</router-link>
                                 <span
                                     v-if="index2 != item.categories.length - 1"
                                 >
@@ -33,7 +26,7 @@
                         </li>
                     </ul>
                 </div>
-                <!--轮播图-->
+                <!--Carousel-->
                 <div>
                     <el-carousel
                         height="370px"
@@ -43,7 +36,7 @@
                             v-for="carousel in carousels"
                             :key="carousel.id"
                         >
-                            <router-link :to="'/goodview/' + carousel.goodId">
+                            <router-link :to="'/goodView/' + carousel.goodId">
                                 <img
                                     style="
                                         height: 370px;
@@ -58,10 +51,10 @@
                     </el-carousel>
                 </div>
             </div>
-            <!--推荐商品-->
+            <!--Recommended Products-->
             <div style="margin-top: 30px">
                 <i class="el-icon-a-02" style="color: #ff5e5e;font-size: 28px; font-weight: 600;">
-                    推荐商品
+                    Recommended Products
                 </i>
             </div>
 
@@ -73,7 +66,7 @@
                         :key="good.id"
                         style="margin-bottom: 20px"
                     >
-                        <router-link :to="'goodview/' + good.id">
+                        <router-link :to="'/goodView/' + good.id">
                             <el-card
                                 :body-style="{
                                     padding: '0px',
@@ -89,7 +82,7 @@
                                         ><b>{{ good.name }}</b></span
                                     ><br />
                                     <span style="color: red; font-size: 15px"
-                                        ><b>￥{{ good.price }}</b></span
+                                        ><b>RM {{ good.price }}</b></span
                                     >
                                 </div>
                             </el-card>
@@ -107,17 +100,15 @@ export default {
     name: "TopView",
     data() {
         return {
-            //轮播图
+            //Carousel
             carousels: [],
-            //推荐商品
+            //Recommended Products
             good: [],
             baseApi: this.$store.state.baseApi,
-
-            //分类icon，每个icon包含id、value、categories对象数组.category：id，name
+            //Each category icon includes id, value, and category items
             icons: [],
-            //搜索内容
+            //Search text
             searchText: "",
-            baseApi: this.$store.state.baseApi,
         };
     },
     components: {
@@ -135,7 +126,7 @@ export default {
             if (res.code === "200") {
                 this.icons = res.data;
                 if (this.icons.length > 6) {
-                    // 截取前六个分类
+                    // Keep the first six categories
                     this.icons = this.icons.slice(0, 6);
                 }
             }

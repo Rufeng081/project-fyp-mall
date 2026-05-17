@@ -1,11 +1,11 @@
 <template>
   <el-card class="card">
     <div style="text-align: center; margin-bottom: 30px">
-      <b>修改个人信息</b>
+      <b>Edit Profile</b>
     </div>
 
     <el-form label-width="60px">
-      <el-form-item label="头像">
+      <el-form-item label="Avatar">
         <el-upload
           class="avatar-uploader"
           :action="baseApi + '/avatar'"
@@ -22,35 +22,35 @@
         </el-upload>
       </el-form-item>
 
-      <el-form-item label="昵称">
+      <el-form-item label="Nickname">
         <el-input v-model="form.nickname" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="电话">
+      <el-form-item label="Phone">
         <el-input v-model="form.phone" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="邮箱">
+      <el-form-item label="Email">
         <el-input v-model="form.email" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="地址">
+      <el-form-item label="Address">
         <el-input v-model="form.address" autocomplete="off"></el-input>
       </el-form-item>
       <el-button
         type="primary"
         style="margin-left: 190px; margin-top: 20px"
         @click="save"
-        >确 定</el-button
+        >Confirm</el-button
       >
     </el-form>
     <el-popover placement="right" width="200" trigger="click">
       <el-form>
-        <el-form-item label="新密码">
+        <el-form-item label="New Password">
           <el-input
             type="password"
             v-model="resetPsw.newPassword"
             autocomplete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="确认密码">
+        <el-form-item label="Confirm Password">
           <el-input
             type="password"
             v-model="resetPsw.confirmPassword"
@@ -58,7 +58,7 @@
           ></el-input>
         </el-form-item>
         <el-button style="font-size: 15px;" type="primary" @click="toResetPassword"
-          >确 定</el-button
+          >Confirm</el-button
         >
       </el-form>
       <el-button
@@ -66,7 +66,7 @@
         type="warning"
         style="margin-left: 190px; margin-top: 20px"
         @click="resetPsw = { newPassword: '', confirmPassword: '' }"
-        >重置密码</el-button
+        >Reset Password</el-button
       >
     </el-popover>
   </el-card>
@@ -92,13 +92,13 @@ export default {
   },
   methods: {
     toResetPassword() {
-      // 重置密码
+      // Reset Password
       if (this.resetPsw.newPassword.trim() == "") {
-        this.$message.error("新密码不能为空");
+        this.$message.error("New password is required");
         return;
       }
       if (this.resetPsw.confirmPassword != this.resetPsw.newPassword) {
-        this.$message.error("两次密码不一致");
+        this.$message.error("Passwords do not match");
         return;
       }
       this.request
@@ -110,7 +110,7 @@ export default {
         )
         .then((res) => {
           if (res.code === "200") {
-            this.$message.success("修改成功");
+            this.$message.success("Updated successfully");
             this.resetPsw = {
               newPassword: "",
               confirmPassword: "",
@@ -120,22 +120,22 @@ export default {
           }
         });
     },
-    //图片上传成功钩子
+    //Image upload success hook
     handleAvatarSuccess(res) {
       this.imageUrl = res.data;
       this.form.avatarUrl = this.imageUrl;
     },
-    //提交事件
+    //Submit event
     save() {
-      //把表格传给后台，保存到数据库
+      //Send the form to the API and save it
       this.request.post("/user", this.form).then((res) => {
         if (res.code === "200") {
-          this.$message.success("保存成功");
-          //把表格的数据更新到user中
+          this.$message.success("Saved successfully");
+          //Update local user data with form values
           for (let key in this.form) {
             this.user[key] = this.form[key];
           }
-          //更新localstorage的user
+          //Update localStorage user
           localStorage.setItem("user", JSON.stringify(this.user));
           this.$emit("refresh");
           this.$router.go(0);

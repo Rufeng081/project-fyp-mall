@@ -10,9 +10,9 @@
 
       <el-popconfirm
           @confirm="delMessage"
-          title="确定删除？"
+          title="Delete?"
       >
-        <el-button style="font-size: 15px;" style="float: right" slot="reference"  v-show="message.userId===userId">删除</el-button>
+        <el-button style="font-size: 15px;" style="float: right" slot="reference"  v-show="message.userId===userId">Delete</el-button>
       </el-popconfirm>
     </div>
     <div style="margin: 12px 0">
@@ -45,10 +45,10 @@ export default {
       console.log('del')
       this.request.delete("/api/market/message/"+this.message.id).then(res=>{
         if(res.code==='200'){
-          this.$message.success("删除成功")
+          this.$message.success("Deleted successfully")
           this.$emit("del-message",this.index)
         }else {
-          this.$message.error("删除失败")
+          this.$message.error("Delete failed")
         }
       })
     }

@@ -56,13 +56,13 @@ public class FileService extends ServiceImpl<FileMapper, MyFile> {
             url = dbMyFileList.get(0) .getUrl();
             myFile.setUrl(url);
         }else{
-            //文件不存在，则保存文件
+            //File does not exist，则保存文件
             File folder = new File(Constants.fileFolderPath);
             if(!folder.exists()){
                 folder.mkdir();
             }
             String folderPath = folder.getAbsolutePath()+"/";   //文件存储文件夹的位置
-            System.out.println("文件存储地址"+folderPath);
+            System.out.println("File storage path: "+folderPath);
             //将文件保存为UUID的名字，通过uuid生成url
             String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
             String finalFileName = uuid+"."+type;
@@ -86,7 +86,7 @@ public class FileService extends ServiceImpl<FileMapper, MyFile> {
     public void download(String fileName, HttpServletResponse response){
         File file = new File(Constants.fileFolderPath+fileName);
         if(!file.exists()){
-            throw new ServiceException(Constants.CODE_500,"文件不存在");
+            throw new ServiceException(Constants.CODE_500,"File does not exist");
         }
         try {
             ServletOutputStream os = response.getOutputStream();

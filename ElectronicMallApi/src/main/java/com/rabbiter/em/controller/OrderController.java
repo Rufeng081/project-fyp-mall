@@ -49,7 +49,7 @@ public class OrderController {
                            String orderNo,String state){
         IPage<Order> orderPage = new Page<>(pageNum,pageSize);
         QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
-        orderQueryWrapper.ne("state","待付款");
+        orderQueryWrapper.ne("state","Pending Payment");
         if(!Util.isEmptyString(state)){
             orderQueryWrapper.eq("state",state);
         }
@@ -89,7 +89,7 @@ public class OrderController {
             return Result.success();
         }
         else {
-            return Result.error(Constants.CODE_500,"确认收货失败");
+            return Result.error(Constants.CODE_500,"Confirm receipt failed");
         }
     }
 
