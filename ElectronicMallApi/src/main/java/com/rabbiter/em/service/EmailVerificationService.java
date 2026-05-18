@@ -9,6 +9,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.security.SecureRandom;
 import java.util.Locale;
@@ -17,6 +19,7 @@ import java.util.regex.Pattern;
 
 @Service
 public class EmailVerificationService {
+    private static final Logger log = LoggerFactory.getLogger(EmailVerificationService.class);
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
     private static final SecureRandom RANDOM = new SecureRandom();
 
@@ -65,6 +68,18 @@ public class EmailVerificationService {
         try {
             mailSender.send(message);
         } catch (RuntimeException e) {
+            Throwable rootCause = e;
+            while (rootCause.getCause() != null) {
+                rootCause = rootCause.getCause();
+            }
+            log.warn(
+                    "Failed to send verification email to {}: {} - {}; root cause: {} - {}",
+                    normalizedEmail,
+                    e.getClass().getSimpleName(),
+                    e.getMessage(),
+                    rootCause.getClass().getSimpleName(),
+                    rootCause.getMessage()
+            );
             redisTemplate.delete(buildCodeKey(normalizedEmail, normalizedPurpose));
             redisTemplate.delete(cooldownKey);
             throw new ServiceException(Constants.CODE_500, "Failed to send verification email");

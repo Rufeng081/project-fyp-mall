@@ -194,3 +194,82 @@
 - Re-read `docs/task_plan.md` as required by the planning-with-files workflow.
 - Root cause: the hook script counts every heading beginning with `### Phase`; `### Phase 3 Decisions` and `### Phase 3 Verification Snapshot` were counted as extra phases without `**Status:** complete`.
 - Resolution: rename those two informational headings so only actual phase headings start with `### Phase`.
+
+## Phase 5: Live Brevo SMTP Delivery Verification
+
+### Status
+- **Phase 5:** in progress.
+
+### Actions Taken
+- Re-read `docs/task_plan.md` and `docs/progress.md`.
+- Added a dedicated Phase 5 checklist for live Brevo SMTP delivery verification.
+- Confirmed policy for handling SMTP credentials: use Brevo console and runtime environment only; do not commit, print, or document secret values.
+- Opened the logged-in Brevo console at `https://app.brevo.com/settings/keys/smtp`.
+- Found SMTP server `smtp-relay.brevo.com`, port `587`, and the account SMTP login in the Brevo UI.
+- Found no existing SMTP key listed; the UI requires `Generate SMTP key`.
+- Received explicit user confirmation to create a new Brevo SMTP key.
+- Generated a new Brevo SMTP key in the Brevo UI. The key was used only in runtime/local temporary process environment and was not written to repository files or documentation.
+- Opened Brevo sender settings and confirmed one Gmail-domain sender exists and is `Verified`.
+- Verified local Redis and MySQL are running.
+- Verified the local database did not yet have `uk_sys_user_email`, then applied `ALTER TABLE sys_user ADD UNIQUE KEY uk_sys_user_email (email);`.
+- Started the Spring Boot backend with Brevo environment variables and `java.io.tmpdir=/private/tmp`.
+- Deleted the temporary backend launch script after the backend started.
+- Triggered `POST /api/auth/send-email-code` against the local backend using a plus-alias test email. The backend reached the SMTP path but returned `Failed to send verification email`.
+- Normalized the captured SMTP key value and restarted the backend, then retried the send-code API. The same SMTP failure remained.
+- Added sanitized backend warning logging in `EmailVerificationService` so the next run can expose the JavaMail/Brevo cause without logging the SMTP key.
+- Removed the temporary send-code payload file from `/private/tmp`.
+- Finalized the Chrome automation session.
+
+### Current Blocker
+- The backend must be restarted to load the new SMTP warning log.
+- A required local process escalation for finding/stopping/restarting the 9191 Spring Boot process was rejected by Codex usage limits, with the message to retry after 1:38 PM or upgrade.
+- Existing backend process may still be listening on 9191 with the pre-log code. It could not be stopped through the current session because stdin is closed and escalation is temporarily unavailable.
+
+### Phase 5 Error Log
+| Timestamp | Error | Attempt | Resolution |
+|---|---|---|---|
+| 2026-05-18 12:34 MYT | Spring Boot failed to create Tomcat temp dir under `/var/tmp` | 1 | Restarted with `JAVA_TOOL_OPTIONS=-Djava.io.tmpdir=/private/tmp`. |
+| 2026-05-18 12:35 MYT | Spring Boot failed to bind 9191 due to sandbox `Operation not permitted` | 1 | Started backend through an escalated local process using a temporary launcher. |
+| 2026-05-18 12:37 MYT | First real Brevo send-code attempt returned `Failed to send verification email` | 1 | Normalized the SMTP key and restarted backend. |
+| 2026-05-18 12:39 MYT | Second real Brevo send-code attempt returned `Failed to send verification email` | 2 | Added sanitized backend warning logging for the next restart. |
+| 2026-05-18 12:40 MYT | Escalated local process action rejected due Codex usage limit | 1 | Blocked until escalation quota resets or the user manually restarts/stops the backend. |
+
+### Resume: 2026-05-18 19:27 MYT
+- User requested continuing the live Brevo SMTP test until all local components work.
+- Re-read `docs/task_plan.md` and `docs/progress.md`.
+- Next action: restart the local backend with the already-generated Brevo SMTP key still held in runtime memory, then trigger the send-code API again to capture the sanitized JavaMail/Brevo failure reason.
+- Restarted the backend with updated sanitized SMTP diagnostic logging.
+- Retried `POST /api/auth/send-email-code`; the backend logged Brevo/JavaMail root cause `535 5.7.8 Authentication failed`.
+- Re-opened Brevo SMTP settings and confirmed the created SMTP key is active but only visible as a masked value after creation.
+- Finding: the runtime key captured during first generation was not the usable full key. Because Brevo does not reveal it again, completing live SMTP requires generating a fresh SMTP key and capturing it immediately from the creation dialog.
+- Stop hook re-triggered while Phase 5 remains incomplete. Re-read `docs/task_plan.md`; remaining items are real Brevo send-code delivery, registration/password reset completion, and final sanitized documentation.
+- Current user confirmation needed: permission to generate a second fresh Brevo SMTP key because the first key can no longer be fully viewed and the captured value failed SMTP authentication.
+- Received user permission and generated a fresh Brevo SMTP key named `project-fyp-mall-live-1779103915342`.
+- Restarted the backend with the newly captured runtime key, but Brevo still returned `535 5.7.8 Authentication failed`.
+- Compared the runtime key suffix against Brevo's masked active key rows. The runtime-captured suffix did not match the latest masked Brevo SMTP key suffix.
+- Finding: DOM text extraction is unreliable on the Brevo modal because it can capture a stale/hidden key candidate. The next attempt must use the modal's copy button/clipboard immediately after generation and verify the runtime key suffix against the masked row suffix before restarting the backend.
+
+### Final Live Verification: 2026-05-18 19:45 MYT
+- User supplied the final Brevo SMTP key value directly and authorized its use for local testing.
+- Loaded the supplied SMTP key into runtime environment only. It was not written to repository files or documentation.
+- Restarted Spring Boot on `http://localhost:9191` with:
+  - Brevo SMTP server `smtp-relay.brevo.com`
+  - port `587`
+  - SMTP login from Brevo
+  - verified Gmail-domain sender
+  - supplied SMTP key in process environment
+- Deleted the temporary backend launcher script after startup.
+- Sent a real registration code through `POST /api/auth/send-email-code`; response was `{"code":"200","data":"Verification code sent"}`.
+- Read the test verification code from Redis and completed `POST /api/auth/register-by-email`; response code was `200`.
+- Verified the newly registered user could log in through `POST /login`; response code was `200`.
+- Sent a real forgot-password reset code through `POST /api/auth/send-email-code` with `purpose=reset`; response code was `200`.
+- Read the reset verification code from Redis and completed `POST /api/auth/reset-password-by-email`; response code was `200`.
+- Verified the same user could log in with the reset password; response code was `200`.
+- Confirmed both Redis verification keys were deleted after successful registration/reset consumption.
+- Confirmed the local MySQL `sys_user` table contains the new live-test user with role `user`.
+- Confirmed Brevo Transactional Email Logs show `Online Mall verification code` entries with `Sent`, `Delivered`, and `First opening` events.
+- Ran backend tests with `mvn -q test`; exit code `0`.
+- Ran frontend production build with `npm run build`; exit code `0` with existing Browserslist and asset-size warnings only.
+- Started Vue dev server on `http://localhost:9192` and verified `npm run check:routes`; 12 routes passed.
+- Removed temporary JSON payload and Redis key files from `/private/tmp`.
+- Final state: Spring Boot API remains running on `http://localhost:9191`; Vue dev server remains running on `http://localhost:9192` for continued manual testing.

@@ -179,13 +179,27 @@ Results:
 
 ### Current Verification Limitation
 
-Live Brevo SMTP delivery requires valid runtime environment variables:
+Live Brevo SMTP delivery was verified on 2026-05-18 using runtime environment variables only:
 
 - `BREVO_SMTP_USERNAME`
 - `BREVO_SMTP_KEY`
 - `BREVO_SENDER_EMAIL`
 
-The implementation intentionally does not hardcode or document the actual SMTP username/key. Live delivery should be verified in the local terminal session that exports those variables before starting the backend.
+The actual SMTP key is not committed, not written to documentation, and was only used in the local backend process environment.
+
+Verified live outcomes:
+
+- Registration verification email was sent through Brevo SMTP.
+- Brevo Transactional Email Logs showed `Online Mall verification code` events, including `Sent`, `Delivered`, and `First opening`.
+- Registration completed through `POST /api/auth/register-by-email`.
+- New registered user login succeeded through `POST /login`.
+- Forgot-password reset verification email was sent through Brevo SMTP.
+- Password reset completed through `POST /api/auth/reset-password-by-email`.
+- Login with the reset password succeeded through `POST /login`.
+- Redis verification keys were removed after successful code consumption.
+- The local `sys_user.email` unique index was present and the live-test user was persisted with role `user`.
+
+During live setup, two generated Brevo SMTP keys failed authentication because the captured values did not match the active full key. The final working key was supplied directly by the user and used only at runtime.
 
 ## 4. Industrial Process Log
 

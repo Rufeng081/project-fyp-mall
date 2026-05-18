@@ -4,7 +4,7 @@
 Convert the mall project into an English-based, Malaysia-context e-commerce platform for the FYP demonstration.
 
 ## Current Phase
-Phase 1 and Phase 2 complete; Phase 3 Brevo email verification implementation complete and locally verified. Live SMTP delivery still requires runtime Brevo environment variables.
+Phase 1 and Phase 2 complete; Phase 3 Brevo email verification implementation and Phase 5 live Brevo SMTP verification are complete.
 
 ## Phases
 
@@ -93,3 +93,12 @@ Phase 1 and Phase 2 complete; Phase 3 Brevo email verification implementation co
 | Full backend tests/package | `mvn -q test` and `mvn -q package` exited `0`. |
 | Frontend build/routes | `npm run build` exited `0`; `npm run check:routes` passed for 12 routes. |
 | Live Brevo SMTP delivery | Requires local runtime environment variables; secrets are not committed or logged. |
+
+### Phase 5: Live Brevo SMTP Delivery Verification
+- [x] Retrieve Brevo SMTP username, SMTP key, and verified sender through the logged-in Brevo console without committing secrets.
+- [x] Start or reuse local Redis, MySQL, Spring Boot API, and Vue app with Brevo environment variables available to the backend.
+- [x] Apply/verify the local `sys_user.email` unique index needed by Phase 3.
+- [x] Send a real registration email code through Brevo SMTP.
+- [x] Complete a local registration and password reset flow using the real SMTP-backed code.
+- [x] Update README/docs with sanitized operational notes and final verification evidence.
+- **Status:** complete
