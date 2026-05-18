@@ -48,15 +48,22 @@ Backend verification:
 
 ```bash
 cd ElectronicMallApi
-mvn clean install
+mvn -q test
+mvn -q package
 ```
 
 Frontend verification:
 
 ```bash
 cd ElectronicMallVue
-npm install
+npm run check:auth
 npm run build
+```
+
+Full acceptance verification is defined in:
+
+```text
+docs/INDUSTRIAL_VERIFICATION_WORKFLOW.md
 ```
 
 Runtime verification:

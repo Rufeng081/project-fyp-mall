@@ -33,13 +33,31 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     EmailVerificationService emailVerificationService;
 
     public UserDTO login(LoginForm loginForm) {
+        if (loginForm == null || !StringUtils.hasText(loginForm.getPassword())) {
+            throw new ServiceException(Constants.CODE_403, "Account and password are required");
+        }
+        String account = StringUtils.hasText(loginForm.getAccount())
+                ? loginForm.getAccount().trim()
+                : (StringUtils.hasText(loginForm.getUsername()) ? loginForm.getUsername().trim() : "");
+        if (!StringUtils.hasText(account)) {
+            throw new ServiceException(Constants.CODE_403, "Account and password are required");
+        }
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username",loginForm.getUsername());
+        queryWrapper.and(wrapper -> wrapper.eq("username", account)
+                .or()
+                .eq("email", account)
+                .or()
+                .apply("lower(email) = {0}", account.toLowerCase()));
         queryWrapper.eq("password",loginForm.getPassword());
         User user = getOne(queryWrapper);
         if(user == null) {
-            throw new ServiceException(Constants.CODE_403,"Username or password is incorrect");
+            throw new ServiceException(Constants.CODE_403,"Account or password is incorrect");
         }
+        return createLoginSession(user);
+
+    }
+
+    private UserDTO createLoginSession(User user) {
         String token = TokenUtils.genToken(user.getId().toString(), user.getUsername());
         //把用户存到redis中
         redisTemplate.opsForValue().set(RedisConstants.USER_TOKEN_KEY + token,user);
@@ -50,10 +68,9 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         //设置token
         userDTO.setToken(token);
         return userDTO;
-
     }
 
-    public User register(LoginForm loginForm) {
+    public UserDTO register(LoginForm loginForm) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username",loginForm.getUsername());
         User user = getOne(queryWrapper);
@@ -62,10 +79,10 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         }else{
             user = new User();
             BeanUtils.copyProperties(loginForm,user);
-            user.setNickname("New User");
+            user.setNickname(loginForm.getUsername());
             user.setRole("user");
             save(user);
-            return user;
+            return createLoginSession(user);
         }
     }
 
@@ -82,7 +99,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         emailVerificationService.sendCode(normalizedEmail, normalizedPurpose);
     }
 
-    public User registerByEmail(EmailRegisterRequest request) {
+    public UserDTO registerByEmail(EmailRegisterRequest request) {
         if (request == null
                 || !StringUtils.hasText(request.getUsername())
                 || !StringUtils.hasText(request.getPassword())
@@ -102,13 +119,13 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         user.setUsername(request.getUsername().trim());
         user.setPassword(request.getPassword());
         user.setEmail(normalizedEmail);
-        user.setNickname("New User");
+        user.setNickname(request.getUsername().trim());
         user.setRole("user");
         save(user);
-        return user;
+        return createLoginSession(user);
     }
 
-    public void resetPasswordByEmail(EmailPasswordResetRequest request) {
+    public UserDTO resetPasswordByEmail(EmailPasswordResetRequest request) {
         if (request == null
                 || !StringUtils.hasText(request.getNewPassword())
                 || !StringUtils.hasText(request.getCode())) {
@@ -122,6 +139,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         emailVerificationService.verifyCode(normalizedEmail, "reset", request.getCode());
         user.setPassword(request.getNewPassword());
         updateById(user);
+        return createLoginSession(user);
     }
 
     public User getOne(String username){

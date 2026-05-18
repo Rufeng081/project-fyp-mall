@@ -175,7 +175,8 @@ export default {
             this.request.post("/api/auth/register-by-email", form).then((res) => {
                 if (res.code === "200") {
                     this.$message.success("Registered successfully");
-                    this.$router.push("/login");
+                    localStorage.setItem("user", JSON.stringify(res.data));
+                    this.$router.push("/");
                 } else {
                     this.$message.error(res.msg);
                 }

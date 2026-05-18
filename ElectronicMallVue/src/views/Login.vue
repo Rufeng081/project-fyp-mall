@@ -23,9 +23,9 @@
             </div>
             <div style="margin-top: 30px">
                 <el-form label-width="70px">
-                    <el-form-item label="Username">
+                    <el-form-item label="Account">
                         <el-input
-                            v-model.trim="user.username"
+                            v-model.trim="user.account"
                             aria-required="true"
                         ></el-input>
                     </el-form-item>
@@ -111,7 +111,7 @@ export default {
         return {
             to: "/", //Login success redirect target
             user: {
-                username: "",
+                account: "",
                 password: "",
             },
             resetDialogVisible: false,
@@ -210,14 +210,16 @@ export default {
                 .then((res) => {
                     if (res.code === "200") {
                         this.$message.success("Password reset successfully");
+                        localStorage.setItem("user", JSON.stringify(res.data));
                         this.resetDialogVisible = false;
+                        this.$router.push(this.to);
                     } else {
                         this.$message.error(res.msg);
                     }
                 });
         },
         onSubmit() {
-            if (this.user.username === "" || this.user.password === "") {
+            if (this.user.account === "" || this.user.password === "") {
                 this.$message.error("Account and password are required");
                 return false;
             }

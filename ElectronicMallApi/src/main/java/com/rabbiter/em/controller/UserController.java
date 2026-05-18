@@ -38,8 +38,8 @@ public class UserController {
 
     @PostMapping("/register")
     public Result register(@RequestBody LoginForm loginForm) {
-        User user = userService.register(loginForm);
-        return Result.success(user);
+        UserDTO dto = userService.register(loginForm);
+        return Result.success(dto);
     }
 
     @GetMapping("/userinfo/{username}")

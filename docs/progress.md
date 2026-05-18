@@ -273,3 +273,39 @@
 - Started Vue dev server on `http://localhost:9192` and verified `npm run check:routes`; 12 routes passed.
 - Removed temporary JSON payload and Redis key files from `/private/tmp`.
 - Final state: Spring Boot API remains running on `http://localhost:9191`; Vue dev server remains running on `http://localhost:9192` for continued manual testing.
+
+## Auth Auto-Login And Full Verification Follow-up: 2026-05-18
+
+### Status
+- **Authentication follow-up:** complete.
+- **Project verification:** complete for automated local checks and core API golden path.
+- **Documentation organization:** complete without deleting any `docs/` content.
+
+### Actions Taken
+- Re-read `docs/README.md`, `docs/auth_auto_login_change_log.md`, and `docs/PHASE_3_BREVO_EMAIL_VERIFICATION_REPORT.md`.
+- Reviewed backend authentication implementation in `UserService`, `AuthController`, `UserController`, `LoginForm`, and email-auth tests.
+- Reviewed frontend authentication implementation in `Register.vue`, `Login.vue`, and `scripts/check-auth-flows.js`.
+- Confirmed email registration and plain registration return login-state DTOs with token.
+- Confirmed new-user nickname defaults to the username for both plain and email registration.
+- Confirmed frontend email registration and password reset store `res.data` into `localStorage.user`.
+- Added regression coverage for a missing-account login edge case.
+- Fixed `UserService.login` so requests without `account` or legacy `username` return `Account and password are required` instead of a null pointer.
+- Added `docs/INDUSTRIAL_VERIFICATION_WORKFLOW.md`.
+- Updated `docs/README.md`, `docs/DEVELOPMENT_WORKFLOW.md`, and `docs/findings.md` to consolidate navigation and current verification evidence.
+
+### Verification Results
+| Test | Command | Result | Status |
+|---|---|---|---|
+| Auth TDD red test | `mvn -q -Dtest=UserServiceEmailAuthTest test` before fix | Failed with `NullPointerException` for missing account | complete |
+| Auth targeted tests | `mvn -q -Dtest=UserServiceEmailAuthTest test` | Exit 0; 7 tests passed | complete |
+| Backend full tests | `mvn -q test` | Exit 0 | complete |
+| Backend package | `mvn -q package` | Exit 0 | complete |
+| Frontend auth check | `npm run check:auth` | Printed `Auth flow checks passed.` | complete |
+| Frontend build | `npm run build` | Exit 0; existing Browserslist and asset-size warnings only | complete |
+| Frontend route fallback | `FRONTEND_PORT=9193 npm run check:routes` | Passed for 12 routes | complete |
+| Core API golden path | `node tools/phase12-api-golden-path.js` | Registered `phase12check_1779107075093`, created paid order `20260518202435039470` | complete |
+
+### Notes
+- The route checker initially failed with `connect EPERM 127.0.0.1:9192` in the sandbox. It passed after starting Vue locally and using the actual fallback port `9193`.
+- The Vue dev server used for this verification was stopped after route checks.
+- No files under `docs/` were deleted.

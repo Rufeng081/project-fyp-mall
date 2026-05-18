@@ -6,7 +6,8 @@
     "dev": "vue-cli-service serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "check:routes": "node scripts/check-history-routes.js"
+    "check:routes": "node scripts/check-history-routes.js",
+    "check:auth": "node scripts/check-auth-flows.js"
   },
   "dependencies": {
     "axios": "^0.26.1",

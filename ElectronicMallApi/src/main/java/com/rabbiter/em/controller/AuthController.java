@@ -1,10 +1,10 @@
 package com.rabbiter.em.controller;
 
 import com.rabbiter.em.common.Result;
-import com.rabbiter.em.entity.User;
 import com.rabbiter.em.entity.dto.EmailCodeRequest;
 import com.rabbiter.em.entity.dto.EmailPasswordResetRequest;
 import com.rabbiter.em.entity.dto.EmailRegisterRequest;
+import com.rabbiter.em.entity.dto.UserDTO;
 import com.rabbiter.em.service.UserService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,13 +27,13 @@ public class AuthController {
 
     @PostMapping("/api/auth/register-by-email")
     public Result registerByEmail(@RequestBody EmailRegisterRequest request) {
-        User user = userService.registerByEmail(request);
-        return Result.success(user);
+        UserDTO dto = userService.registerByEmail(request);
+        return Result.success(dto);
     }
 
     @PostMapping("/api/auth/reset-password-by-email")
     public Result resetPasswordByEmail(@RequestBody EmailPasswordResetRequest request) {
-        userService.resetPasswordByEmail(request);
-        return Result.success("Password reset successfully");
+        UserDTO dto = userService.resetPasswordByEmail(request);
+        return Result.success(dto);
     }
 }

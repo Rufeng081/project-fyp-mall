@@ -1,6 +1,6 @@
 # Documentation Index
 
-Use this file as the entry point for project documentation. The documents are kept flat in `docs/` so links remain simple, but they are grouped here by purpose.
+Use this file as the entry point for project documentation. The documents are kept flat in `docs/` so links remain simple, but they are grouped here by purpose and review order.
 
 ## Start Here
 
@@ -11,6 +11,8 @@ Use this file as the entry point for project documentation. The documents are ke
 | Understand what was already changed | [PHASE_1_2_LOCALIZATION_STABILIZATION_REPORT.md](PHASE_1_2_LOCALIZATION_STABILIZATION_REPORT.md) | Summarizes completed Phase 1 localization and Phase 2 core flow stabilization work, including verification results. |
 | Review final Phase 1/2 acceptance evidence | [PHASE_1_2_FINAL_ACCEPTANCE_REVIEW.md](PHASE_1_2_FINAL_ACCEPTANCE_REVIEW.md) | Records the final route fix, repeatable verification commands, API golden-path result, and final acceptance decision before Phase 3. |
 | Review Phase 3 email verification | [PHASE_3_BREVO_EMAIL_VERIFICATION_REPORT.md](PHASE_3_BREVO_EMAIL_VERIFICATION_REPORT.md) | Records Brevo SMTP registration verification, forgot-password reset, Redis code handling, files changed, and verification evidence. |
+| Review latest auth auto-login changes | [auth_auto_login_change_log.md](auth_auto_login_change_log.md) | Records registration/reset auto-login, default nickname behavior, account login, and focused verification evidence. |
+| Run the industrial verification process | [INDUSTRIAL_VERIFICATION_WORKFLOW.md](INDUSTRIAL_VERIFICATION_WORKFLOW.md) | Defines the repeatable backend, frontend, route, API golden-path, email verification, and documentation gates. |
 | Prepare a UI/UX redesign | [UI_UX_DESIGN_HANDOFF.md](UI_UX_DESIGN_HANDOFF.md) | Maps current routes, screens, components, content, states, assets, and design considerations for a UI designer. |
 
 ## Progress and Decisions
@@ -27,7 +29,17 @@ Use this file as the entry point for project documentation. The documents are ke
 |---|---|
 | [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) | You need to know where frontend, backend, database, and documentation assets live. |
 | [DEVELOPMENT_WORKFLOW.md](DEVELOPMENT_WORKFLOW.md) | You need the recommended Git workflow, local verification commands, and commit hygiene rules. |
+| [INDUSTRIAL_VERIFICATION_WORKFLOW.md](INDUSTRIAL_VERIFICATION_WORKFLOW.md) | You need acceptance-grade verification steps before handoff. |
 | [environment_setup_change_log.md](environment_setup_change_log.md) | You need historical local setup changes, environment fixes, or service verification notes. |
+
+## Change Reports
+
+| File | Scope |
+|---|---|
+| [PHASE_1_2_LOCALIZATION_STABILIZATION_REPORT.md](PHASE_1_2_LOCALIZATION_STABILIZATION_REPORT.md) | Localization and core e-commerce flow stabilization. |
+| [PHASE_1_2_FINAL_ACCEPTANCE_REVIEW.md](PHASE_1_2_FINAL_ACCEPTANCE_REVIEW.md) | Final Phase 1/2 acceptance and golden-path verification. |
+| [PHASE_3_BREVO_EMAIL_VERIFICATION_REPORT.md](PHASE_3_BREVO_EMAIL_VERIFICATION_REPORT.md) | Email verification registration and forgot-password flow. |
+| [auth_auto_login_change_log.md](auth_auto_login_change_log.md) | Latest authentication behavior changes and regression checks. |
 
 ## Evidence
 
@@ -43,3 +55,4 @@ Use this file as the entry point for project documentation. The documents are ke
 - Keep chronological work history in `progress.md`.
 - Keep technical rationale and decisions in `findings.md`.
 - Do not create duplicate `task_plan`, `findings`, or `progress` copies with numeric suffixes; merge new information into the canonical files instead.
+- Do not delete any `docs/` content without explicit approval; consolidate through this index, cross-links, and summaries.
