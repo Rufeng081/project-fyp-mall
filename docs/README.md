@@ -10,6 +10,7 @@ Use this file as the entry point for project documentation. The documents are ke
 | Understand the implementation roadmap | [FYP_PROJECT_OPTIMIZATION_PLAN.md](FYP_PROJECT_OPTIMIZATION_PLAN.md) | Lists the phase-by-phase optimization plan from localization through deployment, documentation, and performance testing. |
 | Understand what was already changed | [PHASE_1_2_LOCALIZATION_STABILIZATION_REPORT.md](PHASE_1_2_LOCALIZATION_STABILIZATION_REPORT.md) | Summarizes completed Phase 1 localization and Phase 2 core flow stabilization work, including verification results. |
 | Review final Phase 1/2 acceptance evidence | [PHASE_1_2_FINAL_ACCEPTANCE_REVIEW.md](PHASE_1_2_FINAL_ACCEPTANCE_REVIEW.md) | Records the final route fix, repeatable verification commands, API golden-path result, and final acceptance decision before Phase 3. |
+| Review Phase 3 email verification | [PHASE_3_BREVO_EMAIL_VERIFICATION_REPORT.md](PHASE_3_BREVO_EMAIL_VERIFICATION_REPORT.md) | Records Brevo SMTP registration verification, forgot-password reset, Redis code handling, files changed, and verification evidence. |
 | Prepare a UI/UX redesign | [UI_UX_DESIGN_HANDOFF.md](UI_UX_DESIGN_HANDOFF.md) | Maps current routes, screens, components, content, states, assets, and design considerations for a UI designer. |
 
 ## Progress and Decisions

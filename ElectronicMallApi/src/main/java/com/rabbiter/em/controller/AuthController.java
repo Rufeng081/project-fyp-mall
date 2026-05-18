@@ -1,0 +1,39 @@
+package com.rabbiter.em.controller;
+
+import com.rabbiter.em.common.Result;
+import com.rabbiter.em.entity.User;
+import com.rabbiter.em.entity.dto.EmailCodeRequest;
+import com.rabbiter.em.entity.dto.EmailPasswordResetRequest;
+import com.rabbiter.em.entity.dto.EmailRegisterRequest;
+import com.rabbiter.em.service.UserService;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+
+@CrossOrigin
+@RestController
+public class AuthController {
+    @Resource
+    private UserService userService;
+
+    @PostMapping("/api/auth/send-email-code")
+    public Result sendEmailCode(@RequestBody EmailCodeRequest request) {
+        userService.sendEmailCode(request.getEmail(), request.getPurpose());
+        return Result.success("Verification code sent");
+    }
+
+    @PostMapping("/api/auth/register-by-email")
+    public Result registerByEmail(@RequestBody EmailRegisterRequest request) {
+        User user = userService.registerByEmail(request);
+        return Result.success(user);
+    }
+
+    @PostMapping("/api/auth/reset-password-by-email")
+    public Result resetPasswordByEmail(@RequestBody EmailPasswordResetRequest request) {
+        userService.resetPasswordByEmail(request);
+        return Result.success("Password reset successfully");
+    }
+}

@@ -59,9 +59,46 @@
                             >Register</el-button
                         >
                     </el-form-item>
+                    <div class="forgot-link" @click="resetDialogVisible = true">
+                        Forgot password?
+                    </div>
                 </el-form>
             </div>
         </div>
+        <el-dialog
+            title="Reset Password"
+            :visible.sync="resetDialogVisible"
+            width="420px"
+            @close="clearResetForm"
+        >
+            <el-form label-width="120px">
+                <el-form-item label="Email">
+                    <el-input v-model.trim="resetForm.email"></el-input>
+                </el-form-item>
+                <el-form-item label="Code">
+                    <div class="code-row">
+                        <el-input v-model.trim="resetForm.code" maxlength="6"></el-input>
+                        <el-button
+                            type="primary"
+                            :disabled="sendingResetCode || resetCountdown > 0"
+                            @click="sendResetCode"
+                        >
+                            {{ resetCountdown > 0 ? resetCountdown + "s" : "Send Code" }}
+                        </el-button>
+                    </div>
+                </el-form-item>
+                <el-form-item label="New Password">
+                    <el-input v-model.trim="resetForm.newPassword" show-password></el-input>
+                </el-form-item>
+                <el-form-item label="Confirm">
+                    <el-input v-model.trim="resetForm.confirmPassword" show-password></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer">
+                <el-button @click="resetDialogVisible = false">Cancel</el-button>
+                <el-button type="success" @click="resetPassword">Reset Password</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
@@ -77,12 +114,108 @@ export default {
                 username: "",
                 password: "",
             },
+            resetDialogVisible: false,
+            resetForm: {
+                email: "",
+                code: "",
+                newPassword: "",
+                confirmPassword: "",
+            },
+            sendingResetCode: false,
+            resetCountdown: 0,
+            resetCountdownTimer: null,
         };
     },
     created() {
         this.to = this.$route.query.to ? this.$route.query.to : "/";
     },
+    beforeDestroy() {
+        if (this.resetCountdownTimer) {
+            clearInterval(this.resetCountdownTimer);
+        }
+    },
     methods: {
+        isValidEmail(email) {
+            return /^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$/.test(email);
+        },
+        startResetCountdown() {
+            this.resetCountdown = 60;
+            this.resetCountdownTimer = setInterval(() => {
+                this.resetCountdown -= 1;
+                if (this.resetCountdown <= 0) {
+                    clearInterval(this.resetCountdownTimer);
+                    this.resetCountdownTimer = null;
+                }
+            }, 1000);
+        },
+        clearResetForm() {
+            this.resetForm = {
+                email: "",
+                code: "",
+                newPassword: "",
+                confirmPassword: "",
+            };
+        },
+        sendResetCode() {
+            if (!this.resetForm.email) {
+                this.$message.error("Email is required");
+                return false;
+            }
+            if (!this.isValidEmail(this.resetForm.email)) {
+                this.$message.error("Email format is invalid");
+                return false;
+            }
+            this.sendingResetCode = true;
+            this.request
+                .post("/api/auth/send-email-code", {
+                    email: this.resetForm.email,
+                    purpose: "reset",
+                })
+                .then((res) => {
+                    if (res.code === "200") {
+                        this.$message.success("Verification code sent");
+                        this.startResetCountdown();
+                    } else {
+                        this.$message.error(res.msg);
+                    }
+                })
+                .finally(() => {
+                    this.sendingResetCode = false;
+                });
+        },
+        resetPassword() {
+            if (
+                this.resetForm.email === "" ||
+                this.resetForm.code === "" ||
+                this.resetForm.newPassword === "" ||
+                this.resetForm.confirmPassword === ""
+            ) {
+                this.$message.error("Email, code and new password are required");
+                return false;
+            }
+            if (!this.isValidEmail(this.resetForm.email)) {
+                this.$message.error("Email format is invalid");
+                return false;
+            }
+            if (this.resetForm.newPassword !== this.resetForm.confirmPassword) {
+                this.$message.error("Passwords do not match");
+                return false;
+            }
+            this.request
+                .post("/api/auth/reset-password-by-email", {
+                    email: this.resetForm.email,
+                    code: this.resetForm.code,
+                    newPassword: md5(this.resetForm.newPassword),
+                })
+                .then((res) => {
+                    if (res.code === "200") {
+                        this.$message.success("Password reset successfully");
+                        this.resetDialogVisible = false;
+                    } else {
+                        this.$message.error(res.msg);
+                    }
+                });
+        },
         onSubmit() {
             if (this.user.username === "" || this.user.password === "") {
                 this.$message.error("Account and password are required");
@@ -136,5 +269,22 @@ export default {
     overflow-y: auto;
     height: 100%;
     background: url("../resource/01.jpg") center top / cover no-repeat;
+}
+.forgot-link {
+    margin-top: 8px;
+    text-align: center;
+    color: #006400;
+    cursor: pointer;
+}
+.forgot-link:hover {
+    text-decoration: underline;
+}
+.code-row {
+    display: flex;
+    gap: 10px;
+}
+.code-row .el-button {
+    width: 120px;
+    flex-shrink: 0;
 }
 </style>

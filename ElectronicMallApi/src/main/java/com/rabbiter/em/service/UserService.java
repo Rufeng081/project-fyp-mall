@@ -8,6 +8,8 @@ import com.rabbiter.em.constants.Constants;
 import com.rabbiter.em.constants.RedisConstants;
 import com.rabbiter.em.entity.LoginForm;
 import com.rabbiter.em.entity.User;
+import com.rabbiter.em.entity.dto.EmailPasswordResetRequest;
+import com.rabbiter.em.entity.dto.EmailRegisterRequest;
 import com.rabbiter.em.entity.dto.UserDTO;
 import com.rabbiter.em.exception.ServiceException;
 import com.rabbiter.em.mapper.UserMapper;
@@ -16,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
@@ -26,6 +29,8 @@ import java.util.concurrent.TimeUnit;
 public class UserService extends ServiceImpl<UserMapper, User> {
     @Resource
     RedisTemplate<String,User> redisTemplate;
+    @Resource
+    EmailVerificationService emailVerificationService;
 
     public UserDTO login(LoginForm loginForm) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
@@ -64,9 +69,70 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         }
     }
 
+    public void sendEmailCode(String email, String purpose) {
+        String normalizedEmail = emailVerificationService.normalizeEmail(email);
+        String normalizedPurpose = emailVerificationService.normalizePurpose(purpose);
+        User user = getByEmail(normalizedEmail);
+        if ("register".equals(normalizedPurpose) && user != null) {
+            throw new ServiceException(Constants.CODE_403, "Email is already in use");
+        }
+        if ("reset".equals(normalizedPurpose) && user == null) {
+            throw new ServiceException(Constants.CODE_403, "No account is linked to this email");
+        }
+        emailVerificationService.sendCode(normalizedEmail, normalizedPurpose);
+    }
+
+    public User registerByEmail(EmailRegisterRequest request) {
+        if (request == null
+                || !StringUtils.hasText(request.getUsername())
+                || !StringUtils.hasText(request.getPassword())
+                || !StringUtils.hasText(request.getCode())) {
+            throw new ServiceException(Constants.CODE_403, "Username, password, email and verification code are required");
+        }
+        if (getOne(request.getUsername()) != null) {
+            throw new ServiceException(Constants.CODE_403, "Username is already in use");
+        }
+        String normalizedEmail = emailVerificationService.normalizeEmail(request.getEmail());
+        if (getByEmail(normalizedEmail) != null) {
+            throw new ServiceException(Constants.CODE_403, "Email is already in use");
+        }
+        emailVerificationService.verifyCode(normalizedEmail, "register", request.getCode());
+
+        User user = new User();
+        user.setUsername(request.getUsername().trim());
+        user.setPassword(request.getPassword());
+        user.setEmail(normalizedEmail);
+        user.setNickname("New User");
+        user.setRole("user");
+        save(user);
+        return user;
+    }
+
+    public void resetPasswordByEmail(EmailPasswordResetRequest request) {
+        if (request == null
+                || !StringUtils.hasText(request.getNewPassword())
+                || !StringUtils.hasText(request.getCode())) {
+            throw new ServiceException(Constants.CODE_403, "Email, verification code and new password are required");
+        }
+        String normalizedEmail = emailVerificationService.normalizeEmail(request.getEmail());
+        User user = getByEmail(normalizedEmail);
+        if (user == null) {
+            throw new ServiceException(Constants.CODE_403, "No account is linked to this email");
+        }
+        emailVerificationService.verifyCode(normalizedEmail, "reset", request.getCode());
+        user.setPassword(request.getNewPassword());
+        updateById(user);
+    }
+
     public User getOne(String username){
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username",username);
+        return getOne(queryWrapper);
+    }
+
+    public User getByEmail(String email) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("email", email);
         return getOne(queryWrapper);
     }
 
@@ -78,7 +144,14 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             old.setAvatarUrl(ObjectUtils.isEmpty(user.getAvatarUrl()) ? old.getAvatarUrl() : user.getAvatarUrl());
             old.setRole(ObjectUtils.isEmpty(user.getRole()) ? old.getRole() : user.getRole());
             old.setPhone(ObjectUtils.isEmpty(user.getPhone()) ? old.getPhone() : user.getPhone());
-            old.setEmail(ObjectUtils.isEmpty(user.getEmail()) ? old.getEmail() : user.getEmail());
+            if (!ObjectUtils.isEmpty(user.getEmail())) {
+                String normalizedEmail = emailVerificationService.normalizeEmail(user.getEmail());
+                User sameEmailUser = getByEmail(normalizedEmail);
+                if (sameEmailUser != null && !sameEmailUser.getId().equals(old.getId())) {
+                    return Result.error("400", "Email already exists");
+                }
+                old.setEmail(normalizedEmail);
+            }
             old.setAddress(ObjectUtils.isEmpty(user.getAddress()) ? old.getAddress() : user.getAddress());
             super.updateById(old);
             return Result.success("Updated successfully");
@@ -86,6 +159,13 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             // 新增
             if(!ObjectUtils.isEmpty(this.getOne(user.getUsername()))) {
                 return Result.error("400", "Username already exists");
+            }
+            if (!ObjectUtils.isEmpty(user.getEmail())) {
+                String normalizedEmail = emailVerificationService.normalizeEmail(user.getEmail());
+                if (getByEmail(normalizedEmail) != null) {
+                    return Result.error("400", "Email already exists");
+                }
+                user.setEmail(normalizedEmail);
             }
             user.setPassword(user.getNewPassword());
             super.save(user);

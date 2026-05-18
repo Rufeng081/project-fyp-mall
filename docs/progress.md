@@ -137,3 +137,60 @@
 ### Notes
 - The final API golden-path script intentionally creates local verification data in MySQL.
 - Generated resource metadata and Java comments may still contain non-demo Chinese text in excluded/generated areas, but visible business UI, seed data, and checked API payloads are localized.
+
+## Phase 3: Brevo Email Verification Registration
+
+### Status
+- **Phase 3:** implementation complete and locally verified, except live Brevo SMTP delivery which requires runtime SMTP environment variables.
+
+### Actions Taken
+- Read the existing `UserController`, `UserService`, `User`, `User.xml`, Redis configuration, interceptor configuration, `application.yml`, Maven `pom.xml`, Vue `Register.vue`, Vue `Login.vue`, Axios request wrapper, router, and SQL user table.
+- Confirmed root findings:
+  - Existing registration used `/register` with username/password only.
+  - Existing `sys_user.email` column existed but did not have a unique index.
+  - Existing password reset used `/user/resetPassword?id=...`, which is not suitable for unauthenticated forgot-password users.
+  - Existing Redis integration could support short-lived verification state.
+- Added backend tests for email verification code Redis behavior and user email registration/reset logic.
+- Added Spring Boot Mail support and Brevo SMTP configuration through environment variables only.
+- Added `EmailVerificationService` for 6-digit code generation, Redis 5-minute TTL storage, Redis 60-second resend cooldown, email validation, and SMTP sending.
+- Added SMTP failure handling so Redis verification code and cooldown keys are removed if email delivery fails.
+- Added `AuthController` APIs:
+  - `POST /api/auth/send-email-code`
+  - `POST /api/auth/register-by-email`
+  - `POST /api/auth/reset-password-by-email`
+- Updated `UserService` to validate duplicate email, verify registration code, create email-verified users, send reset codes only for existing emails, and reset password after code verification.
+- Updated JWT interceptor exclusions so `/api/auth/**` is publicly accessible before login.
+- Updated Vue registration page with email, code, Send Code button, countdown, and email-code registration submission.
+- Updated Vue login page with forgot-password dialog, email reset code sending, and password reset submission.
+- Updated `database/electronic_mall.sql` with `uk_sys_user_email`.
+- Updated `README.md` with Brevo SMTP environment variable setup and Phase 3 endpoints.
+- Added `docs/PHASE_3_BREVO_EMAIL_VERIFICATION_REPORT.md`.
+
+### Phase 3 Test Results
+| Test | Command | Result | Status |
+|---|---|---|---|
+| TDD red test | `mvn -q -Dtest=EmailVerificationServiceTest test` before implementation | Failed because `EmailVerificationService` and mail dependency did not exist | complete |
+| SMTP failure red/green test | `mvn -q -Dtest=EmailVerificationServiceTest test` | First failed with raw `MailSendException`, then exited 0 after cleanup handling | complete |
+| Backend unit tests | `mvn -q -Dtest=EmailVerificationServiceTest,UserServiceEmailAuthTest test` | Exit 0 | complete |
+| Full backend tests | `mvn -q test` in `ElectronicMallApi` | Exit 0 | complete |
+| Backend package | `mvn -q package` in `ElectronicMallApi` | Exit 0 | complete |
+| Frontend production build | `npm run build` in `ElectronicMallVue` | Exit 0; existing Browserslist and asset-size warnings only | complete |
+| Frontend route fallback | `npm run check:routes` against Vue dev server on `http://localhost:9192` | Passed for 12 routes | complete |
+
+### Phase 3 Error Log
+| Timestamp | Error | Attempt | Resolution |
+|---|---|---|---|
+| 2026-05-18 11:58 MYT | Maven test failed in sandbox with `Operation not permitted` accessing `~/.m2/repository` | 1 | Re-ran Maven test with approved escalation for local Maven repository access. |
+| 2026-05-18 12:04 MYT | `npm run check:routes` failed in sandbox with `connect EPERM 127.0.0.1:9192` | 1 | Re-ran route check with approved local network escalation. |
+| 2026-05-18 12:05 MYT | Stopping the Vue dev server failed in sandbox with `operation not permitted` | 1 | Stopped the verification server process with approved escalation. |
+
+### Phase 3 Notes
+- Brevo SMTP secrets are intentionally not committed, logged, or documented with real values.
+- Live SMTP delivery requires starting the backend with `BREVO_SMTP_USERNAME`, `BREVO_SMTP_KEY`, and `BREVO_SENDER_EMAIL` exported in the runtime environment.
+
+## Planning Hook Follow-up: 2026-05-18
+
+- Stop hook reported `Task incomplete (4/6 phases done)` after Phase 3 completion.
+- Re-read `docs/task_plan.md` as required by the planning-with-files workflow.
+- Root cause: the hook script counts every heading beginning with `### Phase`; `### Phase 3 Decisions` and `### Phase 3 Verification Snapshot` were counted as extra phases without `**Status:** complete`.
+- Resolution: rename those two informational headings so only actual phase headings start with `### Phase`.

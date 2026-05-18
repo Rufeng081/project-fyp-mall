@@ -19,6 +19,7 @@ project-fyp-mall/
 | Frontend | Vue 2, Vue Router, Vuex, Element UI, Axios, ECharts |
 | Backend | Java 8, Spring Boot 2.5.6, MyBatis, MyBatis-Plus |
 | Data | MySQL 8, Redis |
+| Email | Spring Boot Mail, Brevo SMTP |
 | Build tools | npm, Maven |
 
 ## Prerequisites
@@ -29,6 +30,7 @@ project-fyp-mall/
 - npm 8.x
 - MySQL 8.x
 - Redis
+- Brevo SMTP account for email verification
 
 ## Database Setup
 
@@ -67,6 +69,40 @@ Default demo accounts:
 | --- | --- | --- |
 | Admin | `admin` | `123456` |
 | User | `user` | `123456` |
+
+The `sys_user.email` column is unique. If an existing local database was created before Phase 3, add the unique index manually or re-import `database/electronic_mall.sql` after backing up local data:
+
+```sql
+ALTER TABLE sys_user ADD UNIQUE KEY uk_sys_user_email (email);
+```
+
+## Email Verification Setup
+
+Registration and password reset use Brevo SMTP through Spring Boot Mail. Do not place SMTP credentials in `application.yml`; set these environment variables before starting the backend:
+
+```bash
+export BREVO_SMTP_USERNAME="your-brevo-smtp-login"
+export BREVO_SMTP_KEY="your-brevo-smtp-key"
+export BREVO_SENDER_EMAIL="verified-sender@example.com"
+```
+
+Brevo SMTP settings are configured in `ElectronicMallApi/src/main/resources/application.yml`:
+
+```text
+Host: smtp-relay.brevo.com
+Port: 587
+TLS: enabled
+```
+
+Phase 3 auth endpoints:
+
+| Purpose | Endpoint |
+| --- | --- |
+| Send registration/reset code | `POST /api/auth/send-email-code` |
+| Register with email code | `POST /api/auth/register-by-email` |
+| Reset forgotten password with email code | `POST /api/auth/reset-password-by-email` |
+
+Email verification codes are 6 digits, stored in Redis for 5 minutes, and the same email cannot request another code for 60 seconds.
 
 ## Run the Backend
 

@@ -20,6 +20,20 @@ spring:
         max-idle: 8
         max-wait: -1ms
     connect-timeout: 30000ms
+  mail:
+    host: smtp-relay.brevo.com
+    port: 587
+    username: ${BREVO_SMTP_USERNAME:}
+    password: ${BREVO_SMTP_KEY:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+brevo:
+  sender-email: ${BREVO_SENDER_EMAIL:}
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
