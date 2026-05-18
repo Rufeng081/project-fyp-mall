@@ -108,6 +108,32 @@ API checks:
 - `POST /login`
 - `GET /api/order/userid/{userId}`
 
+## Final Acceptance Update: 2026-05-18
+
+Final acceptance found one remaining Phase 2 gap: generic direct GET requests to Vue Router history-mode deep links returned `404` from the Vue development server.
+
+Resolution:
+
+- Added explicit `devServer.historyApiFallback` configuration in `ElectronicMallVue/vue.config.js`.
+- Added repeatable route regression check: `ElectronicMallVue/scripts/check-history-routes.js`.
+- Added repeatable API golden-path check: `tools/phase12-api-golden-path.js`.
+
+Final verification:
+
+- `npm run check:routes` passed for 12 main front-end routes.
+- `npm run build` completed with exit 0.
+- `mvn clean package` completed with `BUILD SUCCESS`.
+- Static localization audits returned no visible business Chinese or China/RMB markers.
+- `node tools/phase12-api-golden-path.js` passed and verified registration, login, product data, image endpoint, address, cart, order creation, simulated payment, and order history.
+
+Final accepted state:
+
+```text
+Phase 1: complete
+Phase 2: complete
+Ready for Phase 3: registration email verification code
+```
+
 ## Remaining Notes
 
 - Backend Java comments still include some Chinese developer comments. They are not visible in the application UI and do not affect the FYP demonstration.

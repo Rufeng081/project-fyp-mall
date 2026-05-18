@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vue-cli-service serve",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "check:routes": "node scripts/check-history-routes.js"
   },
   "dependencies": {
     "axios": "^0.26.1",

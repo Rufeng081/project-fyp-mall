@@ -4,7 +4,7 @@
 Convert the mall project into an English-based, Malaysia-context e-commerce platform for the FYP demonstration.
 
 ## Current Phase
-Phase 1 complete
+Phase 1 and Phase 2 complete; ready for Phase 3 registration email verification.
 
 ## Phases
 
@@ -47,5 +47,15 @@ Phase 1 complete
 
 ## Notes
 - Front-end production build and back-end Maven package succeeded on 2026-05-18 00:02 MYT.
-- Vue dev server is running at `http://localhost:9192/`.
+- Vue dev server uses explicit history fallback so direct deep links under `http://localhost:9192/` return the SPA entry.
 - Static audits found no China/RMB currency markers in source, back-end, database, or README after localization.
+- Final Phase 1/2 acceptance was completed on 2026-05-18. See `docs/PHASE_1_2_FINAL_ACCEPTANCE_REVIEW.md`.
+
+## Phase 2 Final Acceptance Closure
+| Item | Status | Evidence |
+|---|---|---|
+| Front-end deep routes | complete | `npm run check:routes` passed for 12 main routes. |
+| Front-end build | complete | `npm run build` exited 0 with warnings only. |
+| Back-end build | complete | `mvn clean package` exited 0 with `BUILD SUCCESS`. |
+| API golden path | complete | `node tools/phase12-api-golden-path.js` created and paid order `20260518114014173400`. |
+| Localization audit | complete | Source/database/static audits returned no visible business Chinese or China/RMB markers. |

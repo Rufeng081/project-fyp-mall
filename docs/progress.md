@@ -95,3 +95,45 @@
   - Add to cart, checkout, simulated payment, and order history worked.
   - Browser text checks for home, product detail, cart, checkout, payment, and order history found no visible Chinese characters.
 - Screenshot saved: `docs/phase2_order_history_verified.png`.
+
+## Final Phase 1/2 Acceptance Closure: 2026-05-18
+
+### Status
+- **Phase 1:** complete and accepted.
+- **Phase 2:** complete and accepted.
+- **Next phase:** Phase 3 registration email verification code.
+
+### Issue Found and Fixed
+- Found that Vue Router history-mode routes such as `/topview`, `/login`, `/register`, `/goodView/3`, and `/orderList` returned `404` for generic GET requests against the Vue dev server.
+- Root cause: Vue CLI's default `historyApiFallback.htmlAcceptHeaders` accepted browser-style HTML requests but did not include `*/*`.
+- Fix: updated `ElectronicMallVue/vue.config.js` with explicit `historyApiFallback` configuration.
+- Regression check: added `ElectronicMallVue/scripts/check-history-routes.js` and `npm run check:routes`.
+
+### Files Changed
+- `ElectronicMallVue/vue.config.js`
+- `ElectronicMallVue/package.json`
+- `ElectronicMallVue/scripts/check-history-routes.js`
+- `tools/phase12-api-golden-path.js`
+- `docs/PHASE_1_2_FINAL_ACCEPTANCE_REVIEW.md`
+- `docs/README.md`
+- `docs/task_plan.md`
+- `docs/findings.md`
+- `docs/progress.md`
+- `docs/PHASE_1_2_LOCALIZATION_STABILIZATION_REPORT.md`
+
+### Final Verification Results
+| Test | Command | Result | Status |
+|---|---|---|---|
+| Front-end route fallback red test | `npm run check:routes` before fix | Failed for 11 deep routes with HTTP 404 | complete |
+| Front-end route fallback green test | `npm run check:routes` after fix | Passed for 12 routes | complete |
+| Front-end build | `npm run build` in `ElectronicMallVue` | Exit 0; Browserslist and asset-size warnings only | complete |
+| Back-end package | `mvn clean package` in `ElectronicMallApi` | Exit 0; `BUILD SUCCESS`; no tests configured | complete |
+| Front-end visible Chinese audit | `rg -n "[\p{Han}]" ElectronicMallVue/src --glob '!ElectronicMallVue/src/resource/**' --glob '!ElectronicMallVue/src/views/front/good/index.html'` | No matches | complete |
+| Currency/China payment audit | `rg -n "¥|￥|RMB|CNY|人民币|支付宝|微信|Pay宝|元" ElectronicMallVue/src ElectronicMallApi/src database README.md --glob '!ElectronicMallVue/src/resource/**'` | No matches | complete |
+| Database Chinese audit | `rg -n "[\p{Han}]" database/electronic_mall.sql` | No matches | complete |
+| China-context seed/source audit | `rg -n "China|Chinese|Beijing|Shanghai|Guangzhou|¥|RMB|CNY|Alipay|WeChat|Weixin|支付宝|微信" database/electronic_mall.sql ElectronicMallVue/src ElectronicMallApi/src --glob '!ElectronicMallVue/src/resource/**'` | No matches | complete |
+| API golden path | `node tools/phase12-api-golden-path.js` | Registered `phase12check_1779075614723`, created and paid order `20260518114014173400` | complete |
+
+### Notes
+- The final API golden-path script intentionally creates local verification data in MySQL.
+- Generated resource metadata and Java comments may still contain non-demo Chinese text in excluded/generated areas, but visible business UI, seed data, and checked API payloads are localized.
