@@ -122,6 +122,7 @@ The repository tracks source code, configuration, database seed data, and projec
 
 Additional documentation is stored in `docs/`:
 
+- `docs/README.md` is the documentation index and recommended starting point.
 - `docs/PROJECT_STRUCTURE.md` explains the repository structure.
 - `docs/DEVELOPMENT_WORKFLOW.md` describes the recommended Git workflow.
 - `docs/environment_setup_change_log.md` records local setup and verification notes.

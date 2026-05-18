@@ -56,4 +56,12 @@ The duplicate SQL copy previously stored under `ElectronicMallApi/` is not neede
 
 ## Documentation
 
-`docs/` contains project notes, planning records, setup logs, and repository workflow documentation. Documentation should be written in English for GitHub-facing materials unless a project requirement states otherwise.
+`docs/` contains project notes, planning records, setup logs, verification evidence, and repository workflow documentation. Start with `docs/README.md`, which groups the files by purpose:
+
+- project goal and scope;
+- implementation roadmap;
+- completed change reports;
+- planning, findings, and progress records;
+- setup and development workflow notes.
+
+Documentation should be written in English for GitHub-facing materials unless a project requirement states otherwise. Avoid duplicate planning files such as `task_plan 2.md`, `findings 2.md`, or `progress 2.md`; merge useful updates into the canonical files instead.
