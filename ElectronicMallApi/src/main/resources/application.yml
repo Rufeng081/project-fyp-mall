@@ -1,18 +1,18 @@
 server:
-  port: 9191
+  port: ${SERVER_PORT:9191}
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/electronic_mall?serverTimezone=GMT%2b8
-    username: root
-    password: 'root'
+    url: ${MYSQL_URL:jdbc:mysql://localhost:3306/electronic_mall?serverTimezone=GMT%2b8}
+    username: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD:root}
   servlet:
     multipart:
       max-file-size: 30MB
   redis:
-    database: 0
-    host: 127.0.0.1
-    port: 6379
+    database: ${REDIS_DATABASE:0}
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
     lettuce:
       pool:
         min-idle: 0

@@ -10,6 +10,7 @@ This directory is the single home for project documentation. The structure separ
 | Review the phase roadmap and current status | [project/implementation-roadmap.md](project/implementation-roadmap.md) |
 | Understand the repository layout | [engineering/repository-structure.md](engineering/repository-structure.md) |
 | Follow the development workflow | [engineering/development-workflow.md](engineering/development-workflow.md) |
+| Deploy to Google Cloud | [engineering/cloud-deployment-guide.md](engineering/cloud-deployment-guide.md) |
 | Run acceptance-grade verification | [verification/verification-workflow.md](verification/verification-workflow.md) |
 | Review completed phase evidence | [reports/](reports/) |
 
@@ -30,6 +31,7 @@ This directory is the single home for project documentation. The structure separ
 | --- | --- |
 | [reports/phase-1-2-localization-stabilization-report.md](reports/phase-1-2-localization-stabilization-report.md) | Localization, route fallback, core e-commerce flow stabilization, and final Phase 1/2 acceptance. |
 | [reports/phase-3-email-verification-report.md](reports/phase-3-email-verification-report.md) | Email-code registration, forgot-password reset, SMTP/Redis behavior, and authentication follow-up changes. |
+| [reports/phase-4-cloud-deployment-report.md](reports/phase-4-cloud-deployment-report.md) | Google Cloud VM deployment, Nginx reverse proxy, backend service, database/cache setup, and public access verification. |
 
 ## Records
 

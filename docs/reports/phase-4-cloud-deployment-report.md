@@ -1,0 +1,72 @@
+# Phase 4 Cloud Deployment Report
+
+## Objective
+
+Deploy Project FYP Mall to Google Cloud so it is accessible through a public IP address and follows the planned Nginx, Spring Boot, MySQL, and Redis architecture.
+
+## Implementation Scope
+
+- Configure frontend production API routing through `/api`.
+- Configure backend deployment values through environment variables.
+- Provision a Google Cloud VM.
+- Install and configure Nginx, Java/Maven, Node.js, MySQL, Redis, and Git.
+- Clone the GitHub repository to the VM.
+- Build and run the backend as a systemd service.
+- Build and serve the Vue frontend through Nginx.
+- Verify public access and core e-commerce functions.
+
+## Local Configuration Changes
+
+| Area | Change |
+| --- | --- |
+| Frontend Axios | `VUE_APP_API_BASE_URL` controls the API base URL. |
+| Frontend development | `.env.development` points to `http://localhost:9191`. |
+| Frontend production | `.env.production` points to `/api`. |
+| Backend server | `SERVER_PORT` can override the default `9191`. |
+| Backend MySQL | `MYSQL_URL`, `MYSQL_USERNAME`, and `MYSQL_PASSWORD` can override local defaults. |
+| Backend Redis | `REDIS_DATABASE`, `REDIS_HOST`, and `REDIS_PORT` can override local defaults. |
+
+## Google Cloud VM Record
+
+| Item | Value |
+| --- | --- |
+| Google account | `a206331@siswa.ukm.edu.my` |
+| Project ID | Pending |
+| VM name | Pending |
+| Region / zone | Pending |
+| Machine type | Pending |
+| OS image | Pending |
+| Boot disk | Pending |
+| External IP | Pending |
+| Firewall rules | Pending |
+
+## Deployment Verification
+
+| Check | Result |
+| --- | --- |
+| Frontend deployment config check | Passed locally with `npm run check:deployment`. |
+| Frontend auth wiring check | Passed locally with `npm run check:auth`. |
+| Frontend production build | Passed locally with `npm run build`; existing Browserslist and asset-size warnings only. |
+| Backend package build | Passed locally with `mvn -q package`. |
+| MySQL service | Pending |
+| Redis service | Pending |
+| Spring Boot systemd service | Pending |
+| Nginx config test | Pending |
+| Public frontend access | Pending |
+| Public API access through `/api` | Pending |
+| Golden-path functional check | Pending |
+
+## Operation Log
+
+| Time | Action | Result |
+| --- | --- | --- |
+| 2026-05-19 | Started Phase 4 from `docs/project/implementation-roadmap.md`. | Phase scope confirmed. |
+| 2026-05-19 | Added frontend deployment configuration check. | Red test failed before implementation because production env config was missing. |
+| 2026-05-19 | Updated frontend API base URL and backend environment override settings. | `npm run check:deployment` passed. |
+| 2026-05-19 | Ran local pre-deployment verification. | `npm run check:auth`, `npm run check:deployment`, `mvn -q package`, and `npm run build` passed. |
+
+## Notes
+
+- Secrets are not stored in repository files or documentation.
+- SMTP email verification requires Brevo credentials in the VM environment file before live registration email testing can pass.
+- HTTPS is optional for Phase 4 and can be added later through a domain and Certbot.

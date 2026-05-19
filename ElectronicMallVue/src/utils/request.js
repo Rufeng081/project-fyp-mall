@@ -3,7 +3,7 @@ import ElementUI from "element-ui";
 import router from '../router'
 
 const request = axios.create({
-    baseURL: 'http://localhost:9191',  // Global API base URL for local development.
+    baseURL: process.env.VUE_APP_API_BASE_URL || '/api',
     timeout: 5000
 })
 

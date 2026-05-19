@@ -64,6 +64,30 @@ Primary report:
 
 - [../reports/phase-3-email-verification-report.md](../reports/phase-3-email-verification-report.md)
 
+## Phase 4 Cloud Deployment
+
+Status: in progress.
+
+Target outcome:
+
+- Google Cloud VM running Project FYP Mall.
+- Nginx serves Vue static files on public HTTP.
+- Nginx forwards `/api` to Spring Boot on `127.0.0.1:9191`.
+- Spring Boot connects to MySQL and Redis on the VM.
+- Public IP supports the core e-commerce demonstration flow.
+
+Primary files:
+
+- [../engineering/cloud-deployment-guide.md](../engineering/cloud-deployment-guide.md)
+- [../reports/phase-4-cloud-deployment-report.md](../reports/phase-4-cloud-deployment-report.md)
+
+Current local changes:
+
+- Frontend production API base URL is `/api` through `VUE_APP_API_BASE_URL`.
+- Frontend development API base URL remains `http://localhost:9191`.
+- Backend port, MySQL, and Redis settings can be overridden through environment variables.
+- Added `npm run check:deployment` to verify the deployment-oriented frontend settings.
+
 ## Verification Results Recorded From Prior Work
 
 | Area | Check | Result |
