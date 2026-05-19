@@ -62,6 +62,7 @@ Keep one canonical seed script unless a deployment phase creates a documented mi
 - `project/` for scope and roadmap.
 - `engineering/` for structure, development workflow, frontend notes, and UI/UX handoff.
 - `verification/` for repeatable verification workflows.
+- `cloud/` for VM diagnostics, cloud runtime debugging notes, and deployment evidence archives.
 - `reports/` for completed phase reports.
 - `records/` for setup logs, decisions, and historical progress records.
 - `assets/` for screenshots and other evidence.

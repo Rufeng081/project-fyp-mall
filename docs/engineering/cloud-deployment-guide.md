@@ -228,15 +228,17 @@ systemctl is-active redis-server
 systemctl is-active project-fyp-mall
 systemctl is-active nginx
 curl -I http://127.0.0.1
-curl http://127.0.0.1/api/good/page?pageNum=1&pageSize=1
+curl "http://127.0.0.1/api/api/good/page?pageNum=1&pageSize=1"
 ```
 
 Run from outside the VM:
 
 ```bash
 curl -I http://SERVER_PUBLIC_IP
-curl http://SERVER_PUBLIC_IP/api/good/page?pageNum=1&pageSize=1
+curl "http://SERVER_PUBLIC_IP/api/api/good/page?pageNum=1&pageSize=1"
 ```
+
+With the current Nginx `location /api/` and `proxy_pass http://127.0.0.1:9191/` pattern, the first external `/api/` prefix is stripped before requests reach Spring Boot. Backend controllers already mapped as `/api/...` therefore need external verification paths such as `/api/api/good/page`. Shared frontend calls without a backend `/api` prefix, such as `/role` and `/file/...`, should resolve externally as `/api/role` and `/api/file/...`.
 
 Browser checks:
 
@@ -245,4 +247,3 @@ Browser checks:
 - Product list and product detail load.
 - User can log in with the seed account.
 - Cart, order placement, simulated payment, and order history work.
-

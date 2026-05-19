@@ -1,6 +1,6 @@
 # Project FYP Mall
 
-Project FYP Mall is a full-stack small e-commerce platform for a Network Technology Final Year Project. It includes a Vue 2 customer/admin frontend, a Spring Boot REST API, MySQL seed data, Redis-backed email verification state, SMTP-based account verification, and documentation for local verification and later cloud deployment.
+Project FYP Mall is a full-stack small e-commerce platform for a Network Technology Final Year Project. It includes a Vue 2 customer/admin frontend, a Spring Boot REST API, MySQL seed data, Redis-backed email verification state, SMTP-based account verification, Google Cloud VM deployment notes, and documentation for local and cloud verification.
 
 ## Current Project Status
 
@@ -11,7 +11,16 @@ Project FYP Mall is a full-stack small e-commerce platform for a Network Technol
 | Email-code registration and forgot-password reset | Complete |
 | Auth auto-login after registration/reset | Complete |
 | Documentation consolidation | In progress |
-| Cloud deployment and JMeter performance evaluation | Planned |
+| Google Cloud server build | Complete; VM stack is running |
+| Cloud runtime debugging | In progress; public images/resources currently fail to display on the public deployment |
+| JMeter performance evaluation | Planned after cloud runtime verification |
+
+Current cloud checkpoint:
+
+- Google Cloud VM `fyp-mall-vm` has been provisioned and the server stack is running behind Nginx.
+- Current public endpoint recorded in the deployment notes: `http://34.143.225.11`.
+- The active blocker is public image/resource display on the deployed site. The investigation is focused on production resource routing and persistent upload storage.
+- Phase 4 should not be marked fully complete until image display, upload/resource access, public API routing, and the browser-level core flow are verified on the VM.
 
 ## Repository Layout
 
@@ -148,6 +157,8 @@ Start from [docs/README.md](docs/README.md). Key areas:
 - [Implementation roadmap](docs/project/implementation-roadmap.md)
 - [Repository structure](docs/engineering/repository-structure.md)
 - [Development workflow](docs/engineering/development-workflow.md)
+- [Cloud deployment guide](docs/engineering/cloud-deployment-guide.md)
+- [Cloud deployment diagnostics](docs/cloud/README.md)
 - [Verification workflow](docs/verification/verification-workflow.md)
 - [Phase reports](docs/reports/)
 

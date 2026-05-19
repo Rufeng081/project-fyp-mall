@@ -1,5 +1,44 @@
 # Environment Setup Change Log
 
+## 2026-05-20
+
+### Google Cloud VM environment checkpoint
+
+- Cloud provider:
+  - Google Cloud.
+- Account:
+  - `a206331@siswa.ukm.edu.my`.
+- Project:
+  - Project name: `project-fyp-mall`.
+  - Project ID: `cobalt-bond-496703-n2`.
+  - Project number: `206025383026`.
+- VM:
+  - Name: `fyp-mall-vm`.
+  - Zone: `asia-southeast1-b`.
+  - Machine type: `e2-medium`.
+  - OS: Ubuntu 22.04 LTS.
+  - Boot disk: 40 GB balanced persistent disk.
+  - External IP: `34.143.225.11`.
+  - Internal IP: `10.148.0.4`.
+  - Network tag: `fyp-mall-http`.
+- Firewall:
+  - Rule: `allow-fyp-mall-http`.
+  - Target tag: `fyp-mall-http`.
+  - Source range: `0.0.0.0/0`.
+  - Allowed protocol/port: `tcp:80`.
+- Runtime stack recorded by diagnostics:
+  - Nginx listening on port `80`.
+  - Spring Boot backend listening on port `9191`.
+  - MySQL listening on `127.0.0.1:3306`.
+  - Redis listening on `127.0.0.1:6379`.
+- Current blocker:
+  - Public deployment is under runtime debugging because public images/resources are not displaying.
+  - Production upload storage should use `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads` with writable `file/` and `avatar/` subdirectories.
+- Related files:
+  - `docs/records/phase-4-cloud-deployment-handoff-2026-05-19.md`.
+  - `docs/cloud/phase-4-vm-diagnostics-2026-05-19.md`.
+  - `docs/reports/phase-4-cloud-deployment-report.md`.
+
 ## 2026-05-17
 
 ### Backend compile import fix

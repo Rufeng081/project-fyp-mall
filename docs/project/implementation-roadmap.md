@@ -403,6 +403,10 @@ After this phase, the registration function should support:
 
 # Phase 4: Cloud Deployment and Network Configuration
 
+## Current Implementation Checkpoint
+
+As of 2026-05-20, the Google Cloud VM has been provisioned and the core server stack is running. Phase 4 is still in cloud runtime debugging because public images/resources are not displaying on the public deployment. Keep this phase open until product/carousel/avatar/uploaded resource loading, upload retrieval, API routing, and the browser-level core e-commerce flow are verified on the VM.
+
 ## Objective
 
 Deploy the project to a cloud server and make it accessible through a public IP address or domain name.

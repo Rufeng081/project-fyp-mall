@@ -66,7 +66,7 @@ Primary report:
 
 ## Phase 4 Cloud Deployment
 
-Status: in progress.
+Status: in progress; Google Cloud VM is built and the current work is cloud runtime debugging.
 
 Target outcome:
 
@@ -75,6 +75,14 @@ Target outcome:
 - Nginx forwards `/api` to Spring Boot on `127.0.0.1:9191`.
 - Spring Boot connects to MySQL and Redis on the VM.
 - Public IP supports the core e-commerce demonstration flow.
+
+Current checkpoint as of 2026-05-20:
+
+- VM `fyp-mall-vm` is provisioned in `asia-southeast1-b`.
+- Public endpoint recorded during deployment: `http://34.143.225.11`.
+- Diagnostics show Nginx, Spring Boot, MySQL, and Redis running.
+- Active blocker: public images/resources fail to display on the public deployment.
+- Phase 4 remains open until image/resource access and the browser-level core flow pass on the VM.
 
 Primary files:
 
@@ -829,3 +837,40 @@ MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads
 ### Review Notes
 - Production should still set `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads` on the VM. The new fallback is a safer last resort, not a replacement for explicit production configuration.
 - The current Nginx pattern strips the first external `/api`; legacy frontend calls that already include `/api/...` therefore still intentionally become `/api/api/...` externally so Spring controllers mapped under `/api/...` continue to match.
+
+## Documentation Sync During Cloud Runtime Debugging: 2026-05-20
+
+### Status
+- Documentation synchronized for the current Phase 4 state.
+- No historical records were removed.
+
+### Updates
+- Root `README.md` now records that the Google Cloud server build is complete and cloud runtime debugging is active.
+- `docs/README.md` now includes a current checkpoint and points cloud debugging readers to `docs/cloud/README.md`.
+- Added `docs/cloud/README.md` as the cloud deployment diagnostics index.
+- Updated `docs/project/implementation-roadmap.md` with a Phase 4 implementation checkpoint.
+- Updated `docs/reports/phase-4-cloud-deployment-report.md` with VM identifiers, service status from diagnostics, and the active image/resource blocker.
+- Updated `docs/records/environment-setup-log.md` with the Google Cloud VM environment checkpoint.
+- Updated `docs/engineering/repository-structure.md` to include the `docs/cloud/` directory purpose.
+
+### Current Blocker
+- The public VM deployment currently does not display public images/resources. Continue from the VM repair and verification commands in `docs/cloud/phase-4-vm-diagnostics-2026-05-19.md`.
+
+## Temporary Documentation Cleanup: 2026-05-20
+
+### Status
+- Temporary and already-integrated files were removed from the tracked repository.
+- No project source code, canonical documentation, database seed, or deployment guide content was deleted.
+
+### Removed From Tracking
+- Root planning files:
+  - `task_plan.md`
+  - `findings.md`
+  - `progress.md`
+- Raw VM diagnostic archive:
+  - `docs/cloud/fyp-mall-diagnostics.tar.gz`
+
+### Reason
+- The root planning files had been synchronized into this work log and the Phase 4 documentation.
+- The diagnostic archive had been summarized into `docs/cloud/phase-4-vm-diagnostics-2026-05-19.md`.
+- `.gitignore` now excludes root planning files and local cloud diagnostic archives so they are not accidentally pushed again.

@@ -2,7 +2,7 @@
 
 ## Source Material
 
-- Diagnostic archive: `docs/cloud/fyp-mall-diagnostics.tar.gz`
+- Diagnostic archive: downloaded as `docs/cloud/fyp-mall-diagnostics.tar.gz` for the 2026-05-19 investigation, then summarized here and removed from the tracked repository during cleanup.
 - Previous handoff: `docs/records/phase-4-cloud-deployment-handoff-2026-05-19.md`
 - VM diagnostic timestamp: `Tue May 19 13:11:36 UTC 2026`
 - VM: `fyp-mall-vm`

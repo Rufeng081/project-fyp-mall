@@ -21,6 +21,12 @@ yarn-error.log*
 
 # Local planning/tool state
 .planning/
+task_plan.md
+findings.md
+progress.md
+
+# Local diagnostic archives
+docs/cloud/*.tar.gz
 
 # Frontend dependencies and build output
 ElectronicMallVue/node_modules/

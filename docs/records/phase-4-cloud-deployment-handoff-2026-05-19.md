@@ -707,7 +707,7 @@ The following tasks are not complete:
 - Live registration email verification still depends on valid SMTP/Brevo credentials in the VM environment. If those credentials are not present, email-sending flows may fail even if the rest of the application works.
 - HTTPS was not configured. Phase 4 was targeting public IP HTTP access. A domain and Certbot can be added later.
 - The latest successful remote Maven build produced a 51 MB Spring Boot JAR, but that JAR had not yet been copied into the systemd runtime path when work stopped.
-- The root planning files `task_plan.md`, `findings.md`, and `progress.md` are untracked. They can be reviewed, merged into `docs/records/project-work-log.md`, or deleted later by user decision.
+- The root planning files `task_plan.md`, `findings.md`, and `progress.md` were temporary planning notes. They were later merged into `docs/records/project-work-log.md` and removed from the tracked repository during documentation cleanup.
 
 ## Recommended Resume Point
 
