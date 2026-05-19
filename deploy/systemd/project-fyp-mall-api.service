@@ -1,0 +1,16 @@
+[Unit]
+Description=Project FYP Mall Spring Boot API
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/project-fyp-mall/ElectronicMallApi
+EnvironmentFile=/etc/project-fyp-mall.env
+ExecStart=/usr/bin/java -jar /opt/project-fyp-mall/ElectronicMallApi/target/ElectronicMallApi-0.0.1-SNAPSHOT.jar
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

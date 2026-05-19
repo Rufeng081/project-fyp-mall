@@ -5,13 +5,14 @@ This folder stores the Nginx deployment template for the Google Cloud VM. Nginx 
 The frontend must be built before Nginx can serve it. This template expects the Vue production files at:
 
 ```text
-/opt/project-fyp-mall/ElectronicMallVue/dist
+/var/www/project-fyp-mall
 ```
 
 Apply the template on the VM:
 
 ```bash
-sudo ln -sf /opt/project-fyp-mall/deploy/nginx/project-fyp-mall.conf /etc/nginx/sites-enabled/project-fyp-mall
+sudo cp /opt/project-fyp-mall/deploy/nginx/project-fyp-mall.conf /etc/nginx/sites-available/project-fyp-mall
+sudo ln -sf /etc/nginx/sites-available/project-fyp-mall /etc/nginx/sites-enabled/project-fyp-mall
 sudo nginx -t
 sudo systemctl reload nginx
 ```
