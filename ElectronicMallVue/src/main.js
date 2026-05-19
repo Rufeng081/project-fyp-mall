@@ -1,8 +1,3 @@
-/*
- * @Description: 
- * @Author: Rabbiter
- * @Date: 2023-03-26 15:27:05
- */
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'

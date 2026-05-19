@@ -358,7 +358,7 @@ HTTP/HTTPS access
 
 ## 10. Project Identity and Implementation Requirements
 
-The project identity and implementation should consistently present this repository as an original FYP project.
+The project identity and implementation should consistently present this repository as an independent FYP project.
 
 ### 10.1 Project Identity Requirements
 
@@ -370,7 +370,7 @@ Use a project-owned package namespace where practical
 Keep README aligned with current project status
 Use a consistent system title
 Use a project-appropriate database name where practical
-Avoid unrelated author or origin traces
+Use project-owned metadata consistently
 Update frontend branding
 Update sample product data
 ```
@@ -729,7 +729,7 @@ You can directly use the following paragraph in the proposal:
 The recommended development route is:
 
 ```text
-Define original FYP scope and system identity
+Define independent FYP scope and system identity
 ↓
 Maintain consistent project branding
 ↓

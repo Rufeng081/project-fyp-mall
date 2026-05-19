@@ -138,7 +138,7 @@ Ready for Phase 3: registration email verification code
 
 - Backend Java comments still include some Chinese developer comments. They are not visible in the application UI and do not affect the FYP demonstration.
 - `Order.xml` intentionally retains old Chinese order-state strings only as compatibility mapping for legacy data.
-- Some generated/static resource metadata may contain original non-business filenames or asset labels, but visible storefront/admin UI has been localized.
+- Some generated/static resource metadata may contain legacy non-business filenames or asset labels, but visible storefront/admin UI has been localized.
 
 ## Appendix A: Final Acceptance Review Detail
 

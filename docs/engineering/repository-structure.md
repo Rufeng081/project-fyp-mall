@@ -67,4 +67,4 @@ Keep one canonical seed script unless a deployment phase creates a documented mi
 - `records/` for setup logs, decisions, and historical progress records.
 - `assets/` for screenshots and other evidence.
 
-Documentation should avoid duplicate planning files and origin-history wording.
+Documentation should avoid duplicate planning files and should use project-owned identity language consistently.

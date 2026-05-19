@@ -1,8 +1,3 @@
-<!--
- * @Description: 
- * @Author: Rabbiter
- * @Date: 2023-03-26 15:27:05
--->
 <template>
   <div style="height: 100%">
     <el-container style="height: 100%">

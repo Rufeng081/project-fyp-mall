@@ -13,7 +13,7 @@ Goal:
 - Move scattered explanatory files into `docs/`.
 - Organize documentation into a clear project, engineering, verification, report, record, and asset hierarchy.
 - Merge duplicate phase records and task logs.
-- Remove origin-history wording from documentation.
+- Align documentation language with the project-owned identity.
 - Refresh the root README for the current project stage.
 
 Decisions:
@@ -825,8 +825,8 @@ MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads
 ### Changes And Purpose
 | Area | Files | Change | Purpose |
 |---|---|---|---|
-| Backend upload path fallback | `ElectronicMallApi/src/main/java/com/rabbiter/em/config/UploadStorageProperties.java`, `ElectronicMallApi/src/test/java/com/rabbiter/em/config/UploadStoragePropertiesTest.java` | Empty `mall.upload-dir` now resolves to `${user.dir}/uploads/{file,avatar}` instead of the classloader/JAR path. | Prevent uploads from falling back to `target/classes`, `target/test-classes`, or executable-JAR-derived paths when `MALL_UPLOAD_DIR` is missing. |
-| Backend stale constants | `ElectronicMallApi/src/main/java/com/rabbiter/em/constants/Constants.java` | Removed unused `fileFolderPath` and `avatarFolderPath` constants that still referenced `PathUtils.getClassLoadRootPath()`. | Avoid future maintenance accidentally reintroducing classloader-based upload storage. |
+| Backend upload path fallback | `ElectronicMallApi/src/main/java/com/rufeng/em/config/UploadStorageProperties.java`, `ElectronicMallApi/src/test/java/com/rufeng/em/config/UploadStoragePropertiesTest.java` | Empty `mall.upload-dir` now resolves to `${user.dir}/uploads/{file,avatar}` instead of the classloader/JAR path. | Prevent uploads from falling back to `target/classes`, `target/test-classes`, or executable-JAR-derived paths when `MALL_UPLOAD_DIR` is missing. |
+| Backend stale constants | `ElectronicMallApi/src/main/java/com/rufeng/em/constants/Constants.java` | Removed unused `fileFolderPath` and `avatarFolderPath` constants that still referenced `PathUtils.getClassLoadRootPath()`. | Avoid future maintenance accidentally reintroducing classloader-based upload storage. |
 | Frontend expired session handling | `ElectronicMallVue/src/utils/request.js`, `ElectronicMallVue/scripts/check-auth-flows.js` | Axios response interceptor now handles backend `401` token/session expiry in addition to legacy `402`, clears `localStorage.user`, and redirects to `/login`. | Make role/login-status failures deterministic after Redis memory loss, backend restart, or stale browser token. |
 
 ### Red-Green Evidence
@@ -874,3 +874,16 @@ MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads
 - The root planning files had been synchronized into this work log and the Phase 4 documentation.
 - The diagnostic archive had been summarized into `docs/cloud/phase-4-vm-diagnostics-2026-05-19.md`.
 - `.gitignore` now excludes root planning files and local cloud diagnostic archives so they are not accidentally pushed again.
+
+## Project Metadata And Namespace Optimization: 2026-05-20
+
+### Status
+- Project metadata and namespace conventions were standardized across source files and documentation.
+- Backend Java package and Maven group identifier now use the project-owned `com.rufeng` namespace.
+- Database seed timestamps were normalized to the current project timeline while preserving table structure and sample data relationships.
+
+### Verification
+- Backend clean package verification passed.
+- Frontend auth/deployment checks passed.
+- Frontend production build passed with existing Browserslist and asset-size warnings.
+- Project-wide metadata search confirmed the standardized namespace and file headers are applied consistently.

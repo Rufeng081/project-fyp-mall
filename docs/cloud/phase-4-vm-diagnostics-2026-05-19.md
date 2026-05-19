@@ -160,8 +160,8 @@ These fixes were applied after the diagnostic review, before VM redeployment.
 | Frontend uploaded resource base URL | `ElectronicMallVue/src/store/index.js`, `.env.development`, `.env.production` | Keep local development resources on `http://localhost:9191`, but use `/api` in production so product images, avatars, and downloads resolve from the VM. |
 | Frontend file upload action | `ElectronicMallVue/src/views/manage/file/File.vue` | Replace hardcoded upload endpoint with `baseApi + "/file/upload"`, so production uploads post to the VM. |
 | Frontend deployment regression check | `ElectronicMallVue/scripts/check-deployment-config.js` | Fail the deployment check if production-facing source files reintroduce `http://localhost:9191`. |
-| Backend upload storage | `ElectronicMallApi/src/main/java/com/rabbiter/em/config/UploadStorageProperties.java`, `FileService.java`, `AvatarService.java`, `application.yml` | Add `MALL_UPLOAD_DIR` / `mall.upload-dir` and store uploaded files under a real external directory instead of a path derived from the executable JAR. |
-| Backend regression test | `ElectronicMallApi/src/test/java/com/rabbiter/em/config/UploadStoragePropertiesTest.java` | Verify configured upload root resolves to separate `file/` and `avatar/` folders. |
+| Backend upload storage | `ElectronicMallApi/src/main/java/com/rufeng/em/config/UploadStorageProperties.java`, `FileService.java`, `AvatarService.java`, `application.yml` | Add `MALL_UPLOAD_DIR` / `mall.upload-dir` and store uploaded files under a real external directory instead of a path derived from the executable JAR. |
+| Backend regression test | `ElectronicMallApi/src/test/java/com/rufeng/em/config/UploadStoragePropertiesTest.java` | Verify configured upload root resolves to separate `file/` and `avatar/` folders. |
 
 Red/green verification performed:
 

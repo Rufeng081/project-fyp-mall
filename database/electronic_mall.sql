@@ -1,19 +1,3 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : localhost
- Source Server Type    : MySQL
- Source Server Version : 80019
- Source Host           : localhost:3306
- Source Schema         : electronic_mall
-
- Target Server Type    : MySQL
- Target Server Version : 80019
- File Encoding         : 65001
-
- Date: 10/08/2023 20:33:14
-*/
-
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -93,9 +77,9 @@ CREATE TABLE `cart`  (
 -- ----------------------------
 -- Records of cart
 -- ----------------------------
-INSERT INTO `cart` VALUES (2, 1, '2023-07-15 13:48:00', 2, 'M', 2);
-INSERT INTO `cart` VALUES (3, 1, '2023-07-15 13:48:04', 5, 'White', 2);
-INSERT INTO `cart` VALUES (4, 1, '2023-07-15 13:48:08', 7, 'EU 43', 2);
+INSERT INTO `cart` VALUES (2, 1, '2026-07-15 13:48:00', 2, 'M', 2);
+INSERT INTO `cart` VALUES (3, 1, '2026-07-15 13:48:04', 5, 'White', 2);
+INSERT INTO `cart` VALUES (4, 1, '2026-07-15 13:48:08', 7, 'EU 43', 2);
 
 -- ----------------------------
 -- Table structure for category
@@ -149,15 +133,15 @@ CREATE TABLE `good`  (
 -- ----------------------------
 -- Records of good
 -- ----------------------------
-INSERT INTO `good` VALUES (2, 'Men Casual Shirt', 'Lightweight casual shirt suitable for daily wear and campus activities.', 0.95, 35, 1370.50, 2, '/file/74488020672944968462e9e4a9c89096.png', '2023-03-27 13:32:44', 1, 0);
-INSERT INTO `good` VALUES (3, 'Study Desk and Chair Set', 'Compact desk and chair set for dormitory study spaces and home offices.', 0.98, 0, 0.00, 13, '/file/b4ac53ed62c74c298366619399c39f99.jpg', '2023-03-31 20:44:00', 1, 0);
-INSERT INTO `good` VALUES (4, 'Premium Malt Beverage', 'A premium bottled beverage suitable for gift sets and small gatherings.', 0.80, 0, 0.00, 19, '/file/be9d2d6a17c5436fb0b8c2f7927484b2.jpg', '2023-03-31 20:46:37', 1, 0);
-INSERT INTO `good` VALUES (5, 'Women Cotton T-Shirt', 'Comfortable cotton T-shirt with a clean white design for casual wear.', 0.80, 1, 116.00, 1, '/file/15cb9fc604984dfa97e0e968eb1d196d.jpg', '2023-03-31 20:47:59', 1, 0);
-INSERT INTO `good` VALUES (6, 'English Psalms Book', 'A compact English reading book suitable for personal study and gifting.', 1.00, 0, 0.00, 14, '/file/8dc5354c7332454796c614bb4a0572fb.jpg', '2023-03-31 20:48:51', 1, 0);
-INSERT INTO `good` VALUES (7, 'Men Casual Sneakers', 'Breathable black-grey casual sneakers with a comfortable walking sole.', 0.96, 1, 110.40, 11, '/file/0afa4eb1c51943808f6e83cd9ced25e8.jpg', '2023-03-31 20:49:36', 1, 0);
-INSERT INTO `good` VALUES (8, 'Archived Demo Product', 'Archived product retained for delete-state testing.', 1.00, 43, 528.90, 1, '/file/09bb6edab07a4c68a44cce41a3300d97.jpg', '2023-06-12 00:55:57', 0, 1);
-INSERT INTO `good` VALUES (9, 'Children Drawing Book', 'Simple line-art practice book for children to colour and draw.', 1.00, 0, 0.00, 13, '/file/2e2a1df657324a3293642344327310cb.png', '2023-08-10 20:28:58', 1, 0);
-INSERT INTO `good` VALUES (10, 'UV Protection Sunglasses', 'Lightweight sunglasses with UV protection for outdoor activities.', 1.00, 0, 0.00, 22, '/file/449ab0163ba648c08cb4a76b40a9dcec.jpg', '2023-08-10 20:29:47', 1, 0);
+INSERT INTO `good` VALUES (2, 'Men Casual Shirt', 'Lightweight casual shirt suitable for daily wear and campus activities.', 0.95, 35, 1370.50, 2, '/file/74488020672944968462e9e4a9c89096.png', '2026-03-27 13:32:44', 1, 0);
+INSERT INTO `good` VALUES (3, 'Study Desk and Chair Set', 'Compact desk and chair set for dormitory study spaces and home offices.', 0.98, 0, 0.00, 13, '/file/b4ac53ed62c74c298366619399c39f99.jpg', '2026-03-31 20:44:00', 1, 0);
+INSERT INTO `good` VALUES (4, 'Premium Malt Beverage', 'A premium bottled beverage suitable for gift sets and small gatherings.', 0.80, 0, 0.00, 19, '/file/be9d2d6a17c5436fb0b8c2f7927484b2.jpg', '2026-03-31 20:46:37', 1, 0);
+INSERT INTO `good` VALUES (5, 'Women Cotton T-Shirt', 'Comfortable cotton T-shirt with a clean white design for casual wear.', 0.80, 1, 116.00, 1, '/file/15cb9fc604984dfa97e0e968eb1d196d.jpg', '2026-03-31 20:47:59', 1, 0);
+INSERT INTO `good` VALUES (6, 'English Psalms Book', 'A compact English reading book suitable for personal study and gifting.', 1.00, 0, 0.00, 14, '/file/8dc5354c7332454796c614bb4a0572fb.jpg', '2026-03-31 20:48:51', 1, 0);
+INSERT INTO `good` VALUES (7, 'Men Casual Sneakers', 'Breathable black-grey casual sneakers with a comfortable walking sole.', 0.96, 1, 110.40, 11, '/file/0afa4eb1c51943808f6e83cd9ced25e8.jpg', '2026-03-31 20:49:36', 1, 0);
+INSERT INTO `good` VALUES (8, 'Archived Demo Product', 'Archived product retained for delete-state testing.', 1.00, 43, 528.90, 1, '/file/09bb6edab07a4c68a44cce41a3300d97.jpg', '2026-06-12 00:55:57', 0, 1);
+INSERT INTO `good` VALUES (9, 'Children Drawing Book', 'Simple line-art practice book for children to colour and draw.', 1.00, 0, 0.00, 13, '/file/2e2a1df657324a3293642344327310cb.png', '2026-08-10 20:28:58', 1, 0);
+INSERT INTO `good` VALUES (10, 'UV Protection Sunglasses', 'Lightweight sunglasses with UV protection for outdoor activities.', 1.00, 0, 0.00, 22, '/file/449ab0163ba648c08cb4a76b40a9dcec.jpg', '2026-08-10 20:29:47', 1, 0);
 
 -- ----------------------------
 -- Table structure for good_standard
@@ -375,7 +359,7 @@ CREATE TABLE `t_order`  (
 -- ----------------------------
 -- Records of t_order
 -- ----------------------------
-INSERT INTO `t_order` VALUES (9, '20230331223822860904', 367.65, 2, 'Aisha Rahman', '+60 11-1234 5678', 'No. 12, Jalan Reko, Kajang, Selangor 43000, Malaysia', 'Received', '2023-03-31 22:38:22');
-INSERT INTO `t_order` VALUES (24, '20230805014642654151', 116.00, 2, 'Aisha Rahman', '+60 11-1234 5678', 'No. 12, Jalan Reko, Kajang, Selangor 43000, Malaysia', 'Paid', '2023-08-05 01:46:42');
+INSERT INTO `t_order` VALUES (9, '20260331223822860904', 367.65, 2, 'Aisha Rahman', '+60 11-1234 5678', 'No. 12, Jalan Reko, Kajang, Selangor 43000, Malaysia', 'Received', '2026-03-31 22:38:22');
+INSERT INTO `t_order` VALUES (24, '20260805014642654151', 116.00, 2, 'Aisha Rahman', '+60 11-1234 5678', 'No. 12, Jalan Reko, Kajang, Selangor 43000, Malaysia', 'Paid', '2026-08-05 01:46:42');
 
 SET FOREIGN_KEY_CHECKS = 1;

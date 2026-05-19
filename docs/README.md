@@ -58,4 +58,4 @@ As of 2026-05-20, the project is in Phase 4 cloud runtime debugging. The Google 
 - Store screenshots or binary evidence under `assets/`.
 - Store VM diagnostic archives and cloud runtime notes under `cloud/`.
 - Avoid duplicated task-plan, findings, and progress files; merge them into `records/project-work-log.md`.
-- Do not include origin-history wording or statements that frame the project as derived from another project.
+- Use project-owned identity language consistently in project-facing documentation.

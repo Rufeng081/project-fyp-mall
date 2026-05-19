@@ -535,7 +535,7 @@ Expected/observed manifest entries:
 
 ```text
 Main-Class: org.springframework.boot.loader.JarLauncher
-Start-Class: com.rabbiter.em.ElectronicMallApplication
+Start-Class: com.rufeng.em.ElectronicMallApplication
 ```
 
 ### 24. Committed and Pushed Backend Packaging Fix
