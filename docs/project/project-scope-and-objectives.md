@@ -1,4 +1,4 @@
-# Project Boundary and Objectives Document
+# Project Scope and Objectives
 
 ## Project Title
 
@@ -8,9 +8,9 @@
 
 ## 1. Project Background
 
-This project is based on an existing ElectronicMall system and will be modified, simplified, and restructured into a cloud-based small e-commerce platform suitable for a Network Technology Final Year Project.
+This project develops a cloud-based small e-commerce platform suitable for a Network Technology Final Year Project.
 
-The original ElectronicMall system provides a modern e-commerce architecture using Spring Boot, Vue, MySQL, RESTful APIs, JWT authentication, and related management modules. However, for this FYP, the project will not focus on building a large commercial online shopping system. Instead, the system will be used as a controlled platform for studying network communication, cloud deployment, request handling, and performance evaluation under different user loads.
+The system uses a modern e-commerce architecture with Spring Boot, Vue, MySQL, RESTful APIs, JWT authentication, and related management modules. The FYP does not focus on building a large commercial online shopping system. Instead, the system is designed as a controlled platform for studying network communication, cloud deployment, request handling, and performance evaluation under different user loads.
 
 The final project will therefore focus on two main aspects:
 
@@ -356,21 +356,21 @@ HTTP/HTTPS access
 
 ---
 
-## 10. What Must Be Modified from ElectronicMall
+## 10. Project Identity and Implementation Requirements
 
-Since ElectronicMall is only used as a base project, it must be modified to become your own FYP project.
+The project identity and implementation should consistently present this repository as an original FYP project.
 
-### 10.1 Project Identity Modification
+### 10.1 Project Identity Requirements
 
-Required changes:
+Required identity controls:
 
 ```text
-Change project name
-Change package name
-Change README
-Change system title
-Change database name
-Remove original author traces
+Use a consistent project name
+Use a project-owned package namespace where practical
+Keep README aligned with current project status
+Use a consistent system title
+Use a project-appropriate database name where practical
+Avoid unrelated author or origin traces
 Update frontend branding
 Update sample product data
 ```
@@ -398,9 +398,9 @@ com.fyp.cloudcommerce
 
 ---
 
-### 10.2 Functional Simplification
+### 10.2 Functional Scope Control
 
-The following modules should be reviewed and possibly simplified:
+The following modules should be reviewed and kept only when they support the FYP demonstration or administration workflow:
 
 ```text
 Income statistics
@@ -411,13 +411,13 @@ Carousel management
 Unnecessary dashboard features
 ```
 
-These modules are not central to NT FYP. They can be removed, hidden, or kept as non-core features.
+These modules are not central to the Network Technology FYP. They can be simplified, hidden, or kept as non-core features if they do not distract from the main evaluation scope.
 
 ---
 
 ### 10.3 Network Performance Support
 
-The modified project should add or document support for performance testing.
+The project should add or document support for performance testing.
 
 Recommended additions:
 
@@ -688,7 +688,7 @@ This positioning is strong because it keeps the modern technology stack while ke
 
 ## 18. Final Boundary Statement
 
-The ElectronicMall system will not be used as a full commercial e-commerce system. It will be modified and reduced into a controlled academic prototype. The purpose of the platform is to provide realistic network request flows for performance evaluation in a cloud environment.
+The system is not positioned as a full commercial e-commerce platform. It is a controlled academic prototype whose purpose is to provide realistic network request flows for performance evaluation in a cloud environment.
 
 The final project boundary is limited to:
 
@@ -720,7 +720,7 @@ Advanced business analytics
 
 You can directly use the following paragraph in the proposal:
 
-> This project aims to develop and evaluate a cloud-based small e-commerce platform using Spring Boot, Vue, MySQL, and Nginx. The system is adapted from an existing ElectronicMall project and will be modified to support only the core e-commerce functions required for this study, including user registration and login, product browsing, cart management, order placement, and basic admin management. The main focus of the project is not to build a full commercial online shopping system, but to analyze the network communication and performance of a cloud-deployed e-commerce application. Apache JMeter will be used to simulate different concurrent user loads, and the system performance will be evaluated using response time, throughput, and error rate. Advanced features such as real payment gateway integration, logistics tracking, AI recommendation, microservices, Docker, Kubernetes, and large-scale commercial optimization are excluded from the project scope.
+> This project aims to develop and evaluate a cloud-based small e-commerce platform using Spring Boot, Vue, MySQL, and Nginx. The system supports the core e-commerce functions required for this study, including user registration and login, product browsing, cart management, order placement, and basic admin management. The main focus of the project is not to build a full commercial online shopping system, but to analyze the network communication and performance of a cloud-deployed e-commerce application. Apache JMeter will be used to simulate different concurrent user loads, and the system performance will be evaluated using response time, throughput, and error rate. Advanced features such as real payment gateway integration, logistics tracking, AI recommendation, microservices, Docker, Kubernetes, and large-scale commercial optimization are excluded from the project scope.
 
 ---
 
@@ -729,11 +729,11 @@ You can directly use the following paragraph in the proposal:
 The recommended development route is:
 
 ```text
-Use ElectronicMall as base
+Define original FYP scope and system identity
 ↓
-Rename and rebrand project
+Maintain consistent project branding
 ↓
-Remove or hide non-core commercial features
+Simplify or hide non-core commercial features
 ↓
 Keep core e-commerce workflow
 ↓
@@ -750,7 +750,7 @@ Analyze response time, throughput, and error rate
 
 ## 21. Final Decision Statement
 
-ElectronicMall can be used as the new FYP base project because it provides a more modern technical architecture than the original JSP/Servlet-based project. However, the final project must be strictly controlled and redefined as a Network Technology FYP.
+This repository should be presented as a Network Technology FYP project with a modern Spring Boot and Vue architecture. The final project scope must remain strictly controlled around cloud deployment, HTTP/API behavior, and performance evaluation.
 
 The final project should not be presented as an advanced commercial online shopping system. It should be presented as:
 

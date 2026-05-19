@@ -1,4 +1,4 @@
-# Industrial Verification Workflow
+# Verification Workflow
 
 Date: 2026-05-18
 
@@ -39,14 +39,14 @@ Expected services:
 Run targeted authentication and email verification tests first:
 
 ```bash
-cd ElectronicMallApi
+cd <backend-module>
 mvn -q -Dtest=EmailVerificationServiceTest,UserServiceEmailAuthTest test
 ```
 
 Then run the full backend suite and package:
 
 ```bash
-cd ElectronicMallApi
+cd <backend-module>
 mvn -q test
 mvn -q package
 ```
@@ -63,28 +63,28 @@ Acceptance criteria:
 Run authentication wiring checks:
 
 ```bash
-cd ElectronicMallVue
+cd <frontend-module>
 npm run check:auth
 ```
 
 Build the Vue app:
 
 ```bash
-cd ElectronicMallVue
+cd <frontend-module>
 npm run build
 ```
 
 Start the dev server and verify history fallback routes:
 
 ```bash
-cd ElectronicMallVue
+cd <frontend-module>
 npm run serve -- --host 127.0.0.1 --port 9192
 ```
 
 If Vue selects a fallback port, pass that port to the route checker:
 
 ```bash
-cd ElectronicMallVue
+cd <frontend-module>
 FRONTEND_PORT=<actual-port> npm run check:routes
 ```
 
@@ -156,11 +156,11 @@ Live verification checklist:
 Before handoff:
 
 - Update `docs/README.md` when adding or reclassifying documents.
-- Add current verification evidence to `docs/progress.md` or a dedicated report.
-- Add important technical findings to `docs/findings.md`.
+- Add current verification evidence to `docs/records/project-work-log.md` or a dedicated report.
+- Add important technical findings to `docs/records/project-work-log.md`.
 - Keep historical phase reports as immutable evidence unless correcting a documented factual error.
-- Do not delete files under `docs/` without explicit approval.
-- Prefer consolidation by linking, summarizing, and reordering the index.
+- Consolidate duplicate records into the relevant report or `docs/records/project-work-log.md`.
+- Update `docs/README.md` when files are moved, renamed, or merged.
 
 ## 8. Current Acceptance Snapshot
 

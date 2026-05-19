@@ -1,4 +1,4 @@
-# FYP Project Optimization Plan
+# Implementation Roadmap
 
 ## Project Direction
 
@@ -8,7 +8,7 @@ Recommended FYP title direction:
 
 > **Development and Network Performance Evaluation of a Cloud-Based Small E-Commerce Platform**
 
-The goal is not to convert the project into a large-scale enterprise system. The goal is to make the current project stable, English-based, cloud-deployed, and suitable for network performance evaluation.
+The goal is not to build a large-scale enterprise system. The goal is to keep the project stable, English-based, cloud-deployed, and suitable for network performance evaluation.
 
 ---
 
@@ -816,12 +816,12 @@ The final optimized project should be described as:
 
 ---
 
-# Recommended Final Folder and Documentation Structure
+# Recommended Documentation Structure
 
 ```text
 project-fyp-mall/
-  ElectronicMallVue/
-  ElectronicMallApi/
+  the projectVue/
+  the projectApi/
   database/
   docs/
     PROJECT_SCOPE.md
@@ -842,7 +842,7 @@ project-fyp-mall/
 
 ---
 
-# Codex Instruction Summary
+# Implementation Instruction Summary
 
 Codex should optimize the project according to the following priority order:
 
@@ -861,7 +861,7 @@ The project must remain suitable for an undergraduate Network Technology FYP.
 
 ---
 
-# Final Warning
+# Scope Control Warning
 
 Do not over-expand the project into an enterprise-level system.
 

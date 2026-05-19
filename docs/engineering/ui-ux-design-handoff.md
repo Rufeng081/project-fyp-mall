@@ -24,7 +24,7 @@ Primary user roles:
 
 ## 2. Frontend Technology and UI Dependencies
 
-Frontend path: `ElectronicMallVue/`
+Frontend path: `<frontend-module>/`
 
 | Area | Current Implementation |
 |---|---|
@@ -880,8 +880,8 @@ Design implications:
 
 Product and avatar media are served by the backend:
 
-- `ElectronicMallApi/file/`
-- `ElectronicMallApi/avatar/`
+- `<backend-module>/file/`
+- `<backend-module>/avatar/`
 
 Current seed product examples:
 
@@ -1039,16 +1039,16 @@ Low priority:
 
 | Concern | Files |
 |---|---|
-| Routes | `ElectronicMallVue/src/router/index.js` |
-| API wrapper | `ElectronicMallVue/src/utils/request.js` |
-| API/media base URL | `ElectronicMallVue/src/store/index.js` |
-| Storefront shell | `ElectronicMallVue/src/views/front/Front.vue` |
-| Storefront pages | `ElectronicMallVue/src/views/front/TopView.vue`, `front/good/*`, `front/order/*` |
-| Auth/profile | `ElectronicMallVue/src/views/Login.vue`, `Register.vue`, `Person.vue` |
-| Admin shell | `ElectronicMallVue/src/views/manage/Manage.vue` |
-| Admin pages | `ElectronicMallVue/src/views/manage/**` |
-| Reusable components | `ElectronicMallVue/src/components/*.vue` |
-| Global CSS | `ElectronicMallVue/src/resource/global.css`, `src/resource/css/search.css`, `src/resource/css/icon.css` |
-| Static frontend assets | `ElectronicMallVue/src/resource/` |
-| Backend media | `ElectronicMallApi/file/`, `ElectronicMallApi/avatar/` |
+| Routes | `<frontend-module>/src/router/index.js` |
+| API wrapper | `<frontend-module>/src/utils/request.js` |
+| API/media base URL | `<frontend-module>/src/store/index.js` |
+| Storefront shell | `<frontend-module>/src/views/front/Front.vue` |
+| Storefront pages | `<frontend-module>/src/views/front/TopView.vue`, `front/good/*`, `front/order/*` |
+| Auth/profile | `<frontend-module>/src/views/Login.vue`, `Register.vue`, `Person.vue` |
+| Admin shell | `<frontend-module>/src/views/manage/Manage.vue` |
+| Admin pages | `<frontend-module>/src/views/manage/**` |
+| Reusable components | `<frontend-module>/src/components/*.vue` |
+| Global CSS | `<frontend-module>/src/resource/global.css`, `src/resource/css/search.css`, `src/resource/css/icon.css` |
+| Static frontend assets | `<frontend-module>/src/resource/` |
+| Backend media | `<backend-module>/file/`, `<backend-module>/avatar/` |
 | Seed data | `database/electronic_mall.sql` |

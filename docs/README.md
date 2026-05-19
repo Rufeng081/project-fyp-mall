@@ -1,58 +1,51 @@
 # Documentation Index
 
-Use this file as the entry point for project documentation. The documents are kept flat in `docs/` so links remain simple, but they are grouped here by purpose and review order.
+This directory is the single home for project documentation. The structure separates project definition, engineering references, verification workflows, phase reports, historical records, and evidence assets.
 
 ## Start Here
 
-| Need | File | Purpose |
-|---|---|---|
-| Understand the FYP goal and boundaries | [FYP_Project_Boundary_and_Objectives.md](FYP_Project_Boundary_and_Objectives.md) | Defines project title, included/excluded scope, objectives, architecture boundary, testing boundary, and final positioning. |
-| Understand the implementation roadmap | [FYP_PROJECT_OPTIMIZATION_PLAN.md](FYP_PROJECT_OPTIMIZATION_PLAN.md) | Lists the phase-by-phase optimization plan from localization through deployment, documentation, and performance testing. |
-| Understand what was already changed | [PHASE_1_2_LOCALIZATION_STABILIZATION_REPORT.md](PHASE_1_2_LOCALIZATION_STABILIZATION_REPORT.md) | Summarizes completed Phase 1 localization and Phase 2 core flow stabilization work, including verification results. |
-| Review final Phase 1/2 acceptance evidence | [PHASE_1_2_FINAL_ACCEPTANCE_REVIEW.md](PHASE_1_2_FINAL_ACCEPTANCE_REVIEW.md) | Records the final route fix, repeatable verification commands, API golden-path result, and final acceptance decision before Phase 3. |
-| Review Phase 3 email verification | [PHASE_3_BREVO_EMAIL_VERIFICATION_REPORT.md](PHASE_3_BREVO_EMAIL_VERIFICATION_REPORT.md) | Records Brevo SMTP registration verification, forgot-password reset, Redis code handling, files changed, and verification evidence. |
-| Review latest auth auto-login changes | [auth_auto_login_change_log.md](auth_auto_login_change_log.md) | Records registration/reset auto-login, default nickname behavior, account login, and focused verification evidence. |
-| Run the industrial verification process | [INDUSTRIAL_VERIFICATION_WORKFLOW.md](INDUSTRIAL_VERIFICATION_WORKFLOW.md) | Defines the repeatable backend, frontend, route, API golden-path, email verification, and documentation gates. |
-| Prepare a UI/UX redesign | [UI_UX_DESIGN_HANDOFF.md](UI_UX_DESIGN_HANDOFF.md) | Maps current routes, screens, components, content, states, assets, and design considerations for a UI designer. |
+| Need | File |
+| --- | --- |
+| Understand project goals, scope, and boundaries | [project/project-scope-and-objectives.md](project/project-scope-and-objectives.md) |
+| Review the phase roadmap and current status | [project/implementation-roadmap.md](project/implementation-roadmap.md) |
+| Understand the repository layout | [engineering/repository-structure.md](engineering/repository-structure.md) |
+| Follow the development workflow | [engineering/development-workflow.md](engineering/development-workflow.md) |
+| Run acceptance-grade verification | [verification/verification-workflow.md](verification/verification-workflow.md) |
+| Review completed phase evidence | [reports/](reports/) |
 
-## Progress and Decisions
+## Directory Map
 
-| File | Use When |
-|---|---|
-| [task_plan.md](task_plan.md) | You need the active/previous task checklist and completion status. |
-| [findings.md](findings.md) | You need technical decisions, rationale, and important findings from prior work. |
-| [progress.md](progress.md) | You need a chronological log of code changes, test results, errors, and verification notes. |
+| Directory | Purpose |
+| --- | --- |
+| [project/](project/) | Project definition, scope, objectives, and roadmap. |
+| [engineering/](engineering/) | Repository structure, development workflow, frontend notes, and UI/UX handoff. |
+| [verification/](verification/) | Repeatable verification gates and acceptance workflow. |
+| [reports/](reports/) | Completed implementation, acceptance, and phase reports. |
+| [records/](records/) | Setup logs, historical work logs, decisions, and troubleshooting notes. |
+| [assets/](assets/) | Screenshots and other verification evidence. |
 
-## Project Operation
-
-| File | Use When |
-|---|---|
-| [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) | You need to know where frontend, backend, database, and documentation assets live. |
-| [DEVELOPMENT_WORKFLOW.md](DEVELOPMENT_WORKFLOW.md) | You need the recommended Git workflow, local verification commands, and commit hygiene rules. |
-| [INDUSTRIAL_VERIFICATION_WORKFLOW.md](INDUSTRIAL_VERIFICATION_WORKFLOW.md) | You need acceptance-grade verification steps before handoff. |
-| [environment_setup_change_log.md](environment_setup_change_log.md) | You need historical local setup changes, environment fixes, or service verification notes. |
-
-## Change Reports
+## Reports
 
 | File | Scope |
-|---|---|
-| [PHASE_1_2_LOCALIZATION_STABILIZATION_REPORT.md](PHASE_1_2_LOCALIZATION_STABILIZATION_REPORT.md) | Localization and core e-commerce flow stabilization. |
-| [PHASE_1_2_FINAL_ACCEPTANCE_REVIEW.md](PHASE_1_2_FINAL_ACCEPTANCE_REVIEW.md) | Final Phase 1/2 acceptance and golden-path verification. |
-| [PHASE_3_BREVO_EMAIL_VERIFICATION_REPORT.md](PHASE_3_BREVO_EMAIL_VERIFICATION_REPORT.md) | Email verification registration and forgot-password flow. |
-| [auth_auto_login_change_log.md](auth_auto_login_change_log.md) | Latest authentication behavior changes and regression checks. |
+| --- | --- |
+| [reports/phase-1-2-localization-stabilization-report.md](reports/phase-1-2-localization-stabilization-report.md) | Localization, route fallback, core e-commerce flow stabilization, and final Phase 1/2 acceptance. |
+| [reports/phase-3-email-verification-report.md](reports/phase-3-email-verification-report.md) | Email-code registration, forgot-password reset, SMTP/Redis behavior, and authentication follow-up changes. |
 
-## Evidence
+## Records
 
-| File | Purpose |
-|---|---|
-| [phase2_order_history_verified.png](phase2_order_history_verified.png) | Browser verification evidence for the Phase 2 order history flow. |
+| File | Scope |
+| --- | --- |
+| [records/environment-setup-log.md](records/environment-setup-log.md) | Local setup fixes, service checks, and environment notes. |
+| [records/project-work-log.md](records/project-work-log.md) | Consolidated task plans, findings, decisions, progress, verification results, and error records from prior work sessions. |
 
 ## Maintenance Rules
 
-- Keep target/scope information in the boundary document.
-- Keep future plans and phase breakdowns in the optimization plan.
-- Keep completed implementation summaries in report files.
-- Keep chronological work history in `progress.md`.
-- Keep technical rationale and decisions in `findings.md`.
-- Do not create duplicate `task_plan`, `findings`, or `progress` copies with numeric suffixes; merge new information into the canonical files instead.
-- Do not delete any `docs/` content without explicit approval; consolidate through this index, cross-links, and summaries.
+- Keep the root README focused on onboarding and current project status.
+- Keep project scope and future direction under `project/`.
+- Keep engineering procedures under `engineering/`.
+- Keep repeatable verification steps under `verification/`.
+- Keep completed phase summaries under `reports/`.
+- Keep chronological records under `records/`.
+- Store screenshots or binary evidence under `assets/`.
+- Avoid duplicated task-plan, findings, and progress files; merge them into `records/project-work-log.md`.
+- Do not include origin-history wording or statements that frame the project as derived from another project.

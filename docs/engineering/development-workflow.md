@@ -1,6 +1,6 @@
 # Development Workflow
 
-This document defines the recommended Git workflow for managing the project on GitHub.
+This document defines the recommended engineering workflow for project changes.
 
 ## Branching
 
@@ -26,7 +26,6 @@ docs/setup-guide
 Use concise, action-oriented commit messages:
 
 ```text
-Initialize GitHub repository structure
 Add product search validation
 Fix order status update response
 Document local setup steps
@@ -38,7 +37,7 @@ Document local setup steps
 2. Make a focused change.
 3. Run the relevant checks locally.
 4. Commit only files related to the change.
-5. Push the branch to GitHub.
+5. Push the branch.
 6. Open a pull request.
 7. Review the diff before merging.
 
@@ -47,7 +46,7 @@ Document local setup steps
 Backend verification:
 
 ```bash
-cd ElectronicMallApi
+cd <backend>
 mvn -q test
 mvn -q package
 ```
@@ -55,16 +54,12 @@ mvn -q package
 Frontend verification:
 
 ```bash
-cd ElectronicMallVue
+cd <frontend>
 npm run check:auth
 npm run build
 ```
 
-Full acceptance verification is defined in:
-
-```text
-docs/INDUSTRIAL_VERIFICATION_WORKFLOW.md
-```
+Full acceptance verification is defined in [../verification/verification-workflow.md](../verification/verification-workflow.md).
 
 Runtime verification:
 
@@ -77,9 +72,9 @@ Frontend: http://localhost:9192
 
 The repository should not commit generated files or machine-specific state:
 
-- `ElectronicMallVue/node_modules/`
-- `ElectronicMallVue/dist/`
-- `ElectronicMallApi/target/`
+- `node_modules/`
+- `dist/`
+- `target/`
 - `.idea/`
 - `.vscode/`
 - `.DS_Store`
@@ -93,4 +88,4 @@ When the schema or seed data changes, update:
 database/electronic_mall.sql
 ```
 
-Do not create additional duplicate SQL dumps in project subfolders unless there is a documented deployment requirement.
+Do not create duplicate SQL dumps in project subfolders unless there is a documented deployment requirement.

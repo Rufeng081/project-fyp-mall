@@ -5,8 +5,8 @@
 ### Backend compile import fix
 
 - Files changed:
-  - `ElectronicMallApi/src/main/java/com/rabbiter/em/controller/OrderController.java`
-  - `ElectronicMallApi/src/main/java/com/rabbiter/em/controller/UserController.java`
+  - `<backend-module>/src/main/java/<backend-package>/controller/OrderController.java`
+  - `<backend-module>/src/main/java/<backend-package>/controller/UserController.java`
 - Reason:
   - `mvn clean install` failed because both controllers imported `com.sun.xml.internal.fastinfoset.stax.events.Util`, which was unavailable in the current JDK 8 build environment.
   - The project already depends on `com.sun.xml.fastinfoset:FastInfoset`, and `FileService.java` uses the public package path `com.sun.xml.fastinfoset.stax.events.Util`.
@@ -42,8 +42,8 @@
 ### Frontend generated dependency permission fix
 
 - Files changed:
-  - `ElectronicMallVue/node_modules/.bin/vue-cli-service`
-  - `ElectronicMallVue/node_modules/@vue/cli-service/bin/vue-cli-service.js`
+  - `<frontend-module>/node_modules/.bin/vue-cli-service`
+  - `<frontend-module>/node_modules/@vue/cli-service/bin/vue-cli-service.js`
 - Reason:
   - `npm run dev` failed with `Permission denied` when executing `node_modules/.bin/vue-cli-service`.
   - Both generated dependency scripts existed and had valid script content, but their file mode was `-rw-rw-r--`, missing the executable bit required by the shell.

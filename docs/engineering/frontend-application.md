@@ -1,6 +1,6 @@
-# ElectronicMallVue
+# Frontend Application
 
-This directory contains the Vue 2 frontend for Project FYP Mall.
+This document summarizes the Vue 2 frontend module.
 
 ## Requirements
 
@@ -35,6 +35,14 @@ It currently sends requests to:
 
 ```text
 http://localhost:9191
+```
+
+## Verification
+
+```bash
+npm run check:auth
+npm run check:routes
+npm run build
 ```
 
 ## Build

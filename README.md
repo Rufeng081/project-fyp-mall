@@ -1,16 +1,30 @@
 # Project FYP Mall
 
-Project FYP Mall is a full-stack electronic mall system built with a Vue 2 frontend and a Spring Boot backend. The repository is organized as a monorepo so the frontend, backend, database seed script, and project documentation can be versioned together.
+Project FYP Mall is a full-stack small e-commerce platform for a Network Technology Final Year Project. It includes a Vue 2 customer/admin frontend, a Spring Boot REST API, MySQL seed data, Redis-backed email verification state, SMTP-based account verification, and documentation for local verification and later cloud deployment.
+
+## Current Project Status
+
+| Area | Status |
+| --- | --- |
+| System localization and demo data | Complete |
+| Core storefront, cart, order, and admin flow stabilization | Complete |
+| Email-code registration and forgot-password reset | Complete |
+| Auth auto-login after registration/reset | Complete |
+| Documentation consolidation | In progress |
+| Cloud deployment and JMeter performance evaluation | Planned |
 
 ## Repository Layout
 
 ```text
 project-fyp-mall/
-  ElectronicMallVue/   Vue 2 frontend application
-  ElectronicMallApi/   Spring Boot REST API
-  database/            Database initialization script
-  docs/                Project notes, setup records, and workflow documentation
+  docs/          Project documentation, reports, workflows, and evidence
+  database/      MySQL initialization script
+  tools/         Verification and utility scripts
+  <backend>/     Spring Boot REST API module
+  <frontend>/    Vue 2 frontend module
 ```
+
+The actual backend and frontend directory names are kept as repository implementation details. Project documentation uses role-based names so the project identity remains consistent.
 
 ## Technology Stack
 
@@ -41,12 +55,6 @@ mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS electronic_mall DEFAULT CHARA
 mysql -u root -p electronic_mall < database/electronic_mall.sql
 ```
 
-The backend currently expects the local database connection configured in:
-
-```text
-ElectronicMallApi/src/main/resources/application.yml
-```
-
 Default local values:
 
 ```text
@@ -57,7 +65,7 @@ Password: root
 Redis: 127.0.0.1:6379
 ```
 
-The seed data is localized for the FYP demo:
+The seed data is prepared for the FYP demo:
 
 - Product, category, user, address, and order sample values are in English.
 - Address and phone examples use Malaysia-style values.
@@ -70,7 +78,7 @@ Default demo accounts:
 | Admin | `admin` | `123456` |
 | User | `user` | `123456` |
 
-The `sys_user.email` column is unique. If an existing local database was created before Phase 3, add the unique index manually or re-import `database/electronic_mall.sql` after backing up local data:
+The `sys_user.email` column is unique. If an existing local database was created before the email-verification phase, add the unique index manually or re-import `database/electronic_mall.sql` after backing up local data:
 
 ```sql
 ALTER TABLE sys_user ADD UNIQUE KEY uk_sys_user_email (email);
@@ -78,7 +86,7 @@ ALTER TABLE sys_user ADD UNIQUE KEY uk_sys_user_email (email);
 
 ## Email Verification Setup
 
-Registration and password reset use Brevo SMTP through Spring Boot Mail. Do not place SMTP credentials in `application.yml`; set these environment variables before starting the backend:
+Registration and forgot-password reset use SMTP through Spring Boot Mail. Do not place SMTP credentials in tracked configuration files; set these environment variables before starting the backend:
 
 ```bash
 export BREVO_SMTP_USERNAME="your-brevo-smtp-login"
@@ -86,15 +94,7 @@ export BREVO_SMTP_KEY="your-brevo-smtp-key"
 export BREVO_SENDER_EMAIL="verified-sender@example.com"
 ```
 
-Brevo SMTP settings are configured in `ElectronicMallApi/src/main/resources/application.yml`:
-
-```text
-Host: smtp-relay.brevo.com
-Port: 587
-TLS: enabled
-```
-
-Phase 3 auth endpoints:
+Auth endpoints:
 
 | Purpose | Endpoint |
 | --- | --- |
@@ -104,64 +104,62 @@ Phase 3 auth endpoints:
 
 Email verification codes are 6 digits, stored in Redis for 5 minutes, and the same email cannot request another code for 60 seconds.
 
-## Run the Backend
+## Run Locally
+
+Backend:
 
 ```bash
-cd ElectronicMallApi
+cd <backend>
 mvn clean install
 mvn spring-boot:run
 ```
 
-The backend listens on:
-
-```text
-http://localhost:9191
-```
-
-Swagger/OpenAPI output is available at:
-
-```text
-http://localhost:9191/v2/api-docs
-```
-
-## Run the Frontend
+Frontend:
 
 ```bash
-cd ElectronicMallVue
+cd <frontend>
 npm install
 npm run dev
 ```
 
-The frontend listens on:
+Default local URLs:
 
-```text
-http://localhost:9192
-```
+| Service | URL |
+| --- | --- |
+| Backend API | `http://localhost:9191` |
+| Frontend app | `http://localhost:9192` |
+| OpenAPI JSON | `http://localhost:9191/v2/api-docs` |
 
-The frontend API client points to:
+## Verification
 
-```text
-http://localhost:9191
-```
+Use the repeatable workflow in [docs/verification/verification-workflow.md](docs/verification/verification-workflow.md). Current verification coverage includes:
+
+- Backend unit tests and package build.
+- Frontend production build.
+- Frontend auth wiring check.
+- Frontend history-route regression check.
+- Core API golden-path check for storefront, cart, order, payment simulation, and order history.
+
+## Documentation
+
+Start from [docs/README.md](docs/README.md). Key areas:
+
+- [Project scope and objectives](docs/project/project-scope-and-objectives.md)
+- [Implementation roadmap](docs/project/implementation-roadmap.md)
+- [Repository structure](docs/engineering/repository-structure.md)
+- [Development workflow](docs/engineering/development-workflow.md)
+- [Verification workflow](docs/verification/verification-workflow.md)
+- [Phase reports](docs/reports/)
 
 ## Version Control Policy
 
-The repository tracks source code, configuration, database seed data, and project documentation. Generated files and local machine state are excluded through `.gitignore`, including:
+The repository tracks source code, configuration templates, database seed data, verification scripts, and project documentation. Generated files and local machine state are excluded through `.gitignore`, including:
 
 - `node_modules/`
 - Maven `target/`
 - IDE metadata
 - OS metadata such as `.DS_Store`
 - log files
-
-## Documentation
-
-Additional documentation is stored in `docs/`:
-
-- `docs/README.md` is the documentation index and recommended starting point.
-- `docs/PROJECT_STRUCTURE.md` explains the repository structure.
-- `docs/DEVELOPMENT_WORKFLOW.md` describes the recommended Git workflow.
-- `docs/environment_setup_change_log.md` records local setup and verification notes.
 
 ## License
 
