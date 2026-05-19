@@ -86,7 +86,7 @@ export default {
     }
   },
   created() {
-    request.post("http://localhost:9191/role").then(res=>{
+    request.post("/role").then(res=>{
       if(res.code==='200'){
         this.role = res.data;
         console.log("asider，role："+this.role)

@@ -4,6 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.rabbiter.em.constants.Constants;
+import com.rabbiter.em.config.UploadStorageProperties;
 import com.rabbiter.em.entity.Avatar;
 import com.rabbiter.em.exception.ServiceException;
 import com.rabbiter.em.mapper.AvatarMapper;
@@ -24,6 +25,8 @@ import java.util.UUID;
 public class AvatarService {
     @Resource
     private AvatarMapper avatarMapper;
+    @Resource
+    private UploadStorageProperties uploadStorageProperties;
 
     public String upload(MultipartFile uploadFile){
         String url = null;
@@ -42,9 +45,9 @@ public class AvatarService {
             System.out.println(originalFilename+"   "+type);
             long size = uploadFile.getSize() / 1024; //文件大小，单位kb
             //File does not exist，则保存文件
-            File folder = new File(Constants.avatarFolderPath);
+            File folder = new File(uploadStorageProperties.getAvatarFolderPath());
             if(!folder.exists()){
-                folder.mkdir();
+                folder.mkdirs();
             }
             String folderPath = folder.getAbsolutePath()+"/";   //文件存储文件夹的位置
             System.out.println("File storage path: "+folderPath);
@@ -69,7 +72,7 @@ public class AvatarService {
     }
     //根据文件名下载文件
     public void download(String fileName, HttpServletResponse response){
-        File file = new File(Constants.avatarFolderPath+fileName);
+        File file = new File(uploadStorageProperties.getAvatarFolderPath()+fileName);
         if(!file.exists()){
             throw new ServiceException(Constants.CODE_500,"File does not exist");
         }
@@ -92,7 +95,7 @@ public class AvatarService {
         if(delete==1){
             String fileName = StrUtil.subAfter(avatar.getUrl(),"/",true);
             System.out.println(fileName);
-            File file = new File(Constants.avatarFolderPath+fileName);
+            File file = new File(uploadStorageProperties.getAvatarFolderPath()+fileName);
             System.out.println(file.getAbsolutePath());
             if(file.exists()){
 

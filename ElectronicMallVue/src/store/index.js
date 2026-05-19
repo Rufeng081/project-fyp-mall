@@ -10,7 +10,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    baseApi: "http://localhost:9191",
+    baseApi: process.env.VUE_APP_RESOURCE_BASE_URL || "/api",
   },
   getters: {
   },

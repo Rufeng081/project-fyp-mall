@@ -754,3 +754,57 @@ Phase 1 and Phase 2 complete; Phase 3 Brevo email verification implementation an
 - The route checker initially failed with `connect EPERM 127.0.0.1:9192` in the sandbox. It passed after starting Vue locally and using the actual fallback port `9193`.
 - The Vue dev server used for this verification was stopped after route checks.
 - No files under `docs/` were deleted.
+
+## Cloud Deployment Diagnostics And Code Fix: 2026-05-19
+
+### Status
+- **VM diagnostics review:** complete.
+- **Minimal cloud runtime code fix:** complete locally; pending VM redeploy by user.
+
+### Actions Taken
+- Reviewed `docs/records/phase-4-cloud-deployment-handoff-2026-05-19.md` to recover the cloud deployment state and stop point.
+- Extracted and analyzed `docs/cloud/fyp-mall-diagnostics.tar.gz`.
+- Confirmed VM services are running in the diagnostic snapshot: Nginx on port 80, Spring Boot on port 9191, MySQL on 3306, and Redis on 6379.
+- Confirmed the previous non-executable backend JAR problem is no longer current because the backend now starts successfully from `/opt/project-fyp-mall/runtime/project-fyp-mall-api.jar`.
+- Identified the remaining production blocker: deployed frontend code still contained browser-side `http://localhost:9191` calls for role checks, uploaded resources, and file uploads.
+- Identified the backend upload-storage risk: file/avatar storage was derived from the executable JAR classloader path instead of a stable writable VM directory.
+- Added `docs/cloud/phase-4-vm-diagnostics-2026-05-19.md` with evidence, root causes, repair steps, VM commands, and verification commands.
+- Added frontend deployment regression checks so production-facing source files cannot reintroduce `http://localhost:9191`.
+- Added backend regression test `UploadStoragePropertiesTest` for configured upload directory resolution.
+- Verified red tests before implementation:
+  - `npm run check:deployment` failed because production resource routing was not configured.
+  - `mvn -q -Dtest=UploadStoragePropertiesTest test` failed because `UploadStorageProperties` did not exist.
+- Applied minimal frontend fix:
+  - Role checks now use `request.post("/role")`.
+  - `VUE_APP_RESOURCE_BASE_URL` controls resource/download/upload base URL.
+  - Production resource base URL is `/api`; development remains `http://localhost:9191`.
+  - File upload action uses `baseApi + "/file/upload"`.
+- Applied minimal backend fix:
+  - Added `mall.upload-dir` with `MALL_UPLOAD_DIR` environment override.
+  - Added `UploadStorageProperties`.
+  - Updated `FileService` and `AvatarService` to use configured file/avatar folders and create missing folders with `mkdirs()`.
+- Verified targeted green tests:
+  - `npm run check:deployment` passed.
+  - `mvn -q -Dtest=UploadStoragePropertiesTest test` passed.
+- Ran full local verification before commit/push:
+  - `npm run check:deployment` passed.
+  - `npm run check:auth` passed.
+  - `npm run build` passed with existing Browserslist and asset-size warnings.
+  - `mvn -q test` passed.
+  - `mvn -q package` passed.
+
+### VM Follow-Up Required
+- After this code is pushed and pulled on the VM, create persistent upload folders:
+
+```bash
+sudo mkdir -p /opt/project-fyp-mall/uploads/file /opt/project-fyp-mall/uploads/avatar
+sudo chown -R www-data:www-data /opt/project-fyp-mall/uploads
+```
+
+- Add this to `/etc/project-fyp-mall.env`:
+
+```text
+MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads
+```
+
+- Rebuild and redeploy the frontend/backend as documented in `docs/cloud/phase-4-vm-diagnostics-2026-05-19.md`.

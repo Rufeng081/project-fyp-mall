@@ -35,6 +35,9 @@ spring:
 brevo:
   sender-email: ${BREVO_SENDER_EMAIL:}
 
+mall:
+  upload-dir: ${MALL_UPLOAD_DIR:}
+
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:

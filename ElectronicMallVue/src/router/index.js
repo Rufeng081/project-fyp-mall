@@ -98,7 +98,7 @@ router.beforeEach((to, from, next) => {
   let allow = false;
   if(to.meta.requireAuth===true){
     // Get the current user's role from the API.
-    request.post("http://localhost:9191/role").then(res=>{
+    request.post("/role").then(res=>{
       if(res.code==='200'){
         role = res.data;
         console.log('Your role is: '+role);

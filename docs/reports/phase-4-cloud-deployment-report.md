@@ -22,9 +22,11 @@ Deploy Project FYP Mall to Google Cloud so it is accessible through a public IP 
 | Frontend Axios | `VUE_APP_API_BASE_URL` controls the API base URL. |
 | Frontend development | `.env.development` points to `http://localhost:9191`. |
 | Frontend production | `.env.production` points to `/api`. |
+| Frontend uploaded resources | `VUE_APP_RESOURCE_BASE_URL` keeps local resources on `http://localhost:9191` and production resources on `/api`. |
 | Backend server | `SERVER_PORT` can override the default `9191`. |
 | Backend MySQL | `MYSQL_URL`, `MYSQL_USERNAME`, and `MYSQL_PASSWORD` can override local defaults. |
 | Backend Redis | `REDIS_DATABASE`, `REDIS_HOST`, and `REDIS_PORT` can override local defaults. |
+| Backend upload storage | `MALL_UPLOAD_DIR` can move uploaded files and avatars to a persistent VM directory outside the executable JAR. |
 
 ## Google Cloud VM Record
 
@@ -64,9 +66,14 @@ Deploy Project FYP Mall to Google Cloud so it is accessible through a public IP 
 | 2026-05-19 | Added frontend deployment configuration check. | Red test failed before implementation because production env config was missing. |
 | 2026-05-19 | Updated frontend API base URL and backend environment override settings. | `npm run check:deployment` passed. |
 | 2026-05-19 | Ran local pre-deployment verification. | `npm run check:auth`, `npm run check:deployment`, `mvn -q package`, and `npm run build` passed. |
+| 2026-05-19 | Reviewed downloaded VM diagnostics after backend installation. | Root causes documented in `docs/cloud/phase-4-vm-diagnostics-2026-05-19.md`. |
+| 2026-05-19 | Added regression checks for production `localhost:9191` references and configurable upload storage. | Frontend check and backend test failed before the fix, then passed after the code change. |
+| 2026-05-19 | Replaced remaining production-facing frontend localhost URLs and moved backend upload storage behind `MALL_UPLOAD_DIR`. | Ready for VM rebuild/redeploy by user. |
+| 2026-05-19 | Ran full local verification for the cloud fix. | `npm run check:deployment`, `npm run check:auth`, `npm run build`, `mvn -q test`, and `mvn -q package` passed. |
 
 ## Notes
 
 - Secrets are not stored in repository files or documentation.
 - SMTP email verification requires Brevo credentials in the VM environment file before live registration email testing can pass.
+- VM production uploads require `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads` and writable `file/` and `avatar/` subdirectories owned by `www-data`.
 - HTTPS is optional for Phase 4 and can be added later through a domain and Certbot.

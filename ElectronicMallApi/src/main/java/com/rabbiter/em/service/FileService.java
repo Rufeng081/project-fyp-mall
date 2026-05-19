@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rabbiter.em.constants.Constants;
+import com.rabbiter.em.config.UploadStorageProperties;
 import com.rabbiter.em.entity.MyFile;
 import com.rabbiter.em.exception.ServiceException;
 import com.rabbiter.em.mapper.FileMapper;
@@ -29,6 +30,8 @@ import java.util.UUID;
 public class FileService extends ServiceImpl<FileMapper, MyFile> {
     @Resource
     private FileMapper fileMapper;
+    @Resource
+    private UploadStorageProperties uploadStorageProperties;
 
     public String upload(MultipartFile uploadFile){
         String originalFilename = uploadFile.getOriginalFilename(); //文件原始名字
@@ -57,9 +60,9 @@ public class FileService extends ServiceImpl<FileMapper, MyFile> {
             myFile.setUrl(url);
         }else{
             //File does not exist，则保存文件
-            File folder = new File(Constants.fileFolderPath);
+            File folder = new File(uploadStorageProperties.getFileFolderPath());
             if(!folder.exists()){
-                folder.mkdir();
+                folder.mkdirs();
             }
             String folderPath = folder.getAbsolutePath()+"/";   //文件存储文件夹的位置
             System.out.println("File storage path: "+folderPath);
@@ -84,7 +87,7 @@ public class FileService extends ServiceImpl<FileMapper, MyFile> {
 
     //根据文件名下载文件
     public void download(String fileName, HttpServletResponse response){
-        File file = new File(Constants.fileFolderPath+fileName);
+        File file = new File(uploadStorageProperties.getFileFolderPath()+fileName);
         if(!file.exists()){
             throw new ServiceException(Constants.CODE_500,"File does not exist");
         }

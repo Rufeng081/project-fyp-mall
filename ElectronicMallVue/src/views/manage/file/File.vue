@@ -15,7 +15,7 @@
     <!--          Button bar-->
     <div style="padding-top: 10px">
 
-      <el-upload action="http://localhost:9191/file/upload" :show-file-list="false" :on-success="handleFileUploadSuccess" style="display: inline-block">
+      <el-upload :action="baseApi + '/file/upload'" :show-file-list="false" :on-success="handleFileUploadSuccess" style="display: inline-block">
         <el-button type="primary"><i class="el-icon-a-032" style="padding-right: 6px"></i>Upload</el-button>
       </el-upload>
       <el-button type="danger" @click="delBatch" style="margin-left: 10px"><i class="el-icon-a-022" style="padding-right: 6px"></i>Delete Selected</el-button>
