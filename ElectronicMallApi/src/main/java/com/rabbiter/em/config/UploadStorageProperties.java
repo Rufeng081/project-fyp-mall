@@ -1,6 +1,5 @@
 package com.rabbiter.em.config;
 
-import com.rabbiter.em.utils.PathUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -22,7 +21,9 @@ public class UploadStorageProperties {
     }
 
     private String resolveFolder(String folderName) {
-        String root = StringUtils.hasText(uploadDir) ? uploadDir : PathUtils.getClassLoadRootPath();
+        String root = StringUtils.hasText(uploadDir)
+                ? uploadDir
+                : Paths.get(System.getProperty("user.dir"), "uploads").toString();
         return Paths.get(root, folderName).toString() + File.separator;
     }
 }

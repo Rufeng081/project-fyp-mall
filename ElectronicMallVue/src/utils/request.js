@@ -35,12 +35,15 @@ request.interceptors.response.use(
             res = res ? JSON.parse(res) : res
         }
         // Redirect to login when token is invalid
-        if(res.code==='402'){
+        if (res.code === '401' || res.code === '402') {
+            localStorage.removeItem("user");
             ElementUI.MessageBox({
                 title: 'Error',
                 message: res.msg
-            }).then(() =>{
-                router.push('/login')
+            }).then(() => {
+                if (router.currentRoute.path !== '/login') {
+                    router.push('/login')
+                }
             } )
         }
         return res;

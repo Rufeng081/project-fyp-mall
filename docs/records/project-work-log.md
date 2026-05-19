@@ -808,3 +808,24 @@ MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads
 ```
 
 - Rebuild and redeploy the frontend/backend as documented in `docs/cloud/phase-4-vm-diagnostics-2026-05-19.md`.
+
+## Cloud Deployment Follow-Up Code Hardening: 2026-05-19
+
+### Status
+- **Code-side hardening for VM path/session issues:** complete locally; pending full verification and redeploy by user.
+
+### Changes And Purpose
+| Area | Files | Change | Purpose |
+|---|---|---|---|
+| Backend upload path fallback | `ElectronicMallApi/src/main/java/com/rabbiter/em/config/UploadStorageProperties.java`, `ElectronicMallApi/src/test/java/com/rabbiter/em/config/UploadStoragePropertiesTest.java` | Empty `mall.upload-dir` now resolves to `${user.dir}/uploads/{file,avatar}` instead of the classloader/JAR path. | Prevent uploads from falling back to `target/classes`, `target/test-classes`, or executable-JAR-derived paths when `MALL_UPLOAD_DIR` is missing. |
+| Backend stale constants | `ElectronicMallApi/src/main/java/com/rabbiter/em/constants/Constants.java` | Removed unused `fileFolderPath` and `avatarFolderPath` constants that still referenced `PathUtils.getClassLoadRootPath()`. | Avoid future maintenance accidentally reintroducing classloader-based upload storage. |
+| Frontend expired session handling | `ElectronicMallVue/src/utils/request.js`, `ElectronicMallVue/scripts/check-auth-flows.js` | Axios response interceptor now handles backend `401` token/session expiry in addition to legacy `402`, clears `localStorage.user`, and redirects to `/login`. | Make role/login-status failures deterministic after Redis memory loss, backend restart, or stale browser token. |
+
+### Red-Green Evidence
+- `npm run check:auth` failed before the frontend change because `request.js` did not handle backend `401` responses.
+- `mvn -q -Dtest=UploadStoragePropertiesTest test` failed before the backend change because empty upload config resolved to `target/test-classes/file/`.
+- After the code changes, both targeted checks passed.
+
+### Review Notes
+- Production should still set `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads` on the VM. The new fallback is a safer last resort, not a replacement for explicit production configuration.
+- The current Nginx pattern strips the first external `/api`; legacy frontend calls that already include `/api/...` therefore still intentionally become `/api/api/...` externally so Spring controllers mapped under `/api/...` continue to match.
