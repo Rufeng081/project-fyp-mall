@@ -4,7 +4,9 @@ This directory is the single home for project documentation. The structure separ
 
 ## Current Checkpoint
 
-As of 2026-05-20, the project is in Phase 4 cloud runtime debugging. The Google Cloud VM has been built and the core server stack is running, but the public deployment still has an unresolved blocker where public images/resources do not display. Do not mark Phase 4 complete until product/carousel/avatar/uploaded resource loading, public API routing, and browser-level core e-commerce flow are verified on the VM.
+As of 2026-05-20, the Google Cloud VM has been built and the image/resource display blocker has been resolved. Product images and user avatars now route through the production `/api` base path and backend file storage is documented around `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads`.
+
+The next planned implementation task is the email verification fallback: fix the `Email sender is not configured` runtime path and add a configuration-controlled option that allows direct registration without email verification when SMTP is intentionally disabled.
 
 ## Start Here
 
@@ -15,7 +17,7 @@ As of 2026-05-20, the project is in Phase 4 cloud runtime debugging. The Google 
 | Understand the repository layout | [engineering/repository-structure.md](engineering/repository-structure.md) |
 | Follow the development workflow | [engineering/development-workflow.md](engineering/development-workflow.md) |
 | Deploy to Google Cloud | [engineering/cloud-deployment-guide.md](engineering/cloud-deployment-guide.md) |
-| Resume cloud runtime debugging | [cloud/README.md](cloud/README.md) |
+| Review cloud runtime fixes | [cloud/README.md](cloud/README.md) |
 | Run acceptance-grade verification | [verification/verification-workflow.md](verification/verification-workflow.md) |
 | Review completed phase evidence | [reports/](reports/) |
 
@@ -44,7 +46,6 @@ As of 2026-05-20, the project is in Phase 4 cloud runtime debugging. The Google 
 | File | Scope |
 | --- | --- |
 | [records/environment-setup-log.md](records/environment-setup-log.md) | Local setup fixes, service checks, and environment notes. |
-| [records/phase-4-cloud-deployment-handoff-2026-05-19.md](records/phase-4-cloud-deployment-handoff-2026-05-19.md) | Detailed handoff from VM provisioning and initial deployment work. |
 | [records/project-work-log.md](records/project-work-log.md) | Consolidated task plans, findings, decisions, progress, verification results, and error records from prior work sessions. |
 
 ## Maintenance Rules

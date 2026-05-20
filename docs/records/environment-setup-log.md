@@ -31,11 +31,11 @@
   - Spring Boot backend listening on port `9191`.
   - MySQL listening on `127.0.0.1:3306`.
   - Redis listening on `127.0.0.1:6379`.
-- Current blocker:
-  - Public deployment is under runtime debugging because public images/resources are not displaying.
+- Runtime status:
+  - Public image/resource display has been fixed after production resource routing and upload storage were corrected.
   - Production upload storage should use `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads` with writable `file/` and `avatar/` subdirectories.
+  - The next runtime issue is email-code registration when SMTP sender variables are not configured; the backend can return `Email sender is not configured`.
 - Related files:
-  - `docs/records/phase-4-cloud-deployment-handoff-2026-05-19.md`.
   - `docs/cloud/phase-4-vm-diagnostics-2026-05-19.md`.
   - `docs/reports/phase-4-cloud-deployment-report.md`.
 

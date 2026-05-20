@@ -92,8 +92,6 @@ PONG
 ```bash
 cd /opt/project-fyp-mall/ElectronicMallApi
 mvn clean package
-sudo mkdir -p /opt/project-fyp-mall/runtime
-cp target/ElectronicMallApi-0.0.1-SNAPSHOT.jar /opt/project-fyp-mall/runtime/project-fyp-mall-api.jar
 ```
 
 ## Backend Environment
@@ -111,6 +109,7 @@ REDIS_PORT=6379
 BREVO_SMTP_USERNAME=CHANGE_ME_IF_EMAIL_TESTING_IS_REQUIRED
 BREVO_SMTP_KEY=CHANGE_ME_IF_EMAIL_TESTING_IS_REQUIRED
 BREVO_SENDER_EMAIL=CHANGE_ME_IF_EMAIL_TESTING_IS_REQUIRED
+MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads
 ```
 
 Protect the file:
@@ -122,21 +121,22 @@ sudo chmod 600 /etc/project-fyp-mall.env
 
 ## systemd Service
 
-Create `/etc/systemd/system/project-fyp-mall.service`:
+Create `/etc/systemd/system/project-fyp-mall-api.service` or copy the repository template from `deploy/systemd/project-fyp-mall-api.service`:
 
 ```ini
 [Unit]
 Description=Project FYP Mall Spring Boot API
-After=network.target mysql.service redis-server.service
+After=network.target
 
 [Service]
+Type=simple
 User=www-data
-WorkingDirectory=/opt/project-fyp-mall
+Group=www-data
+WorkingDirectory=/opt/project-fyp-mall/ElectronicMallApi
 EnvironmentFile=/etc/project-fyp-mall.env
-ExecStart=/usr/bin/java -jar /opt/project-fyp-mall/runtime/project-fyp-mall-api.jar
-SuccessExitStatus=143
-Restart=always
-RestartSec=10
+ExecStart=/usr/bin/java -jar /opt/project-fyp-mall/ElectronicMallApi/target/ElectronicMallApi-0.0.1-SNAPSHOT.jar
+Restart=on-failure
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
@@ -145,11 +145,17 @@ WantedBy=multi-user.target
 Enable the service:
 
 ```bash
-sudo chown -R www-data:www-data /opt/project-fyp-mall/runtime
 sudo systemctl daemon-reload
-sudo systemctl enable project-fyp-mall
-sudo systemctl restart project-fyp-mall
-sudo systemctl status project-fyp-mall --no-pager
+sudo systemctl enable project-fyp-mall-api.service
+sudo systemctl restart project-fyp-mall-api.service
+sudo systemctl status project-fyp-mall-api.service --no-pager
+```
+
+Create persistent upload directories before starting the backend:
+
+```bash
+sudo mkdir -p /opt/project-fyp-mall/uploads/file /opt/project-fyp-mall/uploads/avatar
+sudo chown -R www-data:www-data /opt/project-fyp-mall/uploads
 ```
 
 ## Frontend Build
@@ -225,7 +231,7 @@ Run these on the VM:
 ```bash
 systemctl is-active mysql
 systemctl is-active redis-server
-systemctl is-active project-fyp-mall
+systemctl is-active project-fyp-mall-api.service
 systemctl is-active nginx
 curl -I http://127.0.0.1
 curl "http://127.0.0.1/api/api/good/page?pageNum=1&pageSize=1"

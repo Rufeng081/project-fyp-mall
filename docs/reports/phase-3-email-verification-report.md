@@ -227,6 +227,7 @@ During live setup, two generated Brevo SMTP keys failed authentication because t
 - Redis is used only for short-lived verification state.
 - No SMTP secret is committed to the repository.
 - For production, future improvements could include stronger password hashing, failed-code attempt limits, HTML email templates, audit logs, and a dedicated migration tool such as Flyway or Liquibase.
+- Current follow-up after cloud deployment: when SMTP sender variables are missing, the backend can return `Email sender is not configured`. The next planned change is to improve this configuration path and add a controlled option that allows direct registration without email verification for deployments that intentionally skip SMTP.
 
 ## 6. Authentication Follow-up: Auto-Login and Account Login
 

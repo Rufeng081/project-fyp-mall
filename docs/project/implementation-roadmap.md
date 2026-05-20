@@ -405,7 +405,9 @@ After this phase, the registration function should support:
 
 ## Current Implementation Checkpoint
 
-As of 2026-05-20, the Google Cloud VM has been provisioned and the core server stack is running. Phase 4 is still in cloud runtime debugging because public images/resources are not displaying on the public deployment. Keep this phase open until product/carousel/avatar/uploaded resource loading, upload retrieval, API routing, and the browser-level core e-commerce flow are verified on the VM.
+As of 2026-05-20, the Google Cloud VM has been provisioned, the core server stack is running, and the public image/resource display issue has been fixed. Production frontend resources now use `/api`, Nginx proxies requests to Spring Boot, and uploaded files are expected under `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads`.
+
+The next implementation task is under the authentication/email area: fix the `Email sender is not configured` runtime behavior and add a configuration-controlled direct-registration option for deployments that intentionally skip email verification.
 
 ## Objective
 

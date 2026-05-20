@@ -46,14 +46,9 @@ Deploy Project FYP Mall to Google Cloud so it is accessible through a public IP 
 
 ## Current Cloud Runtime Status
 
-As of 2026-05-20, the VM has been built and the core services are running, but Phase 4 remains in progress. The active production blocker is that public images/resources do not display on the public deployment.
+As of 2026-05-20, the production image/resource display issue has been fixed. The deployed frontend no longer depends on browser-side `localhost:9191` for product images, user avatars, uploads, or role checks. Production requests use `/api`, Nginx proxies them to the Spring Boot service on `127.0.0.1:9191`, and backend file storage is configured through `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads`.
 
-Current diagnosis focuses on:
-
-- Production resource URLs resolving through the VM instead of browser-side `localhost`.
-- Nginx external paths for backend controllers that are mapped under `/api/...`.
-- Persistent upload storage through `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads`.
-- Public browser verification after the frontend/backend are rebuilt and redeployed on the VM.
+The next runtime blocker is email-code registration on environments without complete SMTP sender settings. The backend currently reports `Email sender is not configured` when SMTP variables are missing. The next planned implementation will improve that path and add a controlled direct-registration fallback for deployments that intentionally skip email verification.
 
 ## Deployment Verification
 
@@ -67,9 +62,10 @@ Current diagnosis focuses on:
 | Redis service | Running in VM diagnostics. |
 | Spring Boot systemd service | Running in VM diagnostics. |
 | Nginx config test | Passed in VM diagnostics. |
-| Public frontend access | Partially verified; site is served, but public image/resource display is unresolved. |
-| Public API access through Nginx | Partially verified; current correct legacy-controller path is `/api/api/...` with the active Nginx strip-prefix config. |
-| Golden-path functional check | Pending |
+| Public frontend access | Verified by user after image/resource fix. |
+| Public image/avatar/resource access | Fixed; product and avatar images display correctly after `/api` resource routing and upload-directory migration. |
+| Public API access through Nginx | Route pattern verified; backend `/api/...` controllers resolve externally as `/api/api/...`, while `/file`, `/avatar`, and `/role` resolve externally as `/api/file`, `/api/avatar`, and `/api/role`. |
+| Golden-path functional check | Image/resource flow verified by user; full post-email-fallback browser regression remains a future check. |
 
 ## Operation Log
 
@@ -83,12 +79,13 @@ Current diagnosis focuses on:
 | 2026-05-19 | Added regression checks for production `localhost:9191` references and configurable upload storage. | Frontend check and backend test failed before the fix, then passed after the code change. |
 | 2026-05-19 | Replaced remaining production-facing frontend localhost URLs and moved backend upload storage behind `MALL_UPLOAD_DIR`. | Ready for VM rebuild/redeploy by user. |
 | 2026-05-19 | Ran full local verification for the cloud fix. | `npm run check:deployment`, `npm run check:auth`, `npm run build`, `mvn -q test`, and `mvn -q package` passed. |
-| 2026-05-20 | Synchronized documentation after confirming the VM is built and image display is the active blocker. | Root README, docs index, roadmap, cloud notes, setup log, and work log updated. |
+| 2026-05-20 | Synchronized documentation after confirming the VM was built and image display was the active blocker at that time. | Root README, docs index, roadmap, cloud notes, setup log, and work log updated. |
+| 2026-05-20 | User confirmed the image display issue is fixed and the project is running normally. | Documentation updated to close the image/resource blocker and identify email verification fallback as the next task. |
 
 ## Notes
 
 - Secrets are not stored in repository files or documentation.
-- SMTP email verification requires Brevo credentials in the VM environment file before live registration email testing can pass.
+- SMTP email verification requires Brevo credentials in the VM environment file before live registration email testing can pass; missing sender configuration currently produces `Email sender is not configured`.
 - VM production uploads require `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads` and writable `file/` and `avatar/` subdirectories owned by `www-data`.
-- The current public image/resource issue must be resolved before Phase 4 is marked complete.
+- The public image/resource issue has been resolved. Keep the deployment helper files as the canonical instructions for rebuilding and verifying the VM.
 - HTTPS is optional for Phase 4 and can be added later through a domain and Certbot.

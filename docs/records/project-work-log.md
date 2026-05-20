@@ -66,7 +66,7 @@ Primary report:
 
 ## Phase 4 Cloud Deployment
 
-Status: in progress; Google Cloud VM is built and the current work is cloud runtime debugging.
+Status: image/resource runtime blocker fixed; Google Cloud VM is built and running.
 
 Target outcome:
 
@@ -81,8 +81,10 @@ Current checkpoint as of 2026-05-20:
 - VM `fyp-mall-vm` is provisioned in `asia-southeast1-b`.
 - Public endpoint recorded during deployment: `http://34.143.225.11`.
 - Diagnostics show Nginx, Spring Boot, MySQL, and Redis running.
-- Active blocker: public images/resources fail to display on the public deployment.
-- Phase 4 remains open until image/resource access and the browser-level core flow pass on the VM.
+- User confirmed the public image/resource display issue is fixed and the project is running normally.
+- Product images and user avatars now route through `/api` instead of browser-side `localhost:9191`.
+- Backend upload storage is documented and configured around `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads`.
+- Next implementation task: fix the `Email sender is not configured` runtime path and add a configuration-controlled option to allow direct registration without email verification.
 
 Primary files:
 
@@ -93,7 +95,7 @@ Current local changes:
 
 - Frontend production API base URL is `/api` through `VUE_APP_API_BASE_URL`.
 - Frontend development API base URL remains `http://localhost:9191`.
-- Backend port, MySQL, and Redis settings can be overridden through environment variables.
+- Backend port, MySQL, Redis, SMTP, and upload storage settings can be overridden through environment variables.
 - Added `npm run check:deployment` to verify the deployment-oriented frontend settings.
 
 ## Verification Results Recorded From Prior Work
@@ -673,10 +675,8 @@ Phase 1 and Phase 2 complete; Phase 3 Brevo email verification implementation an
 - Removed the temporary send-code payload file from `/private/tmp`.
 - Finalized the Chrome automation session.
 
-### Current Blocker
-- The backend must be restarted to load the new SMTP warning log.
-- A required local process escalation for finding/stopping/restarting the 9191 Spring Boot process was rejected by Codex usage limits, with the message to retry after 1:38 PM or upgrade.
-- Existing backend process may still be listening on 9191 with the pre-log code. It could not be stopped through the current session because stdin is closed and escalation is temporarily unavailable.
+### Historical Blocker
+- This temporary restart blocker was resolved later in the same Phase 5 work. Live Brevo SMTP delivery was eventually verified and recorded in the later completion notes.
 
 ### Phase 5 Error Log
 | Timestamp | Error | Attempt | Resolution |
@@ -770,7 +770,7 @@ Phase 1 and Phase 2 complete; Phase 3 Brevo email verification implementation an
 - **Minimal cloud runtime code fix:** complete locally; pending VM redeploy by user.
 
 ### Actions Taken
-- Reviewed `docs/records/phase-4-cloud-deployment-handoff-2026-05-19.md` to recover the cloud deployment state and stop point.
+- Reviewed the temporary Phase 4 deployment handoff to recover the cloud deployment state and stop point.
 - Extracted and analyzed `docs/cloud/fyp-mall-diagnostics.tar.gz`.
 - Confirmed VM services are running in the diagnostic snapshot: Nginx on port 80, Spring Boot on port 9191, MySQL on 3306, and Redis on 6379.
 - Confirmed the previous non-executable backend JAR problem is no longer current because the backend now starts successfully from `/opt/project-fyp-mall/runtime/project-fyp-mall-api.jar`.
@@ -841,20 +841,20 @@ MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads
 ## Documentation Sync During Cloud Runtime Debugging: 2026-05-20
 
 ### Status
-- Documentation synchronized for the current Phase 4 state.
-- No historical records were removed.
+- Documentation synchronized for the Phase 4 runtime-debugging state at that time.
+- This section is retained as historical context; later notes in this work log mark image/resource display as fixed.
 
 ### Updates
-- Root `README.md` now records that the Google Cloud server build is complete and cloud runtime debugging is active.
+- Root `README.md` recorded that the Google Cloud server build was complete and cloud runtime debugging was active at that time.
 - `docs/README.md` now includes a current checkpoint and points cloud debugging readers to `docs/cloud/README.md`.
 - Added `docs/cloud/README.md` as the cloud deployment diagnostics index.
 - Updated `docs/project/implementation-roadmap.md` with a Phase 4 implementation checkpoint.
-- Updated `docs/reports/phase-4-cloud-deployment-report.md` with VM identifiers, service status from diagnostics, and the active image/resource blocker.
+- Updated `docs/reports/phase-4-cloud-deployment-report.md` with VM identifiers, service status from diagnostics, and the then-active image/resource blocker.
 - Updated `docs/records/environment-setup-log.md` with the Google Cloud VM environment checkpoint.
 - Updated `docs/engineering/repository-structure.md` to include the `docs/cloud/` directory purpose.
 
-### Current Blocker
-- The public VM deployment currently does not display public images/resources. Continue from the VM repair and verification commands in `docs/cloud/phase-4-vm-diagnostics-2026-05-19.md`.
+### Historical Blocker
+- This image/resource blocker was fixed later on 2026-05-20. Continue to use `docs/cloud/phase-4-vm-diagnostics-2026-05-19.md` as diagnostic evidence, not as the current blocker list.
 
 ## Temporary Documentation Cleanup: 2026-05-20
 
@@ -887,3 +887,27 @@ MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads
 - Frontend auth/deployment checks passed.
 - Frontend production build passed with existing Browserslist and asset-size warnings.
 - Project-wide metadata search confirmed the standardized namespace and file headers are applied consistently.
+
+## Image Display Fix Documentation Sync: 2026-05-20
+
+### Status
+- Public product image and user avatar display is fixed.
+- Documentation now treats the image/resource issue as resolved instead of an active blocker.
+- Temporary Phase 4 handoff content has been consolidated into the cloud diagnostics report, Phase 4 report, and this work log.
+
+### Findings
+- Database path values were already correct: active `good.imgs` values use `/file/...` and active `sys_user.avatar_url` values use `/avatar/...`.
+- The previous production failure was caused by deployed frontend bundles using browser-side `localhost:9191` and backend file storage expecting files under `uploads/file` and `uploads/avatar`.
+- The durable production pattern is:
+  - Vue production API/resource base: `/api`.
+  - Nginx proxy: `/api/` to `http://127.0.0.1:9191/`.
+  - Backend upload root: `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads`.
+
+### Documentation Updates
+- Updated root `README.md`, `docs/README.md`, `docs/project/implementation-roadmap.md`, `docs/reports/phase-4-cloud-deployment-report.md`, `docs/cloud/README.md`, `docs/cloud/phase-4-vm-diagnostics-2026-05-19.md`, `docs/records/environment-setup-log.md`, `docs/engineering/cloud-deployment-guide.md`, and this work log.
+- Updated `docs/reports/phase-3-email-verification-report.md` to record the next email fallback task.
+
+### Next Task
+- Fix `Email sender is not configured`.
+- Add a configuration-controlled option that allows direct registration without email verification when SMTP is intentionally disabled.
+- Keep SMTP secrets in runtime environment variables only.

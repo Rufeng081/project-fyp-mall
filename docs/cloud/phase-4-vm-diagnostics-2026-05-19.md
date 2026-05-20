@@ -3,12 +3,14 @@
 ## Source Material
 
 - Diagnostic archive: downloaded as `docs/cloud/fyp-mall-diagnostics.tar.gz` for the 2026-05-19 investigation, then summarized here and removed from the tracked repository during cleanup.
-- Previous handoff: `docs/records/phase-4-cloud-deployment-handoff-2026-05-19.md`
+- Previous handoff: the temporary Phase 4 deployment handoff was consolidated into this diagnostic report, the Phase 4 report, and the project work log, then removed during cleanup.
 - VM diagnostic timestamp: `Tue May 19 13:11:36 UTC 2026`
 - VM: `fyp-mall-vm`
 - Public HTTP endpoint: `http://34.143.225.11`
 
 ## Current Runtime State
+
+Resolution update: the user later confirmed that the public image/resource display issue is fixed and the deployment is running normally. The findings below are retained as diagnostic evidence for the root cause and repair path.
 
 The downloaded diagnostics show that the basic server stack is now running.
 
@@ -277,7 +279,7 @@ MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads
 
 ## VM Commands After Code Fix Is Pushed
 
-Run these in the VM SSH session after the frontend/backend fixes are committed and pushed:
+Run these in the VM SSH session after the frontend/backend fixes are committed and pushed. The current canonical deployment templates are in `deploy/`.
 
 ```bash
 cd /opt/project-fyp-mall
@@ -295,9 +297,7 @@ sudo chown -R www-data:www-data /var/www/project-fyp-mall
 ```bash
 cd /opt/project-fyp-mall/ElectronicMallApi
 mvn -q -DskipTests clean package
-sudo cp target/ElectronicMallApi-0.0.1-SNAPSHOT.jar /opt/project-fyp-mall/runtime/project-fyp-mall-api.jar
-sudo chown www-data:www-data /opt/project-fyp-mall/runtime/project-fyp-mall-api.jar
-sudo systemctl restart project-fyp-mall
+sudo systemctl restart project-fyp-mall-api.service
 ```
 
 If the backend upload-dir change is included, also run:
@@ -316,7 +316,7 @@ MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads
 Then restart again:
 
 ```bash
-sudo systemctl restart project-fyp-mall
+sudo systemctl restart project-fyp-mall-api.service
 ```
 
 After the local fix is pushed, `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads` is required on the VM for production uploads to persist outside the JAR/runtime artifact.

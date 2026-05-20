@@ -10,17 +10,18 @@ Project FYP Mall is a full-stack small e-commerce platform for a Network Technol
 | Core storefront, cart, order, and admin flow stabilization | Complete |
 | Email-code registration and forgot-password reset | Complete |
 | Auth auto-login after registration/reset | Complete |
-| Documentation consolidation | In progress |
+| Documentation consolidation | Complete |
 | Google Cloud server build | Complete; VM stack is running |
-| Cloud runtime debugging | In progress; public images/resources currently fail to display on the public deployment |
+| Cloud runtime debugging | Complete for image/resource display; public deployment now serves product and avatar images correctly |
+| Email verification production fallback | Next task; fix `Email sender is not configured` and add an optional direct-registration mode |
 | JMeter performance evaluation | Planned after cloud runtime verification |
 
 Current cloud checkpoint:
 
 - Google Cloud VM `fyp-mall-vm` has been provisioned and the server stack is running behind Nginx.
 - Current public endpoint recorded in the deployment notes: `http://34.143.225.11`.
-- The active blocker is public image/resource display on the deployed site. The investigation is focused on production resource routing and persistent upload storage.
-- Phase 4 should not be marked fully complete until image display, upload/resource access, public API routing, and the browser-level core flow are verified on the VM.
+- The image/resource blocker has been fixed by routing production frontend resources through `/api`, proxying through Nginx, and using `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads` for persistent backend file storage.
+- The next functional blocker is email-code registration on deployments where SMTP sender variables are missing. The planned improvement is to fix the `Email sender is not configured` path and add a controlled option to allow direct registration without email verification.
 
 ## Repository Layout
 
@@ -113,6 +114,8 @@ Auth endpoints:
 
 Email verification codes are 6 digits, stored in Redis for 5 minutes, and the same email cannot request another code for 60 seconds.
 
+Current follow-up: if the backend returns `Email sender is not configured`, verify that all three SMTP variables are present in the runtime environment. The next implementation task is to add a configuration-controlled direct-registration fallback for deployments that do not use SMTP.
+
 ## Run Locally
 
 Backend:
@@ -148,6 +151,7 @@ Use the repeatable workflow in [docs/verification/verification-workflow.md](docs
 - Frontend auth wiring check.
 - Frontend history-route regression check.
 - Core API golden-path check for storefront, cart, order, payment simulation, and order history.
+- Deployment config check that prevents production builds from reintroducing `localhost:9191`.
 
 ## Documentation
 
