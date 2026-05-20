@@ -6,7 +6,7 @@ This directory is the single home for project documentation. The structure separ
 
 As of 2026-05-20, the Google Cloud VM has been built and the image/resource display blocker has been resolved. Product images and user avatars now route through the production `/api` base path and backend file storage is documented around `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads`.
 
-The next planned implementation task is the email verification fallback: fix the `Email sender is not configured` runtime path and add a configuration-controlled option that allows direct registration without email verification when SMTP is intentionally disabled.
+The email verification service is configured through Brevo SMTP environment variables and now uses the FYP-UKM Rufeng Mall Demo verification email template. Runtime deployments must provide `BREVO_SMTP_USERNAME`, `BREVO_SMTP_KEY`, and `BREVO_SENDER_EMAIL`; direct registration without email verification is not enabled.
 
 ## Start Here
 

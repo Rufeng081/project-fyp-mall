@@ -66,6 +66,39 @@ class EmailVerificationServiceTest {
     }
 
     @Test
+    void sendCodeUsesFypUkmDemoEmailTemplate() {
+        when(redisTemplate.hasKey("auth:email:cooldown:register:student@example.com")).thenReturn(false);
+
+        service.sendCode("student@example.com", "register");
+
+        ArgumentCaptor<String> codeCaptor = ArgumentCaptor.forClass(String.class);
+        verify(valueOperations).set(
+                eq("auth:email:code:register:student@example.com"),
+                codeCaptor.capture(),
+                eq(5L),
+                eq(TimeUnit.MINUTES)
+        );
+
+        ArgumentCaptor<SimpleMailMessage> messageCaptor = ArgumentCaptor.forClass(SimpleMailMessage.class);
+        verify(mailSender).send(messageCaptor.capture());
+        SimpleMailMessage message = messageCaptor.getValue();
+
+        assertEquals("[FYP-UKM] Rufeng Mall Demo Verification Code", message.getSubject());
+        assertEquals("Dear User,\n\n"
+                + "Your verification code for the FYP-UKM Rufeng Mall Demo System is:\n\n"
+                + "====================\n"
+                + "      " + codeCaptor.getValue() + "\n"
+                + "====================\n\n"
+                + "This code is valid for 5 minutes. Please do not share this code with anyone.\n\n"
+                + "This email was sent automatically by the FYP Mall demo system for account registration or password reset verification.\n\n"
+                + "If you did not request this code, you can safely ignore this email.\n\n"
+                + "Regards,\n"
+                + "FYP-UKM Rufeng Mall Demo System\n"
+                + "LI RUFENG\n"
+                + "A206331", message.getText());
+    }
+
+    @Test
     void sendCodeRejectsRepeatedSendDuringCooldown() {
         when(redisTemplate.hasKey("auth:email:cooldown:register:student@example.com")).thenReturn(true);
 

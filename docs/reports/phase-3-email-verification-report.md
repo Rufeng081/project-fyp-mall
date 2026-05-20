@@ -63,6 +63,8 @@ Business rules:
 - Code length: 6 digits.
 - Code TTL: 5 minutes.
 - Resend cooldown: 60 seconds.
+- Outgoing email subject: `[FYP-UKM] Rufeng Mall Demo Verification Code`.
+- Outgoing email body identifies the demo system as `FYP-UKM Rufeng Mall Demo System`, `LI RUFENG`, `A206331`.
 - Registration rejects duplicate username or email.
 - Password reset only sends a code if the email belongs to an existing user.
 - Verification code is deleted after successful use.
@@ -137,6 +139,7 @@ Verified behavior:
 
 - Sending code stores a 6-digit code in Redis for 5 minutes.
 - Sending code creates a 60-second cooldown key.
+- Sending code uses the configured FYP-UKM Rufeng Mall Demo email subject and body.
 - Sending during cooldown is rejected.
 - Correct code verification deletes the Redis code.
 - Wrong code is rejected.
@@ -191,6 +194,7 @@ Verified live outcomes:
 
 - Registration verification email was sent through Brevo SMTP.
 - Brevo Transactional Email Logs showed `Online Mall verification code` events, including `Sent`, `Delivered`, and `First opening`.
+- The email subject/body was later reconfigured on 2026-05-20 to use the FYP-UKM Rufeng Mall Demo template.
 - Registration completed through `POST /api/auth/register-by-email`.
 - New registered user login succeeded through `POST /login`.
 - Forgot-password reset verification email was sent through Brevo SMTP.
@@ -227,9 +231,22 @@ During live setup, two generated Brevo SMTP keys failed authentication because t
 - Redis is used only for short-lived verification state.
 - No SMTP secret is committed to the repository.
 - For production, future improvements could include stronger password hashing, failed-code attempt limits, HTML email templates, audit logs, and a dedicated migration tool such as Flyway or Liquibase.
-- Current follow-up after cloud deployment: when SMTP sender variables are missing, the backend can return `Email sender is not configured`. The next planned change is to improve this configuration path and add a controlled option that allows direct registration without email verification for deployments that intentionally skip SMTP.
+- Current deployment rule: SMTP sender variables are required for email verification. Missing sender configuration is rejected intentionally instead of enabling direct registration without email verification.
 
-## 6. Authentication Follow-up: Auto-Login and Account Login
+## 6. Email Template Configuration Update
+
+Date: 2026-05-20
+
+The email verification service was configured to send the project identity template requested for the FYP-UKM demo:
+
+- Subject: `[FYP-UKM] Rufeng Mall Demo Verification Code`
+- Body includes the generated 6-digit code between separator lines.
+- Body states the 5-minute validity period and account registration/password reset purpose.
+- Signature: `FYP-UKM Rufeng Mall Demo System`, `LI RUFENG`, `A206331`.
+
+The change is limited to `EmailVerificationService` email content and its focused unit test. Redis TTL, resend cooldown, registration flow, reset flow, SMTP configuration, and frontend API behavior were already aligned with the requirement and did not require further code changes.
+
+## 7. Authentication Follow-up: Auto-Login and Account Login
 
 Date: 2026-05-18
 

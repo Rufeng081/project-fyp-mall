@@ -84,7 +84,7 @@ Current checkpoint as of 2026-05-20:
 - User confirmed the public image/resource display issue is fixed and the project is running normally.
 - Product images and user avatars now route through `/api` instead of browser-side `localhost:9191`.
 - Backend upload storage is documented and configured around `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads`.
-- Next implementation task: fix the `Email sender is not configured` runtime path and add a configuration-controlled option to allow direct registration without email verification.
+- Email verification service is configured through Brevo SMTP environment variables and the FYP-UKM Rufeng Mall Demo email template.
 
 Primary files:
 
@@ -97,6 +97,25 @@ Current local changes:
 - Frontend development API base URL remains `http://localhost:9191`.
 - Backend port, MySQL, Redis, SMTP, and upload storage settings can be overridden through environment variables.
 - Added `npm run check:deployment` to verify the deployment-oriented frontend settings.
+
+## Email Verification Service Template Configuration
+
+Date: 2026-05-20
+
+Status: complete.
+
+Completed outcomes:
+
+- Configured outgoing verification email subject as `[FYP-UKM] Rufeng Mall Demo Verification Code`.
+- Configured outgoing verification email body for the FYP-UKM Rufeng Mall Demo System, including the generated 6-digit code, 5-minute validity notice, automated-email notice, ignore-if-not-requested notice, and `LI RUFENG / A206331` signature.
+- Confirmed no additional backend flow changes were needed: Redis stores the code for 5 minutes, resend cooldown remains 60 seconds, and registration/reset flows already use the same email verification service.
+- Updated root and `docs/` progress notes so the current state says the email verification service is configured rather than listing email fallback as the next implementation task.
+
+Verification:
+
+| Check | Result |
+| --- | --- |
+| Targeted email service test | Passed with `mvn -q -Dtest=EmailVerificationServiceTest test`. |
 
 ## Verification Results Recorded From Prior Work
 
@@ -905,9 +924,9 @@ MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads
 
 ### Documentation Updates
 - Updated root `README.md`, `docs/README.md`, `docs/project/implementation-roadmap.md`, `docs/reports/phase-4-cloud-deployment-report.md`, `docs/cloud/README.md`, `docs/cloud/phase-4-vm-diagnostics-2026-05-19.md`, `docs/records/environment-setup-log.md`, `docs/engineering/cloud-deployment-guide.md`, and this work log.
-- Updated `docs/reports/phase-3-email-verification-report.md` to record the next email fallback task.
+- Updated `docs/reports/phase-3-email-verification-report.md` to record the email verification service configuration status.
 
-### Next Task
-- Fix `Email sender is not configured`.
-- Add a configuration-controlled option that allows direct registration without email verification when SMTP is intentionally disabled.
-- Keep SMTP secrets in runtime environment variables only.
+### Current Email Verification State
+- Email verification remains enabled for registration and forgot-password reset.
+- Brevo SMTP credentials must stay in runtime environment variables only.
+- Direct registration without email verification is not enabled.

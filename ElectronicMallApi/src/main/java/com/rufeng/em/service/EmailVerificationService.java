@@ -22,6 +22,7 @@ public class EmailVerificationService {
     private static final Logger log = LoggerFactory.getLogger(EmailVerificationService.class);
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
     private static final SecureRandom RANDOM = new SecureRandom();
+    private static final String EMAIL_SUBJECT = "[FYP-UKM] Rufeng Mall Demo Verification Code";
 
     private final RedisTemplate<String, Object> redisTemplate;
     private final JavaMailSender mailSender;
@@ -63,8 +64,8 @@ public class EmailVerificationService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(senderEmail);
         message.setTo(normalizedEmail);
-        message.setSubject("Online Mall verification code");
-        message.setText("Your verification code is: " + code + "\n\nThis code expires in 5 minutes.");
+        message.setSubject(EMAIL_SUBJECT);
+        message.setText(buildEmailText(code));
         try {
             mailSender.send(message);
         } catch (RuntimeException e) {
@@ -120,6 +121,21 @@ public class EmailVerificationService {
 
     private String generateCode() {
         return String.format("%06d", RANDOM.nextInt(1000000));
+    }
+
+    private String buildEmailText(String code) {
+        return "Dear User,\n\n"
+                + "Your verification code for the FYP-UKM Rufeng Mall Demo System is:\n\n"
+                + "====================\n"
+                + "      " + code + "\n"
+                + "====================\n\n"
+                + "This code is valid for 5 minutes. Please do not share this code with anyone.\n\n"
+                + "This email was sent automatically by the FYP Mall demo system for account registration or password reset verification.\n\n"
+                + "If you did not request this code, you can safely ignore this email.\n\n"
+                + "Regards,\n"
+                + "FYP-UKM Rufeng Mall Demo System\n"
+                + "LI RUFENG\n"
+                + "A206331";
     }
 
     private String buildCodeKey(String email, String purpose) {

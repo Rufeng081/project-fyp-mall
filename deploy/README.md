@@ -55,7 +55,7 @@ At minimum, keep:
 MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads
 ```
 
-Fill in real database, Redis, and SMTP values on the VM only. Do not commit real secrets.
+Fill in real database, Redis, and SMTP values on the VM only. The email verification service sends the FYP-UKM Rufeng Mall Demo template through Brevo SMTP, so registration and forgot-password email codes require all three `BREVO_*` values. Do not commit real secrets.
 
 ## 5. Migrate old uploaded files
 

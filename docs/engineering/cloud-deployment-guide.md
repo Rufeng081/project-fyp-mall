@@ -112,6 +112,8 @@ BREVO_SENDER_EMAIL=CHANGE_ME_IF_EMAIL_TESTING_IS_REQUIRED
 MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads
 ```
 
+The email verification service is configured for Brevo SMTP and sends the FYP-UKM Rufeng Mall Demo verification email template. Fill in all three `BREVO_*` values on the VM before testing registration or forgot-password email codes.
+
 Protect the file:
 
 ```bash
