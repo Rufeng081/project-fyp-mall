@@ -71,6 +71,12 @@ Cloud sync completion:
 - Did not overwrite the live VM MySQL database; database seed application remains a separate backup-first step.
 - Pushed and pulled the follow-up documentation-only commits so the VM also contains the final operation record.
 
+Live database phpMyAdmin follow-up on 2026-06-16:
+
+- Verified that phpMyAdmin still shows the pre-optimization live database because the previous work updated the repository SQL seed, not the live MySQL schema.
+- Read-only VM MySQL checks found the live database still has the legacy `standard` table, no physical foreign keys, no primary key on `good_standard`, `double(10,2)` money fields in `good`, 14 orphaned `order_goods` rows, and missing practical indexes.
+- Recorded the detailed finding in [live-database-phpmyadmin-check-2026-06-16.md](live-database-phpmyadmin-check-2026-06-16.md).
+
 ## Current Documentation Cleanup
 
 Goal:

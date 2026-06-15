@@ -64,6 +64,7 @@ The cloud runtime has also been checked from the local `gcloud` CLI. The active 
 | [records/project-work-log.md](records/project-work-log.md) | Consolidated task plans, findings, decisions, progress, verification results, and error records from prior work sessions. |
 | [records/fyp-readiness-database-audit-2026-06-15.md](records/fyp-readiness-database-audit-2026-06-15.md) | Final FYP readiness, database audit, cloud endpoint check, and documentation/JMeter preparation record. |
 | [records/final-database-verification-cloud-sync-2026-06-15.md](records/final-database-verification-cloud-sync-2026-06-15.md) | Final database/code compatibility verification and GitHub/GCP synchronization record. |
+| [records/live-database-phpmyadmin-check-2026-06-16.md](records/live-database-phpmyadmin-check-2026-06-16.md) | Read-only phpMyAdmin/live MySQL follow-up explaining why repository schema changes were not visible in the live database. |
 
 ## Testing
 
