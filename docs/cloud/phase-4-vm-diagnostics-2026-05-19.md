@@ -366,3 +366,107 @@ Optional Nginx improvement:
 - Return `404` for obviously unwanted paths such as `/vendor/`, `/cgi-bin/`, `/phpunit/`, `/solr/`, `/containers/`, and `*.php`.
 
 This is not the current functional blocker, but it will make logs cleaner and reduce misleading scanner responses.
+
+## Follow-Up Runtime Check: 2026-06-15
+
+### Scope
+
+The VM was checked after local `gcloud` CLI setup was completed. The goal was to confirm the deployed runtime state and investigate a product-detail API failure observed through the Nginx public routing pattern.
+
+### Runtime State
+
+| Component | Result |
+| --- | --- |
+| VM | `fyp-mall-vm` is running in `asia-southeast1-b` with external IP `34.143.225.11`. |
+| Machine type | `e2-medium`. |
+| Firewall | `allow-fyp-mall-http` allows public TCP `80`; HTTPS `443` is not currently open. |
+| Nginx | Active; config test passed. |
+| Spring Boot | Active on port `9191`. |
+| Systemd unit | The active VM unit is `project-fyp-mall.service`, not `project-fyp-mall-api.service`. |
+| MySQL | Active on `127.0.0.1:3306`. |
+| Redis | Active on `127.0.0.1:6379`. |
+| Frontend history routes | `/`, `/topview`, `/goodList`, `/goodView/3`, `/cart`, `/login`, `/register`, and `/manage/home` returned the Vue app through Nginx. |
+| Runtime environment file | `/etc/project-fyp-mall.env` exists and has the expected MySQL, Redis, Brevo SMTP, and `MALL_UPLOAD_DIR` keys set. Secret values were not printed. |
+
+### Issue Found
+
+The product detail route failed through Nginx:
+
+```bash
+curl -i http://127.0.0.1/api/api/good/3
+```
+
+Observed result before the fix:
+
+```text
+HTTP/1.1 500
+{"code":"401","msg":"Session expired. Please log in again","data":null}
+```
+
+The backend journal showed a Redis deserialization failure for cached product data that still referenced the previous Java package name:
+
+```text
+com.rabbiter.em.entity.Good
+```
+
+The active backend package is now under `com.rufeng.em`, so the stale Redis entry could not be deserialized.
+
+Redis evidence:
+
+```bash
+redis-cli --scan --pattern "good:*"
+redis-cli TYPE good:id:3
+redis-cli TTL good:id:3
+redis-cli GET good:id:3
+```
+
+Observed key:
+
+```text
+good:id:3
+TTL: -1
+```
+
+Because the stale cache had no expiry, it would not clear itself automatically.
+
+### Fix Applied
+
+Only the stale product cache key was deleted. No database data, uploaded files, service files, or secrets were changed.
+
+```bash
+redis-cli DEL good:id:3
+```
+
+### Verification After Fix
+
+The previously failing product detail route returned successfully:
+
+```bash
+curl -i http://127.0.0.1/api/api/good/3
+```
+
+Result:
+
+```text
+HTTP/1.1 200
+{"code":"200","data":{"id":3,"name":"Study Desk and Chair Set", ...}}
+```
+
+The product standards route also remained healthy:
+
+```bash
+curl -i http://127.0.0.1/api/api/good/standard/3
+```
+
+Result:
+
+```text
+HTTP/1.1 200
+{"code":"200", ...}
+```
+
+### Follow-Up Notes
+
+- Update deployment documentation and scripts to use the current unit name `project-fyp-mall.service`, or rename the VM unit to match repository templates if consistency is preferred.
+- After package namespace changes or entity serialization changes, clear Redis application caches before or immediately after deployment.
+- Consider making product-cache deserialization failures fall back to database reload instead of surfacing as a product-detail failure.

@@ -4,9 +4,11 @@ This directory is the single home for project documentation. The structure separ
 
 ## Current Checkpoint
 
-As of 2026-05-20, the Google Cloud VM has been built and the image/resource display blocker has been resolved. Product images and user avatars now route through the production `/api` base path and backend file storage is documented around `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads`.
+As of 2026-06-15, the Google Cloud VM has been built and the image/resource display blocker has been resolved. Product images and user avatars now route through the production `/api` base path and backend file storage is documented around `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads`.
 
 The email verification service is configured through Brevo SMTP environment variables and now uses the FYP-UKM Rufeng Mall Demo verification email template. Runtime deployments must provide `BREVO_SMTP_USERNAME`, `BREVO_SMTP_KEY`, and `BREVO_SENDER_EMAIL`; direct registration without email verification is not enabled.
+
+The cloud runtime has also been checked from the local `gcloud` CLI. The active VM service is `project-fyp-mall.service`, a stale Redis product-cache key was removed after a package-namespace migration, and phpMyAdmin is available behind the existing Nginx public port `80` at `http://34.143.225.11/phpmyadmin/`. Apache is bound only to `127.0.0.1:8081` for phpMyAdmin and MySQL port `3306` remains private.
 
 ## Start Here
 
@@ -47,6 +49,13 @@ The email verification service is configured through Brevo SMTP environment vari
 | --- | --- |
 | [records/environment-setup-log.md](records/environment-setup-log.md) | Local setup fixes, service checks, and environment notes. |
 | [records/project-work-log.md](records/project-work-log.md) | Consolidated task plans, findings, decisions, progress, verification results, and error records from prior work sessions. |
+
+## Cloud Runtime Notes
+
+| File | Scope |
+| --- | --- |
+| [cloud/phase-4-vm-diagnostics-2026-05-19.md](cloud/phase-4-vm-diagnostics-2026-05-19.md) | VM diagnostics, image/resource routing fixes, and the 2026-06-15 Redis stale-cache follow-up. |
+| [cloud/phpmyadmin-admin-setup-2026-06-15.md](cloud/phpmyadmin-admin-setup-2026-06-15.md) | phpMyAdmin installation and Nginx/Apache integration for MySQL administration. |
 
 ## Maintenance Rules
 

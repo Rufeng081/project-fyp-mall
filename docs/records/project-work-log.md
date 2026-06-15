@@ -930,3 +930,85 @@ MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads
 - Email verification remains enabled for registration and forgot-password reset.
 - Brevo SMTP credentials must stay in runtime environment variables only.
 - Direct registration without email verification is not enabled.
+
+## VM Runtime Follow-Up: 2026-06-15
+
+### Status
+- Google Cloud CLI connectivity from the local machine was confirmed.
+- VM runtime health check completed.
+- Stale Redis product cache was cleaned up and product detail API recovered.
+
+### Findings
+- `gcloud` is configured for account `a206331@siswa.ukm.edu.my`, project `cobalt-bond-496703-n2`, and zone `asia-southeast1-b`.
+- VM `fyp-mall-vm` is running with public IP `34.143.225.11`.
+- Nginx, MySQL, Redis, and Spring Boot are running.
+- The actual active Spring Boot service is `project-fyp-mall.service`; the older documented `project-fyp-mall-api.service` name is not present on the VM.
+- `/etc/project-fyp-mall.env` exists and has the expected MySQL, Redis, Brevo SMTP, and upload-directory keys set. Secret values were not printed.
+- Frontend history routes returned the Vue app through Nginx.
+- Product detail route `/api/api/good/3` initially failed with HTTP 500 and response body `{"code":"401","msg":"Session expired. Please log in again","data":null}`.
+- Backend logs showed Redis deserialization failure for stale cached product data referencing old package `com.rabbiter.em.entity.Good`.
+- Redis key `good:id:3` had no TTL, so it would not expire automatically.
+
+### Fix Applied
+- Deleted only the stale Redis product cache key:
+
+```bash
+redis-cli DEL good:id:3
+```
+
+### Verification
+| Check | Result |
+| --- | --- |
+| `curl -i http://127.0.0.1/api/api/good/3` | HTTP 200 with product `Study Desk and Chair Set`. |
+| `curl -i http://127.0.0.1/api/api/good/standard/3` | HTTP 200 with product standards. |
+
+### Follow-Up
+- Align repository deployment docs or VM service naming around `project-fyp-mall.service`.
+- Clear Redis application cache after namespace/entity serialization changes.
+- Consider a backend hardening change so stale product-cache deserialization falls back to database reload.
+
+## phpMyAdmin Admin Setup: 2026-06-15
+
+### Status
+- phpMyAdmin was installed on the Google Cloud VM for browser-based administration of the `electronic_mall` database.
+- The final access path is `http://34.143.225.11/phpmyadmin/`.
+- No database tables or records were deleted.
+- MySQL port `3306` was not opened to the public internet.
+
+### Findings
+- Apache and phpMyAdmin were not installed before this task.
+- MySQL `8.0.46` was active on the VM.
+- Nginx was already active on public TCP `80` for the production Vue frontend and `/api/` backend proxy.
+- Existing firewall rule `allow-fyp-mall-http` already allowed TCP `80` for VM tag `fyp-mall-http`; no duplicate firewall rule was created.
+- Apache initially failed to start after installation because Nginx already owned public TCP `80`.
+
+### Fix Applied
+- Installed Apache, PHP, required PHP extensions, and phpMyAdmin.
+- Kept Nginx as the public web server.
+- Changed Apache to listen only on `127.0.0.1:8081`.
+- Enabled `/etc/phpmyadmin/apache.conf` under Apache.
+- Added an Nginx `/phpmyadmin/` reverse proxy to local Apache.
+- Created/updated `mall_admin@localhost` and granted privileges only on `electronic_mall.*`.
+- Stored the generated MySQL password outside Git and documentation.
+
+### Verification
+| Check | Result |
+| --- | --- |
+| `apache2.service` | Active/running. |
+| `nginx.service` | Active/running. |
+| Public port `80` | Nginx on `0.0.0.0:80`. |
+| Local Apache port | Apache on `127.0.0.1:8081`. |
+| Public phpMyAdmin URL | HTTP 200 from `http://34.143.225.11/phpmyadmin/`. |
+| MySQL login | `mall_admin@localhost` login succeeded. |
+| MySQL grants | `ALL PRIVILEGES` on `electronic_mall.*`; global scope remains `USAGE`. |
+
+### Documentation
+- Added `docs/cloud/phpmyadmin-admin-setup-2026-06-15.md`.
+- Updated `docs/cloud/README.md`.
+- Updated `docs/README.md`.
+- Consolidated root planning-file details into this work log and the new cloud note.
+
+### Follow-Up
+- Restrict `/phpmyadmin/` by source IP or disable the Nginx location block when not actively needed.
+- Add HTTPS before treating phpMyAdmin as a long-term public administration endpoint.
+- Keep phpMyAdmin and MySQL credentials out of Git.
