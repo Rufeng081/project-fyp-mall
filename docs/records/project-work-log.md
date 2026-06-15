@@ -62,6 +62,14 @@ Follow-up final verification and cloud-sync record:
 
 - [final-database-verification-cloud-sync-2026-06-15.md](final-database-verification-cloud-sync-2026-06-15.md)
 
+Cloud sync completion:
+
+- Pushed commit `eab14af` to GitHub `main`.
+- Used `gcloud compute ssh` to fast-forward VM `/opt/project-fyp-mall` to `eab14af`.
+- Rebuilt backend and frontend on the VM, synced Vue `dist/` to `/var/www/project-fyp-mall/`, restarted `project-fyp-mall.service`, and reloaded Nginx.
+- Verified public homepage HTTP `200` and public product API JSON `"code":"200"`.
+- Did not overwrite the live VM MySQL database; database seed application remains a separate backup-first step.
+
 ## Current Documentation Cleanup
 
 Goal:

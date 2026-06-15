@@ -42,7 +42,14 @@ Confirm that the database optimization is complete, verify that the backend/fron
 
 ## GitHub Push
 
-Status: pending at the time this record was created.
+Status: completed.
+
+| Item | Result |
+| --- | --- |
+| Branch | `main` |
+| Commit | `eab14af Prepare final FYP database readiness` |
+| Remote | `https://github.com/Rufeng081/project-fyp-mall.git` |
+| Push result | `85e1047..eab14af main -> main` |
 
 ## Google Cloud VM Sync
 
@@ -66,3 +73,36 @@ Planned low-risk sync:
 Database note:
 
 - The optimized SQL seed is ready in the repository, but the cloud VM database should not be overwritten without first backing up the current demo database and confirming that replacing the live seed data is desired.
+
+## Google Cloud VM Sync Result
+
+Status: completed for repository code and application runtime. The cloud database was not overwritten.
+
+Operations performed:
+
+| Operation | Purpose | Result |
+| --- | --- | --- |
+| Confirmed gcloud target | Verify correct GCP account, project, zone, and VM | Account `a206331@siswa.ukm.edu.my`, project `cobalt-bond-496703-n2`, zone `asia-southeast1-b`, VM `fyp-mall-vm` |
+| Checked VM status | Confirm server is reachable before sync | VM `RUNNING`, public IP `34.143.225.11` |
+| Checked VM repository | Confirm current server commit | Initial VM checkout was behind GitHub and had runtime `uploads/` as untracked data |
+| Fixed Git safety/permission blocker | Allow Git sync without using root-owned repository state | Added Git safe-directory entry and corrected repository code ownership to `a206331:a206331`, excluding `uploads` and `runtime` |
+| Pulled GitHub changes | Sync server repository with pushed commit | Fast-forwarded VM repository to `eab14af` |
+| Built backend on VM | Confirm backend still packages on server | `mvn -q -DskipTests clean package` completed |
+| Checked frontend deployment config on VM | Confirm production routing settings on server | `npm run check:deployment` passed |
+| Built frontend on VM | Generate production static files | `npm run build` completed with existing Browserslist and asset-size warnings |
+| Synced frontend static files | Deploy Vue `dist/` to Nginx web root | `rsync` copied `dist/` to `/var/www/project-fyp-mall/` |
+| Restarted backend service | Apply rebuilt backend artifact | `project-fyp-mall.service` restarted and reported `active` |
+| Verified Nginx | Confirm reverse proxy config remains valid | `nginx -t` passed and Nginx reported `active` |
+
+Post-sync smoke checks:
+
+| Check | Result |
+| --- | --- |
+| Public homepage | `curl -I http://34.143.225.11` returned HTTP `200 OK` |
+| Public product API | `curl http://34.143.225.11/api/api/good/page?pageNum=1&pageSize=1` returned JSON with `"code":"200"` |
+| VM local product API | `curl http://127.0.0.1/api/api/good/page?pageNum=1&pageSize=1` returned JSON with `"code":"200"` |
+| VM repository status | `main...origin/main`; untracked `uploads/` remains as runtime data |
+
+Important database deployment finding:
+
+- The VM application has been synchronized with the repository, but the live MySQL database was not replaced with `database/electronic_mall.sql`. This is intentional because applying the optimized SQL seed would reset live demo data unless a backup and controlled import/migration step is performed first.
