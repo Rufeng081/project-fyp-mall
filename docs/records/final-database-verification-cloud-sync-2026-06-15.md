@@ -106,3 +106,8 @@ Post-sync smoke checks:
 Important database deployment finding:
 
 - The VM application has been synchronized with the repository, but the live MySQL database was not replaced with `database/electronic_mall.sql`. This is intentional because applying the optimized SQL seed would reset live demo data unless a backup and controlled import/migration step is performed first.
+
+Final documentation sync:
+
+- After recording the application sync result, documentation-only commit `30d2afa Record final FYP cloud sync` was pushed to GitHub and pulled on the VM.
+- Final VM checks after that pull showed commit `30d2afa`, `project-fyp-mall.service` active, Nginx active, public homepage HTTP `200`, and public product API JSON `"code":"200"`.

@@ -69,6 +69,7 @@ Cloud sync completion:
 - Rebuilt backend and frontend on the VM, synced Vue `dist/` to `/var/www/project-fyp-mall/`, restarted `project-fyp-mall.service`, and reloaded Nginx.
 - Verified public homepage HTTP `200` and public product API JSON `"code":"200"`.
 - Did not overwrite the live VM MySQL database; database seed application remains a separate backup-first step.
+- Pushed and pulled documentation-only commit `30d2afa` so the VM also contains the final operation record.
 
 ## Current Documentation Cleanup
 
