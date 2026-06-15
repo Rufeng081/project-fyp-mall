@@ -109,5 +109,6 @@ Important database deployment finding:
 
 Final documentation sync:
 
-- After recording the application sync result, documentation-only commit `30d2afa Record final FYP cloud sync` was pushed to GitHub and pulled on the VM.
-- Final VM checks after that pull showed commit `30d2afa`, `project-fyp-mall.service` active, Nginx active, public homepage HTTP `200`, and public product API JSON `"code":"200"`.
+- After recording the application sync result, subsequent documentation-only commits were pushed to GitHub and pulled on the VM with `git pull --ff-only`.
+- These documentation-only pulls did not require an application rebuild because they changed only `/docs`.
+- Final VM checks after the documentation sync showed `project-fyp-mall.service` active, Nginx active, public homepage HTTP `200`, and public product API JSON `"code":"200"`.
