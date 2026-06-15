@@ -11,7 +11,8 @@ CREATE TABLE `address`  (
   `link_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Address',
   `link_phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Phone',
   `user_id` bigint(0) NULL DEFAULT NULL COMMENT 'Owner user',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `idx_address_user` (`user_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'Address table' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -50,7 +51,9 @@ CREATE TABLE `carousel`  (
   `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
   `good_id` bigint(0) NULL DEFAULT NULL COMMENT 'Related product ID',
   `show_order` int(0) NULL DEFAULT NULL COMMENT 'Display order',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `idx_carousel_good` (`good_id`) USING BTREE,
+  KEY `idx_carousel_show_order` (`show_order`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'Carousel table' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -71,7 +74,9 @@ CREATE TABLE `cart`  (
   `good_id` bigint(0) NULL DEFAULT NULL COMMENT 'Product ID',
   `standard` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
   `user_id` bigint(0) NULL DEFAULT NULL COMMENT 'User ID',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `idx_cart_user_time` (`user_id`, `create_time`) USING BTREE,
+  KEY `idx_cart_good_standard` (`good_id`, `standard`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'Cart table' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -119,15 +124,16 @@ CREATE TABLE `good`  (
   `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Product name',
   `description` varchar(1600) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Description',
-  `discount` double(10, 2) NOT NULL DEFAULT 1.00 COMMENT 'Discount',
+  `discount` decimal(4, 2) NOT NULL DEFAULT 1.00 COMMENT 'Discount',
   `sales` bigint(0) NOT NULL DEFAULT 0 COMMENT 'Sales',
-  `sale_money` double(10, 2) NULL DEFAULT 0.00 COMMENT 'Sales amount',
+  `sale_money` decimal(10, 2) NULL DEFAULT 0.00 COMMENT 'Sales amount',
   `category_id` bigint(0) NULL DEFAULT NULL COMMENT 'Category ID',
   `imgs` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Product image',
   `create_time` datetime NULL DEFAULT NULL COMMENT 'Created time',
   `recommend` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Recommended flag. 0 no, 1 yes',
   `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Deleted flag. 0 active, 1 deleted',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `idx_good_category_status` (`category_id`, `is_delete`, `recommend`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'Product table' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -148,10 +154,11 @@ INSERT INTO `good` VALUES (10, 'UV Protection Sunglasses', 'Lightweight sunglass
 -- ----------------------------
 DROP TABLE IF EXISTS `good_standard`;
 CREATE TABLE `good_standard`  (
-  `good_id` bigint(0) NULL DEFAULT NULL COMMENT 'Product ID',
-  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Variant',
-  `price` decimal(10, 2) NULL DEFAULT NULL COMMENT 'Price',
-  `store` bigint(0) NULL DEFAULT NULL COMMENT 'Stock'
+  `good_id` bigint(0) NOT NULL COMMENT 'Product ID',
+  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'Variant',
+  `price` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT 'Price',
+  `store` bigint(0) NOT NULL DEFAULT 0 COMMENT 'Stock',
+  PRIMARY KEY (`good_id`, `value`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'Product variant table' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -200,7 +207,8 @@ DROP TABLE IF EXISTS `icon_category`;
 CREATE TABLE `icon_category`  (
   `category_id` bigint(0) NOT NULL COMMENT 'Category ID',
   `icon_id` bigint(0) NOT NULL COMMENT 'Icon ID',
-  PRIMARY KEY (`category_id`) USING BTREE
+  PRIMARY KEY (`category_id`) USING BTREE,
+  KEY `idx_icon_category_icon` (`icon_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'Product category icon relation table' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -233,40 +241,16 @@ CREATE TABLE `order_goods`  (
   `good_id` bigint(0) NULL DEFAULT NULL COMMENT 'Product ID',
   `count` int(0) NULL DEFAULT NULL COMMENT 'Quantity',
   `standard` varchar(1600) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Variant',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `idx_order_goods_order` (`order_id`) USING BTREE,
+  KEY `idx_order_goods_good` (`good_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of order_goods
 -- ----------------------------
 INSERT INTO `order_goods` VALUES (9, 9, 2, 3, 'M');
-INSERT INTO `order_goods` VALUES (10, 10, 2, 3, 'L');
-INSERT INTO `order_goods` VALUES (11, 11, 2, 1, 'S');
-INSERT INTO `order_goods` VALUES (12, 12, 8, 1, '123');
-INSERT INTO `order_goods` VALUES (13, 13, 8, 12, '123');
-INSERT INTO `order_goods` VALUES (14, 14, 8, 1, '123');
-INSERT INTO `order_goods` VALUES (15, 15, 8, 1, '123');
-INSERT INTO `order_goods` VALUES (16, 16, 8, 15, '123');
-INSERT INTO `order_goods` VALUES (17, 17, 8, 1, '123');
-INSERT INTO `order_goods` VALUES (18, 18, 8, 1, '123');
-INSERT INTO `order_goods` VALUES (19, 19, 8, 11, '123');
-INSERT INTO `order_goods` VALUES (20, 20, 2, 1, 'M');
-INSERT INTO `order_goods` VALUES (21, 21, 2, 1, 'L');
-INSERT INTO `order_goods` VALUES (22, 22, 7, 1, 'EU 43');
-INSERT INTO `order_goods` VALUES (23, 23, 2, 1, 'S');
 INSERT INTO `order_goods` VALUES (24, 24, 5, 1, 'White');
-
--- ----------------------------
--- Table structure for standard
--- ----------------------------
-DROP TABLE IF EXISTS `standard`;
-CREATE TABLE `standard`  (
-  `goodId` bigint(0) NOT NULL COMMENT 'Product ID',
-  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Product variant',
-  `price` decimal(10, 2) NULL DEFAULT NULL COMMENT 'Variant price',
-  `store` bigint(0) NULL DEFAULT NULL COMMENT 'Variant stock',
-  PRIMARY KEY (`goodId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'Variant table' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for sys_file
@@ -330,6 +314,7 @@ CREATE TABLE `sys_user`  (
   `avatar_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Avatar URL',
   `role` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Role',
   PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `uk_sys_user_username` (`username`) USING BTREE,
   UNIQUE KEY `uk_sys_user_email` (`email`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'User table' ROW_FORMAT = Dynamic;
 
@@ -353,13 +338,45 @@ CREATE TABLE `t_order`  (
   `link_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Address',
   `state` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'Order status',
   `create_time` datetime NULL DEFAULT NULL COMMENT 'Created time',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'Order table' ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `uk_t_order_order_no` (`order_no`) USING BTREE,
+  KEY `idx_order_user_time` (`user_id`, `create_time`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'Order table' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_order
 -- ----------------------------
 INSERT INTO `t_order` VALUES (9, '20260331223822860904', 367.65, 2, 'Aisha Rahman', '+60 11-1234 5678', 'No. 12, Jalan Reko, Kajang, Selangor 43000, Malaysia', 'Received', '2026-03-31 22:38:22');
 INSERT INTO `t_order` VALUES (24, '20260805014642654151', 116.00, 2, 'Aisha Rahman', '+60 11-1234 5678', 'No. 12, Jalan Reko, Kajang, Selangor 43000, Malaysia', 'Paid', '2026-08-05 01:46:42');
+
+-- ----------------------------
+-- Foreign key constraints
+-- ----------------------------
+ALTER TABLE `address`
+  ADD CONSTRAINT `fk_address_user` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `cart`
+  ADD CONSTRAINT `fk_cart_user` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_cart_good` FOREIGN KEY (`good_id`) REFERENCES `good` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `carousel`
+  ADD CONSTRAINT `fk_carousel_good` FOREIGN KEY (`good_id`) REFERENCES `good` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `good`
+  ADD CONSTRAINT `fk_good_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+ALTER TABLE `good_standard`
+  ADD CONSTRAINT `fk_good_standard_good` FOREIGN KEY (`good_id`) REFERENCES `good` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `icon_category`
+  ADD CONSTRAINT `fk_icon_category_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_icon_category_icon` FOREIGN KEY (`icon_id`) REFERENCES `icon` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `t_order`
+  ADD CONSTRAINT `fk_order_user` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+ALTER TABLE `order_goods`
+  ADD CONSTRAINT `fk_order_goods_order` FOREIGN KEY (`order_id`) REFERENCES `t_order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_order_goods_good` FOREIGN KEY (`good_id`) REFERENCES `good` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 SET FOREIGN_KEY_CHECKS = 1;

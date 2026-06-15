@@ -6,6 +6,62 @@ This file consolidates the previous root-level and documentation-level task plan
 
 2026-05-19
 
+## FYP Readiness and Database Audit
+
+Date: 2026-06-15
+
+Status: documentation, JMeter preparation, and SQL seed schema optimization complete; changes have not been directly applied to the local or cloud database instance.
+
+Completed outcomes:
+
+- Confirmed the local repository targets GitHub project `Rufeng081/project-fyp-mall`.
+- Reviewed `database/electronic_mall.sql` for final FYP database readiness.
+- Confirmed the live cloud endpoint `http://34.143.225.11` responds through Nginx and supports product APIs, product detail, variants, image resource retrieval, demo login, authenticated user ID, cart read, and order history read.
+- Identified database risks: missing key on `good_standard`, no physical foreign keys, duplicate/legacy `standard` table, orphaned `order_goods` seed rows, mixed money data types, weak MD5 password hashing, missing indexes, and cloud database seed-date drift.
+- Added database improvement plan, database design documentation, and ERD explanation under `docs/database/`.
+- Added JMeter plan files for homepage, product list, product detail, login, add to cart, place order, simulated payment, and order history under `docs/testing/jmeter/`.
+- Added a dedicated audit record under `docs/records/fyp-readiness-database-audit-2026-06-15.md`.
+
+Follow-up implementation in the same session:
+
+- Added `tools/check-database-schema.js` for repeatable schema validation.
+- Updated `database/electronic_mall.sql` with composite key on `good_standard`, practical indexes, unique keys for username/order number, decimal money fields, foreign-key constraints, removal of duplicate `standard`, and cleanup of orphaned `order_goods` seed rows.
+- Reviewed backend mappings and confirmed no code synchronization was required for these schema changes.
+- Kept the existing MD5 password flow after explicit project decision; documented it as a demo limitation instead of migrating to BCrypt.
+- Consolidated temporary implementation records into this work log and the dedicated database audit record.
+
+Primary files:
+
+- [../database/DATABASE_IMPROVEMENT_PLAN.md](../database/DATABASE_IMPROVEMENT_PLAN.md)
+- [../database/DATABASE_DESIGN.md](../database/DATABASE_DESIGN.md)
+- [../database/ERD_EXPLANATION.md](../database/ERD_EXPLANATION.md)
+- [fyp-readiness-database-audit-2026-06-15.md](fyp-readiness-database-audit-2026-06-15.md)
+- [../testing/jmeter/README.md](../testing/jmeter/README.md)
+
+Verification:
+
+| Check | Result |
+| --- | --- |
+| Live cloud homepage HEAD request | HTTP 200 from Nginx |
+| Live product list/detail/variant/carousel/image/login/cart/order-history API checks | Passed with successful responses |
+| JMeter file XML validation | Passed with `xmllint --noout docs/testing/jmeter/*.jmx` |
+| Schema validation | Passed with `node tools/check-database-schema.js` after SQL changes |
+| Backend tests | Passed with `mvn -q test` |
+| Backend package | Passed with `mvn -q package` |
+| Frontend auth/deployment checks | Passed with `npm run check:auth` and `npm run check:deployment` |
+| Frontend production build | Passed with `npm run build`; only existing Browserslist and asset-size warnings were reported |
+| JMeter execution | Not run locally because the `jmeter` command is not installed in this workspace |
+| Temporary MySQL import | Blocked because local MySQL is not accepting socket or TCP connections |
+| Password hashing decision | MD5 intentionally retained for current FYP demo scope after user confirmation; no BCrypt code changes remain |
+
+Important limitation:
+
+- Schema changes were applied to `database/electronic_mall.sql` only. Before changing the cloud VM database, back up the VM database, import the SQL into a disposable MySQL database, then apply the update during a controlled window.
+
+Follow-up final verification and cloud-sync record:
+
+- [final-database-verification-cloud-sync-2026-06-15.md](final-database-verification-cloud-sync-2026-06-15.md)
+
 ## Current Documentation Cleanup
 
 Goal:
