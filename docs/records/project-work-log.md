@@ -77,6 +77,16 @@ Live database phpMyAdmin follow-up on 2026-06-16:
 - Read-only VM MySQL checks found the live database still has the legacy `standard` table, no physical foreign keys, no primary key on `good_standard`, `double(10,2)` money fields in `good`, 14 orphaned `order_goods` rows, and missing practical indexes.
 - Recorded the detailed finding in [live-database-phpmyadmin-check-2026-06-16.md](live-database-phpmyadmin-check-2026-06-16.md).
 
+Live database optimization completion on 2026-06-16:
+
+- Added `database/migrations/2026-06-16-live-db-optimization.sql` as the in-place live DB migration.
+- Backed up live MySQL to `/var/backups/project-fyp-mall/electronic_mall_before_live_db_optimization_20260616_232702.sql`.
+- Rehearsed the migration on temporary DB `electronic_mall_migration_check_20260616`.
+- Applied the tested migration to live `electronic_mall`.
+- Verified the live DB now has no legacy `standard` table, no orphan `order_goods`, 11 foreign keys, decimal money fields, the `good_standard(good_id,value)` primary key, and the expected unique/index keys.
+- Verified public read flows and a controlled add-to-cart/place-order/delete-order write flow.
+- Recorded the detailed result in [live-database-optimization-2026-06-16.md](live-database-optimization-2026-06-16.md).
+
 ## Current Documentation Cleanup
 
 Goal:
