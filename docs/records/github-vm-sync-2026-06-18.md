@@ -31,6 +31,7 @@ Push the completed demo-readiness and Phase 6/JMeter work to GitHub, then synchr
 | 13 | Verified server state. | VM HEAD was `ec7cb11`; `nginx`, `project-fyp-mall.service`, `mysql`, and `redis-server` were active. |
 | 14 | Verified runtime endpoint. | Local VM homepage check returned HTTP `200`; product API returned JSON containing `"code":"200"`. |
 | 15 | Checked recent backend warnings/errors. | `journalctl -u project-fyp-mall.service --since '5 minutes ago' -p warning` returned no entries. |
+| 16 | Added and synchronized this operation record. | A follow-up docs-only commit was pushed and pulled so GitHub and the VM repository also contain the sync evidence. No backend/frontend rebuild was needed for the docs-only update. |
 
 ## Notes
 
@@ -42,8 +43,8 @@ Push the completed demo-readiness and Phase 6/JMeter work to GitHub, then synchr
 
 | Target | Version |
 |---|---|
-| Local `main` | `ec7cb11` |
-| GitHub `origin/main` | `ec7cb11` |
-| VM repository | `ec7cb11` |
+| Local `main` | Same final docs-synchronized `main` commit as GitHub and VM |
+| GitHub `origin/main` | Same final docs-synchronized `main` commit as local and VM |
+| VM repository | Same final docs-synchronized `main` commit as local and GitHub |
 | Backend runtime | Rebuilt and restarted from `ec7cb11` |
 | Frontend runtime | Rebuilt from `ec7cb11` and synced to Nginx web root |
