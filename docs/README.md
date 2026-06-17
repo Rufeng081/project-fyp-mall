@@ -73,6 +73,7 @@ Current public Nginx routing note: frontend-generated backend `/api/*` calls are
 | [records/live-database-optimization-2026-06-16.md](records/live-database-optimization-2026-06-16.md) | Backup-first live MySQL migration record, post-migration schema checks, and application smoke-test evidence. |
 | [records/fyp-demo-readiness-audit-2026-06-16.md](records/fyp-demo-readiness-audit-2026-06-16.md) | Full demo-readiness audit covering code structure, database status, local verification, public endpoint checks, and remaining pre-thesis/JMeter risks. |
 | [records/phase-6-jmeter-execution-record-2026-06-16.md](records/phase-6-jmeter-execution-record-2026-06-16.md) | Chronological Phase 6 JMeter execution record, backup/data-impact notes, and verification evidence. |
+| [records/github-vm-sync-2026-06-18.md](records/github-vm-sync-2026-06-18.md) | GitHub push and Google Cloud VM synchronization record for the completed demo-readiness and Phase 6 work. |
 
 ## Testing
 

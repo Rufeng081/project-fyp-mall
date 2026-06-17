@@ -102,6 +102,15 @@ Phase 6 JMeter completion on 2026-06-16:
 - Confirmed VM services remained active after load phases.
 - Recorded the detailed execution in [phase-6-jmeter-execution-record-2026-06-16.md](phase-6-jmeter-execution-record-2026-06-16.md) and the final report in [../reports/phase-6-jmeter-performance-evaluation-report.md](../reports/phase-6-jmeter-performance-evaluation-report.md).
 
+GitHub and VM synchronization on 2026-06-18:
+
+- Committed the completed demo-readiness and Phase 6/JMeter work as `ec7cb11` (`Complete Phase 6 JMeter evaluation`).
+- Fast-forwarded local `main` and pushed `origin/main` to `ec7cb11`.
+- Synced VM `/opt/project-fyp-mall` to `ec7cb11` using repository owner `a206331`, preserving untracked runtime `backups/` and `uploads/` directories.
+- Rebuilt the backend with Maven, rebuilt the frontend with Vue CLI, rsynced `dist/` to `/var/www/project-fyp-mall/`, restarted `project-fyp-mall.service`, and reloaded Nginx.
+- Verified VM services are active, homepage returns HTTP `200`, product API returns JSON `"code":"200"`, and recent backend warning/error logs are empty.
+- Recorded the detailed synchronization result in [github-vm-sync-2026-06-18.md](github-vm-sync-2026-06-18.md).
+
 ## Current Documentation Cleanup
 
 Goal:
