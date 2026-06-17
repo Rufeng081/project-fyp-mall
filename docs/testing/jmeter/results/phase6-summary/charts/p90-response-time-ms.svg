@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="790" viewBox="0 0 1200 790" role="img" aria-label="Phase 6 P90 Response Time">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="12" y="32" font-size="22" font-family="Arial, sans-serif" font-weight="700" fill="#111827">Phase 6 P90 Response Time</text>
+<text x="12" y="50" font-size="12" font-family="Arial, sans-serif" fill="#4b5563">Milliseconds, lower is better</text>
+<line x1="360" y1="50" x2="360" y2="764" stroke="#d1d5db"/>
+<text x="12" y="75" font-size="12" fill="#111827">authenticated load 04_login T10</text>
+<rect x="360" y="63" width="381.1610076670318" height="16" fill="#059669"/>
+<text x="749.1610076670318" y="75" font-size="12" fill="#111827">2784.00</text>
+<text x="12" y="101" font-size="12" fill="#111827">authenticated load 04_login T50</text>
+<rect x="360" y="89" width="275.4654983570646" height="16" fill="#059669"/>
+<text x="643.4654983570646" y="101" font-size="12" fill="#111827">2012.00</text>
+<text x="12" y="127" font-size="12" fill="#111827">authenticated load 04_login T100</text>
+<rect x="360" y="115" width="426.6155531215772" height="16" fill="#059669"/>
+<text x="794.6155531215772" y="127" font-size="12" fill="#111827">3116.00</text>
+<text x="12" y="153" font-size="12" fill="#111827">authenticated load 08_order_history T10</text>
+<rect x="360" y="141" width="337.89704271631985" height="16" fill="#059669"/>
+<text x="705.8970427163199" y="153" font-size="12" fill="#111827">2468.00</text>
+<text x="12" y="179" font-size="12" fill="#111827">authenticated load 08_order_history T50</text>
+<rect x="360" y="167" width="269.85213581599123" height="16" fill="#059669"/>
+<text x="637.8521358159912" y="179" font-size="12" fill="#111827">1971.00</text>
+<text x="12" y="205" font-size="12" fill="#111827">authenticated load 08_order_history T100</text>
+<rect x="360" y="193" width="271.90580503833513" height="16" fill="#059669"/>
+<text x="639.9058050383351" y="205" font-size="12" fill="#111827">1986.00</text>
+<text x="12" y="231" font-size="12" fill="#111827">controlled mutation 05_add_to_cart T1</text>
+<rect x="360" y="219" width="107.06462212486309" height="16" fill="#dc2626"/>
+<text x="475.0646221248631" y="231" font-size="12" fill="#111827">782.00</text>
+<text x="12" y="257" font-size="12" fill="#111827">controlled mutation 05_add_to_cart T5</text>
+<rect x="360" y="245" width="163.19824753559695" height="16" fill="#dc2626"/>
+<text x="531.1982475355969" y="257" font-size="12" fill="#111827">1192.00</text>
+<text x="12" y="283" font-size="12" fill="#111827">controlled mutation 05_add_to_cart T10</text>
+<rect x="360" y="271" width="278.6144578313253" height="16" fill="#dc2626"/>
+<text x="646.6144578313254" y="283" font-size="12" fill="#111827">2035.00</text>
+<text x="12" y="309" font-size="12" fill="#111827">controlled mutation 06_place_order T1</text>
+<rect x="360" y="297" width="327.35487404162103" height="16" fill="#dc2626"/>
+<text x="695.3548740416211" y="309" font-size="12" fill="#111827">2391.00</text>
+<text x="12" y="335" font-size="12" fill="#111827">controlled mutation 06_place_order T5</text>
+<rect x="360" y="323" width="146.63198247535598" height="16" fill="#dc2626"/>
+<text x="514.6319824753559" y="335" font-size="12" fill="#111827">1071.00</text>
+<text x="12" y="361" font-size="12" fill="#111827">controlled mutation 06_place_order T10</text>
+<rect x="360" y="349" width="257.6670317634173" height="16" fill="#dc2626"/>
+<text x="625.6670317634173" y="361" font-size="12" fill="#111827">1882.00</text>
+<text x="12" y="387" font-size="12" fill="#111827">controlled mutation 07_simulated_payment T1</text>
+<rect x="360" y="375" width="47.371303395399785" height="16" fill="#dc2626"/>
+<text x="415.37130339539976" y="387" font-size="12" fill="#111827">346.00</text>
+<text x="12" y="413" font-size="12" fill="#111827">controlled mutation 07_simulated_payment T5</text>
+<rect x="360" y="401" width="56.81818181818182" height="16" fill="#dc2626"/>
+<text x="424.8181818181818" y="413" font-size="12" fill="#111827">415.00</text>
+<text x="12" y="439" font-size="12" fill="#111827">controlled mutation 07_simulated_payment T10</text>
+<rect x="360" y="427" width="60.377875136911285" height="16" fill="#dc2626"/>
+<text x="428.37787513691126" y="439" font-size="12" fill="#111827">441.00</text>
+<text x="12" y="465" font-size="12" fill="#111827">read-only load 01_homepage T10</text>
+<rect x="360" y="453" width="220.01642935377876" height="16" fill="#2563eb"/>
+<text x="588.0164293537788" y="465" font-size="12" fill="#111827">1607.00</text>
+<text x="12" y="491" font-size="12" fill="#111827">read-only load 01_homepage T50</text>
+<rect x="360" y="479" width="743.1544359255203" height="16" fill="#2563eb"/>
+<text x="1111.1544359255204" y="491" font-size="12" fill="#111827">5428.00</text>
+<text x="12" y="517" font-size="12" fill="#111827">read-only load 01_homepage T100</text>
+<rect x="360" y="505" width="750" height="16" fill="#2563eb"/>
+<text x="1118" y="517" font-size="12" fill="#111827">5478.00</text>
+<text x="12" y="543" font-size="12" fill="#111827">read-only load 01_homepage T200</text>
+<rect x="360" y="531" width="336.3910186199343" height="16" fill="#2563eb"/>
+<text x="704.3910186199344" y="543" font-size="12" fill="#111827">2457.00</text>
+<text x="12" y="569" font-size="12" fill="#111827">read-only load 02_product_list T10</text>
+<rect x="360" y="557" width="227.6834611171961" height="16" fill="#2563eb"/>
+<text x="595.6834611171961" y="569" font-size="12" fill="#111827">1663.00</text>
+<text x="12" y="595" font-size="12" fill="#111827">read-only load 02_product_list T50</text>
+<rect x="360" y="583" width="132.53012048192772" height="16" fill="#2563eb"/>
+<text x="500.5301204819277" y="595" font-size="12" fill="#111827">968.00</text>
+<text x="12" y="621" font-size="12" fill="#111827">read-only load 02_product_list T100</text>
+<rect x="360" y="609" width="475.49288061336256" height="16" fill="#2563eb"/>
+<text x="843.4928806133626" y="621" font-size="12" fill="#111827">3473.00</text>
+<text x="12" y="647" font-size="12" fill="#111827">read-only load 02_product_list T200</text>
+<rect x="360" y="635" width="465.4983570646221" height="16" fill="#2563eb"/>
+<text x="833.498357064622" y="647" font-size="12" fill="#111827">3400.00</text>
+<text x="12" y="673" font-size="12" fill="#111827">read-only load 03_product_detail T10</text>
+<rect x="360" y="661" width="239.7316538882804" height="16" fill="#2563eb"/>
+<text x="607.7316538882803" y="673" font-size="12" fill="#111827">1751.00</text>
+<text x="12" y="699" font-size="12" fill="#111827">read-only load 03_product_detail T50</text>
+<rect x="360" y="687" width="347.34392113910184" height="16" fill="#2563eb"/>
+<text x="715.3439211391019" y="699" font-size="12" fill="#111827">2537.00</text>
+<text x="12" y="725" font-size="12" fill="#111827">read-only load 03_product_detail T100</text>
+<rect x="360" y="713" width="497.53559693318726" height="16" fill="#2563eb"/>
+<text x="865.5355969331872" y="725" font-size="12" fill="#111827">3634.00</text>
+<text x="12" y="751" font-size="12" fill="#111827">read-only load 03_product_detail T200</text>
+<rect x="360" y="739" width="500.9583789704272" height="16" fill="#2563eb"/>
+<text x="868.9583789704272" y="751" font-size="12" fill="#111827">3659.00</text>
+</svg>

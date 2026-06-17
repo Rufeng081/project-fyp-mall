@@ -126,7 +126,7 @@ router.beforeEach((to, from, next) => {
   else{    //Authorization not required
     if(to.meta.requireLogin===true){
       if(!isLogin()){
-        next('/login');
+        return next('/login');
       }
     }
     if (to.meta.title) {
@@ -134,7 +134,7 @@ router.beforeEach((to, from, next) => {
     } else {
       document.title ='Unknown Page'
     }
-    next()
+    return next()
   }
 
 })

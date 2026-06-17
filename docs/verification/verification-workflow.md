@@ -1,6 +1,6 @@
 # Verification Workflow
 
-Date: 2026-05-18
+Date: 2026-06-16
 
 This document defines the repeatable verification workflow for the FYP mall project. Use it before accepting authentication, email verification, storefront, order, or documentation changes.
 
@@ -124,6 +124,23 @@ Acceptance criteria:
 - Script exits with code `0`.
 - Output includes `registeredUser`, `cartItemId`, `orderNo`, `orderState: "Paid"`, and Malaysia-style delivery phone.
 
+## 5.1 Public Endpoint Path Mapping
+
+The current public deployment uses `VUE_APP_API_BASE_URL=/api` and an Nginx `/api/` proxy that strips the first `/api/` segment before forwarding to Spring Boot.
+
+Use these public URL patterns for manual checks:
+
+| Backend route type | Backend path | Public path |
+|---|---|---|
+| Backend root route | `/login` | `/api/login` |
+| Backend root route | `/userid` | `/api/userid` |
+| Backend `/api/*` route | `/api/good` | `/api/api/good` |
+| Backend `/api/*` route | `/api/carousel` | `/api/api/carousel` |
+| Uploaded file | `/file/<name>` | `/api/file/<name>` |
+| Avatar file | `/avatar/<name>` | `/api/avatar/<name>` |
+
+Do not use `http://34.143.225.11/api/good` as a public manual check for product list under the current Nginx template. It forwards to backend `/good` and returns `401`.
+
 ## 6. Email Verification Runtime Checklist
 
 For live SMTP verification, use runtime environment variables only:
@@ -164,14 +181,20 @@ Before handoff:
 
 ## 8. Current Acceptance Snapshot
 
-Latest local verification on 2026-05-18:
+Latest local and public verification on 2026-06-16:
 
 | Check | Result |
 |---|---|
-| `mvn -q -Dtest=UserServiceEmailAuthTest test` | Passed, 7 tests |
 | `mvn -q test` | Passed |
 | `mvn -q package` | Passed |
 | `npm run check:auth` | Passed |
-| `npm run build` | Passed with existing warnings |
-| `FRONTEND_PORT=9193 npm run check:routes` | Passed for 12 routes |
-| `node tools/phase12-api-golden-path.js` | Passed; created paid order `20260518202435039470` |
+| `npm run check:deployment` | Passed |
+| `npm run build` | Passed with existing Browserslist and asset-size warnings |
+| `node tools/check-database-schema.js` | Passed |
+| Public homepage `http://34.143.225.11/` | HTTP 200; browser loaded `/topview` with title `Online Mall` |
+| Public demo login and authenticated read APIs | Passed for user ID, addresses, cart, and order history |
+
+Not executed in this 2026-06-16 audit:
+
+- Local `node tools/phase12-api-golden-path.js`, because it requires running local MySQL/Redis/backend services and mutates data.
+- Public add-to-cart, place-order, and simulated-payment mutations, because Phase 6/JMeter mutation testing is intentionally deferred.

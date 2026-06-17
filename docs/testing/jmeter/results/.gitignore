@@ -1,0 +1,14 @@
+# Keep final summaries and selected lightweight evidence in Git.
+*.jtl
+*.log
+*-html/
+**/*-html/
+
+!.gitignore
+!phase6-summary/
+!phase6-summary/**
+!**/*.md
+!**/*.csv
+!**/*.svg
+!**/*.png
+!**/*.jpg

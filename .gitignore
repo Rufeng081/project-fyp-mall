@@ -27,6 +27,7 @@ progress.md
 
 # Local diagnostic archives
 docs/cloud/*.tar.gz
+tools/downloads/
 
 # Frontend dependencies and build output
 ElectronicMallVue/node_modules/

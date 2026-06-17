@@ -19,4 +19,12 @@ sudo systemctl reload nginx
 
 The backend should run on `127.0.0.1:9191`, and uploaded files should be stored under `/opt/project-fyp-mall/uploads`.
 
+The current template intentionally strips the first public `/api/` segment before forwarding to the backend. With the existing frontend code and `VUE_APP_API_BASE_URL=/api`, this means:
+
+- Frontend calls to backend `/api/*` routes are public as `/api/api/*`.
+- Backend root routes such as `/login` and `/userid` are public as `/api/login` and `/api/userid`.
+- Uploaded file and avatar routes are public as `/api/file/*` and `/api/avatar/*`.
+
+For manual API checks, use `/api/api/good` rather than `/api/good`.
+
 Do not commit `/etc/project-fyp-mall.env` or any real environment files. They can contain database credentials, SMTP keys, and other secrets.

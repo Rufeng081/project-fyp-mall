@@ -1,8 +1,14 @@
 # JMeter Test Plans
 
-Date: 2026-06-15
+Date: 2026-06-16
 
 These JMeter plans support final FYP demonstration readiness testing for the small cloud-based mall system.
+
+For Phase 6 planning, execution scope, load levels, result organization, and report interpretation, see:
+
+- [phase-6-jmeter-performance-evaluation-plan.md](phase-6-jmeter-performance-evaluation-plan.md)
+- [../../reports/phase-6-jmeter-performance-evaluation-report.md](../../reports/phase-6-jmeter-performance-evaluation-report.md)
+- [results/phase6-summary/summary-tables.md](results/phase6-summary/summary-tables.md)
 
 Default target:
 
@@ -48,3 +54,11 @@ Suggested cloud readiness order:
 4. `04_login.jmx`
 5. `08_order_history.jmx`
 6. Mutation plans only after backup: `05_add_to_cart.jmx`, `06_place_order.jmx`, `07_simulated_payment.jmx`
+
+Current planning status:
+
+- Phase 6 was executed on 2026-06-16 as a controlled academic network performance evaluation, not a commercial capacity claim.
+- Official retained results are under `results/phase6-summary/`.
+- Raw `.jtl` files and generated HTML reports are stored locally under `results/` but ignored by Git.
+- Mutation tests require a database backup and low concurrency because they create cart/order data and consume stock.
+- Public backend `/api/*` routes should use `${API_PREFIX}/api/*` with `API_PREFIX=/api` under the current Nginx configuration.

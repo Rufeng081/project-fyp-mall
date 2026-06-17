@@ -97,6 +97,18 @@ sudo systemctl reload nginx
 
 The template serves Vue files from `/var/www/project-fyp-mall`, falls back to `index.html` for Vue history routes, and proxies `/api/` to `http://127.0.0.1:9191/`.
 
+Because the production Axios base URL is `/api` and many existing frontend calls already include `/api/...`, manual public checks for backend `/api/*` routes use a doubled public prefix:
+
+| Backend path | Public path |
+|---|---|
+| `/api/good` | `/api/api/good` |
+| `/api/carousel` | `/api/api/carousel` |
+| `/api/good/standard/3` | `/api/api/good/standard/3` |
+| `/login` | `/api/login` |
+| `/userid` | `/api/userid` |
+| `/file/<name>` | `/api/file/<name>` |
+| `/avatar/<name>` | `/api/avatar/<name>` |
+
 ## 8. Verify production assets
 
 After building the Vue frontend, verify no production dist file contains `localhost:9191`:

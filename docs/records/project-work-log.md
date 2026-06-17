@@ -87,6 +87,21 @@ Live database optimization completion on 2026-06-16:
 - Verified public read flows and a controlled add-to-cart/place-order/delete-order write flow.
 - Recorded the detailed result in [live-database-optimization-2026-06-16.md](live-database-optimization-2026-06-16.md).
 
+Phase 6 JMeter completion on 2026-06-16:
+
+- Installed Apache JMeter 5.6.3 locally under ignored tooling after official SHA512 verification.
+- Parameterized all eight JMeter plans with `THREADS`, `RAMP_UP`, and `LOOPS`.
+- Added sampler-level response assertions for homepage HTML and backend JSON `"code":"200"` responses.
+- Created VM-side MySQL backup `/opt/project-fyp-mall/backups/electronic_mall_phase6_before_20260616_1452.sql` before mutation tests.
+- Ran all eight smoke plans with 21 total samples and 0 errors.
+- Ran read-only load for homepage, product list, and product detail at 10/50/100/200 threads with 0 errors.
+- Ran authenticated load for login and order history at 10/50/100 threads with 0 errors.
+- Ran controlled mutation load for add-to-cart, place-order, and simulated-payment at 1/5/10 threads with 0 errors.
+- Summarized 3197 official JMeter sampler executions with 0 errors and 0.00% observed error rate.
+- Recorded mutation data impact: post-run `t_order=37`, `cart=25`, Chair stock `483`, paid orders `19`, and pending orders `17`.
+- Confirmed VM services remained active after load phases.
+- Recorded the detailed execution in [phase-6-jmeter-execution-record-2026-06-16.md](phase-6-jmeter-execution-record-2026-06-16.md) and the final report in [../reports/phase-6-jmeter-performance-evaluation-report.md](../reports/phase-6-jmeter-performance-evaluation-report.md).
+
 ## Current Documentation Cleanup
 
 Goal:
@@ -1093,3 +1108,62 @@ redis-cli DEL good:id:3
 - Restrict `/phpmyadmin/` by source IP or disable the Nginx location block when not actively needed.
 - Add HTTPS before treating phpMyAdmin as a long-term public administration endpoint.
 - Keep phpMyAdmin and MySQL credentials out of Git.
+
+## FYP Demo Readiness Audit: 2026-06-16
+
+### Scope
+- Full project readiness check before thesis writing and Phase 6 JMeter/Jammer execution.
+- Reviewed local source, documentation, database design, public endpoint, GitHub metadata, and Google Cloud VM state.
+
+### Changes Made
+- Fixed frontend protected-route guard in `ElectronicMallVue/src/router/index.js` by returning immediately after unauthenticated redirect to `/login`.
+- Added a static guard assertion to `ElectronicMallVue/scripts/check-auth-flows.js`.
+- Added `docs/records/fyp-demo-readiness-audit-2026-06-16.md`.
+- Updated `docs/README.md`, `docs/verification/verification-workflow.md`, `docs/cloud/README.md`, `deploy/README.md`, and `deploy/nginx/README.md`.
+
+### Verification
+| Check | Result |
+|---|---|
+| `node tools/check-database-schema.js` | Passed |
+| `npm run check:auth` | Passed |
+| `npm run check:deployment` | Passed |
+| `mvn -q test` | Passed |
+| `mvn -q package` | Passed |
+| `npm run build` | Passed with existing Browserslist and asset-size warnings |
+| Public homepage/browser check | Passed; `/topview` loaded with title `Online Mall` |
+| Public demo login and authenticated read APIs | Passed |
+| `gcloud` VM service checks | `nginx`, `project-fyp-mall.service`, `mysql`, and `redis-server` active |
+| Live MySQL checks | Expected core tables, key indexes, and foreign keys present |
+| Recent VM error logs | No backend or Nginx error entries in the last 30 minutes |
+
+### Remaining Notes
+- Public manual checks for backend `/api/*` routes must use `/api/api/*` under the current Nginx path mapping.
+- Live cloud data still has 2023 cart/order timestamps while repository seed data uses 2026 timestamps.
+- Current checkout flow should be described as single-item checkout unless backend multi-item order handling is strengthened.
+- Password storage remains frontend MD5 and should be documented as a demo limitation.
+- Public mutation checks for add-to-cart, place-order, and simulated payment remain deferred to Phase 6/JMeter work.
+
+## Phase 6 JMeter Planning: 2026-06-16
+
+### Scope
+- Created a planning-only Phase 6 document for Apache JMeter performance evaluation.
+- Did not execute JMeter tests in this step.
+- Confirmed that Phase 6 fits the FYP scope because the project objective includes cloud-based network performance evaluation.
+
+### Documentation Added
+- [../testing/jmeter/phase-6-jmeter-performance-evaluation-plan.md](../testing/jmeter/phase-6-jmeter-performance-evaluation-plan.md)
+
+### Key Planning Decisions
+- Treat Phase 6 as a controlled academic evaluation, not a commercial scalability claim.
+- Collect average, median, 90th percentile, min/max response time, throughput, error rate, and success rate.
+- Separate read-only, authentication, mutation, and optional mixed-user scenarios.
+- Run read-only tests before mutation tests.
+- Back up the live database before add-to-cart, order placement, or simulated payment load tests.
+- Use conservative mutation load levels because the current checkout flow mutates cart/order/stock data.
+- Keep public path mapping explicit: backend `/api/*` routes are public as `/api/api/*` under the current Nginx template.
+
+### Next Phase 6 Execution Step
+- Confirm JMeter installation.
+- Create `docs/testing/jmeter/results/`.
+- Run one-user smoke tests for all eight `.jmx` plans.
+- Only after smoke tests pass, run controlled load levels and prepare result tables/charts for the FYP report.
