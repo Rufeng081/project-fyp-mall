@@ -191,7 +191,7 @@ Latest local and public verification on 2026-06-16:
 | `npm run check:deployment` | Passed |
 | `npm run build` | Passed with existing Browserslist and asset-size warnings |
 | `node tools/check-database-schema.js` | Passed |
-| Public homepage `http://34.143.225.11/` | HTTP 200; browser loaded `/topview` with title `Online Mall` |
+| Public homepage `http://34.143.225.11/` | HTTP 200; browser loaded `/topview` with title `Rufeng Mall | FYP E-Commerce System` |
 | Public demo login and authenticated read APIs | Passed for user ID, addresses, cart, and order history |
 
 Not executed in this 2026-06-16 audit:

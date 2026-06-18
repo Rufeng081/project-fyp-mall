@@ -8,7 +8,7 @@ The project is a small e-commerce platform adapted for a UKM FYP demonstration. 
 
 Core positioning:
 
-- Product type: small online mall / campus-friendly e-commerce demo.
+- Product type: Rufeng Mall / campus-friendly e-commerce demo.
 - Currency: `RM` / MYR.
 - Locale context: Malaysia addresses, `+60` phone numbers, English UI.
 - Payment scope: simulated payment only; no real payment gateway.
@@ -356,7 +356,7 @@ File: `src/views/Login.vue`
 Current content:
 
 - Background image.
-- Title: `Login - Online Mall`.
+- Title: `Login - Rufeng Mall`.
 - Username field.
 - Password field.
 - `Login` button.

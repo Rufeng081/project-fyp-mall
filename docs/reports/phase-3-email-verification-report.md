@@ -193,7 +193,7 @@ The actual SMTP key is not committed, not written to documentation, and was only
 Verified live outcomes:
 
 - Registration verification email was sent through Brevo SMTP.
-- Brevo Transactional Email Logs showed `Online Mall verification code` events, including `Sent`, `Delivered`, and `First opening`.
+- Brevo Transactional Email Logs showed `Rufeng Mall verification code` events, including `Sent`, `Delivered`, and `First opening`.
 - The email subject/body was later reconfigured on 2026-05-20 to use the FYP-UKM Rufeng Mall Demo template.
 - Registration completed through `POST /api/auth/register-by-email`.
 - New registered user login succeeded through `POST /login`.

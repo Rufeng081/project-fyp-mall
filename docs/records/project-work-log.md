@@ -844,7 +844,7 @@ Phase 1 and Phase 2 complete; Phase 3 Brevo email verification implementation an
 - Verified the same user could log in with the reset password; response code was `200`.
 - Confirmed both Redis verification keys were deleted after successful registration/reset consumption.
 - Confirmed the local MySQL `sys_user` table contains the new live-test user with role `user`.
-- Confirmed Brevo Transactional Email Logs show `Online Mall verification code` entries with `Sent`, `Delivered`, and `First opening` events.
+- Confirmed Brevo Transactional Email Logs show `Rufeng Mall verification code` entries with `Sent`, `Delivered`, and `First opening` events.
 - Ran backend tests with `mvn -q test`; exit code `0`.
 - Ran frontend production build with `npm run build`; exit code `0` with existing Browserslist and asset-size warnings only.
 - Started Vue dev server on `http://localhost:9192` and verified `npm run check:routes`; 12 routes passed.
@@ -1139,7 +1139,7 @@ redis-cli DEL good:id:3
 | `mvn -q test` | Passed |
 | `mvn -q package` | Passed |
 | `npm run build` | Passed with existing Browserslist and asset-size warnings |
-| Public homepage/browser check | Passed; `/topview` loaded with title `Online Mall` |
+| Public homepage/browser check | Passed; `/topview` loaded with title `Rufeng Mall | FYP E-Commerce System` |
 | Public demo login and authenticated read APIs | Passed |
 | `gcloud` VM service checks | `nginx`, `project-fyp-mall.service`, `mysql`, and `redis-server` active |
 | Live MySQL checks | Expected core tables, key indexes, and foreign keys present |

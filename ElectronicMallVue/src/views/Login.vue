@@ -14,7 +14,7 @@
                         user-drag: none;
                     "
                 />
-                <b style="font-size: 28px">Login - Online Mall</b>
+                <b style="font-size: 28px">Login - Rufeng Mall</b>
             </div>
             <div style="margin-top: 30px">
                 <el-form label-width="70px">

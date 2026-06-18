@@ -9,7 +9,7 @@ As of 2026-06-16:
 - Google Cloud VM provisioning is complete.
 - The VM server stack is running with Nginx, Spring Boot, MySQL, and Redis.
 - Public HTTP endpoint recorded during deployment: `http://34.143.225.11`.
-- Public homepage/browser check passed: the app loads `/topview`, title `Online Mall`, and visible storefront/category content without captured console errors.
+- Public homepage/browser check passed: the app loads `/topview`, title `Rufeng Mall | FYP E-Commerce System`, and visible storefront/category content without captured console errors.
 - Public demo user login and authenticated read checks passed for user ID, addresses, cart, and order history.
 - `gcloud` read-only verification confirmed VM `fyp-mall-vm` is RUNNING, and VM services `nginx`, `project-fyp-mall.service`, `mysql`, and `redis-server` are active.
 - Live MySQL has the expected core tables, key indexes, and foreign keys. Checked counts: `good=9`, `sys_user=2`, `t_order=3`.

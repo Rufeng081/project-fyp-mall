@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="3">
         <div style="font-size: 20px; font-weight: bold; text-align: center">
-          <a href="/"><i class="el-icon-a-011"></i> Online Mall</a>
+          <a href="/"><i class="el-icon-a-011"></i> Rufeng Mall</a>
         </div>
       </el-col>
       <el-col :span="17">
