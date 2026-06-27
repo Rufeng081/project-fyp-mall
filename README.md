@@ -75,6 +75,15 @@ Password: root
 Redis: 127.0.0.1:6379
 ```
 
+Cloud phpMyAdmin access for the practice VM:
+
+```text
+URL: http://34.143.225.11/phpmyadmin/
+Database: electronic_mall
+Username: admin
+Password: sxEn91pKbj4cHEWdcy1i
+```
+
 The seed data is prepared for the FYP demo:
 
 - Product, category, user, address, and order sample values are in English.

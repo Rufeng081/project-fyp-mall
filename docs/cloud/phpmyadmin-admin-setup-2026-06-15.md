@@ -134,21 +134,28 @@ sudo systemctl reload nginx
 
 ## MySQL Admin User
 
-A local-only MySQL user was created for phpMyAdmin login. The generated password was delivered to the operator during the session and is intentionally not stored in the repository.
+A local-only MySQL user was created for phpMyAdmin login. On 2026-06-27, the practice VM phpMyAdmin account was reset to the shared exercise credentials below:
+
+```text
+URL: http://34.143.225.11/phpmyadmin/
+Database: electronic_mall
+Username: admin
+Password: sxEn91pKbj4cHEWdcy1i
+```
 
 ```sql
-CREATE USER IF NOT EXISTS 'mall_admin'@'localhost' IDENTIFIED BY '<generated-password>';
-ALTER USER 'mall_admin'@'localhost' IDENTIFIED BY '<generated-password>';
-GRANT ALL PRIVILEGES ON electronic_mall.* TO 'mall_admin'@'localhost';
+CREATE USER IF NOT EXISTS 'admin'@'localhost' IDENTIFIED BY 'sxEn91pKbj4cHEWdcy1i';
+ALTER USER 'admin'@'localhost' IDENTIFIED BY 'sxEn91pKbj4cHEWdcy1i';
+GRANT ALL PRIVILEGES ON electronic_mall.* TO 'admin'@'localhost';
 FLUSH PRIVILEGES;
-SHOW GRANTS FOR 'mall_admin'@'localhost';
+SHOW GRANTS FOR 'admin'@'localhost';
 ```
 
 Observed grants:
 
 ```text
-GRANT USAGE ON *.* TO `mall_admin`@`localhost`
-GRANT ALL PRIVILEGES ON `electronic_mall`.* TO `mall_admin`@`localhost`
+GRANT USAGE ON *.* TO `admin`@`localhost`
+GRANT ALL PRIVILEGES ON `electronic_mall`.* TO `admin`@`localhost`
 ```
 
 ## Verification
@@ -162,10 +169,10 @@ GRANT ALL PRIVILEGES ON `electronic_mall`.* TO `mall_admin`@`localhost`
 | `http://127.0.0.1:8081/phpmyadmin/` from VM | HTTP `200` |
 | `http://127.0.0.1/phpmyadmin/` from VM through Nginx | HTTP `200` |
 | `http://34.143.225.11/phpmyadmin/` from local Mac | HTTP `200` |
-| `mall_admin` login to MySQL | Successful |
+| `admin` login to MySQL | Successful |
 | `electronic_mall` table visibility | Successful |
 
-Tables visible to `mall_admin` included:
+Tables visible to `admin` included:
 
 ```text
 address

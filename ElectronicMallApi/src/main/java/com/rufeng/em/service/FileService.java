@@ -87,7 +87,7 @@ public class FileService extends ServiceImpl<FileMapper, MyFile> {
 
     //根据文件名下载文件
     public void download(String fileName, HttpServletResponse response){
-        File file = new File(uploadStorageProperties.getFileFolderPath()+fileName);
+        File file = resolveDownloadFile(fileName);
         if(!file.exists()){
             throw new ServiceException(Constants.CODE_500,"File does not exist");
         }
@@ -101,6 +101,14 @@ public class FileService extends ServiceImpl<FileMapper, MyFile> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    File resolveDownloadFile(String fileName) {
+        File uploadedFile = new File(uploadStorageProperties.getFileFolderPath() + fileName);
+        if (uploadedFile.exists()) {
+            return uploadedFile;
+        }
+        return new File(System.getProperty("user.dir"), "file" + File.separator + fileName);
     }
     public int fakeDelete(int id){
         UpdateWrapper<MyFile> updateWrapper = new UpdateWrapper<>();
