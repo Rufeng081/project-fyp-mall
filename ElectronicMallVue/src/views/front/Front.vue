@@ -1,18 +1,14 @@
 <template>
-  <el-container style="height: 100%;width:100%;">
-    <el-header style="background-color: white">
+  <el-container class="front-shell">
+    <el-header class="front-header">
       <Navagation :user="user"
                   :role="role"
                   :login-status="loginStatus"
       ></Navagation>
     </el-header>
-
-
-    <el-main style="background-color: lightgrey;width:100%;">
-
+    <el-main class="front-main">
       <router-view />
     </el-main>
-
   </el-container>
 </template>
 
@@ -75,8 +71,26 @@ export default {
 
 <style scoped>
 @import "../../resource/css/search.css";
-.image {
+
+.front-shell {
+  min-height: 100vh;
   width: 100%;
-  display: block;
+  background:
+    radial-gradient(circle at 8% 12%, rgba(91, 43, 214, 0.08), transparent 26%),
+    linear-gradient(180deg, var(--mall-bg) 0%, #ffffff 100%);
+}
+
+.front-header {
+  height: auto !important;
+  padding: 0;
+  line-height: normal;
+  background: transparent;
+}
+
+.front-main {
+  width: 100%;
+  padding: 0 0 34px;
+  background: transparent;
+  overflow: visible;
 }
 </style>

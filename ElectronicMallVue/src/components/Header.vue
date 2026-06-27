@@ -1,25 +1,24 @@
 <template>
-  <div style="display: flex;">
-    <div style="flex: 1;">
-    <!--          Collapse button-->
-    <span style="font-size: 25px;cursor: pointer" :class="collapseIcon" v-on:click="$emit('collapse')" :title="collapseTitle"></span>
-    <!--          Collapse button-->
-    <span style="font-size: 25px;cursor: pointer;margin-left: 10px" class='iconfont icon-r-left' v-on:click="back" title="Back"></span>
-<!--    Breadcrumb-->
-    <el-breadcrumb style="display: inline-block; margin-left: 30px;font-size: 22px">
-      <el-breadcrumb-item :to="{ path: '/manage/home' }">Home</el-breadcrumb-item>
-      <el-breadcrumb-item>{{routePath}}</el-breadcrumb-item>
-    </el-breadcrumb>
+  <div class="admin-header">
+    <div class="header-left">
+      <button class="header-icon" type="button" @click="$emit('collapse')" :title="collapseTitle">
+        <span :class="collapseIcon"></span>
+      </button>
+      <button class="header-icon" type="button" @click="back" title="Back">
+        <span class="iconfont icon-r-left"></span>
+      </button>
+      <el-breadcrumb class="admin-breadcrumb">
+        <el-breadcrumb-item :to="{ path: '/manage/home' }">Home</el-breadcrumb-item>
+        <el-breadcrumb-item>{{ routePath }}</el-breadcrumb-item>
+      </el-breadcrumb>
     </div>
-    <!--          Settings button-->
-    <el-dropdown style="margin-right: 40px;cursor: pointer">
-    <span class="el-dropdown-link">
-      <div style="display: inline-block;font-size: 22px;font-weight: 600;">
-        <img :src="baseApi + user.avatarUrl" class="avatar">
-          {{user.nickname }}
-      <i class="el-icon-arrow-down el-icon--right" style="margin-right: 15px"></i>
-      </div>
-    </span>
+
+    <el-dropdown class="admin-profile">
+      <span class="el-dropdown-link">
+        <img :src="baseApi + user.avatarUrl" class="avatar" alt="Admin avatar" />
+        {{ user.nickname }}
+        <i class="el-icon-arrow-down el-icon--right"></i>
+      </span>
       <el-dropdown-menu slot="dropdown" style="text-align: center">
         <el-dropdown-item>
           <div @click="$router.push('/manage/person')">Profile</div>
@@ -27,65 +26,99 @@
         <el-dropdown-item>
           <div @click="logout">Logout</div>
         </el-dropdown-item>
-
-
       </el-dropdown-menu>
     </el-dropdown>
   </div>
-
 </template>
 
 <script>
-import request from "@/utils/request";
-
 export default {
   name: "Header",
   props: {
     collapseIcon: String,
     collapseTitle: String,
-    user: Object
+    user: Object,
   },
-  methods:{
+  methods: {
     logout() {
       localStorage.removeItem("user");
-      this.$router.push('/login');
+      this.$router.push("/login");
       this.$message.success("Logged out successfully");
     },
-    back(){
-      this.$router.go(-1)
-    }
-
+    back() {
+      this.$router.go(-1);
+    },
   },
-  data(){
-    return{
-      routePath: '',
+  data() {
+    return {
+      routePath: "",
       baseApi: this.$store.state.baseApi,
-
-
-      // user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {nickname:'Login expired'}
-    }
+    };
   },
   watch: {
-    //Breadcrumb
-    '$route': function (){
-      this.routePath=this.$route.meta.path
+    "$route": function () {
+      this.routePath = this.$route.meta.path;
     },
-
   },
   created() {
-    // this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {nickname:'Login expired'};
-    this.routePath=this.$route.meta.path;
-  }
-}
-
+    this.routePath = this.$route.meta.path;
+  },
+};
 </script>
 
 <style scoped>
-.avatar{
-  width: 60px;
+.admin-header {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.header-left {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-icon {
+  width: 42px;
+  height: 42px;
+  border: none;
   border-radius: 10px;
-  position: relative;
-  top: 10px;
-  right: 5px;
+  background: var(--mall-primary-soft);
+  color: var(--mall-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+.admin-breadcrumb {
+  margin-left: 12px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.admin-profile {
+  margin-right: 24px;
+  cursor: pointer;
+}
+
+.el-dropdown-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--mall-text);
+  font-weight: 800;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  object-fit: cover;
 }
 </style>

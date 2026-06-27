@@ -1,10 +1,10 @@
 <template>
-  <div style="height: 100%">
-    <el-container style="height: 100%">
+  <div class="manage-shell">
+    <el-container class="manage-container">
       <!--      Sidebar-->
       <el-aside
         :width="sideWidth + 'px'"
-        style="background-color: rgb(238, 241, 246); height: 100%"
+        class="manage-aside"
       >
         <Aside :is-collapse="isCollapse"></Aside>
       </el-aside>
@@ -12,7 +12,7 @@
       <el-container>
         <!--        Header-->
         <el-header
-          style="border-bottom: 1px solid #ccc; background-color: aliceblue;height: 80px;"
+          class="manage-header"
         >
           <Header
             :collapse-icon="collapseIcon"
@@ -22,7 +22,7 @@
           ></Header>
         </el-header>
 
-        <el-main :class="{bk: $route.path=='/manage/home'}">
+        <el-main class="manage-main" :class="{bk: $route.path=='/manage/home'}">
           <router-view @refresh="getUser" />
         </el-main>
       </el-container>
@@ -31,20 +31,37 @@
 </template>
 
 <style>
-.el-header {
-  background-color: #b3c0d1;
-  color: #333;
-  line-height: 80px;
+.manage-shell,
+.manage-container {
+  min-height: 100vh;
 }
 
-.el-aside {
-  color: #333;
+.manage-aside {
+  height: 100vh;
+  background: #f4f1fb;
+  border-right: 1px solid var(--mall-border);
+}
+
+.manage-header {
+  height: 80px !important;
+  line-height: 80px;
+  border-bottom: 1px solid var(--mall-border);
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--mall-text);
+}
+
+.manage-main {
+  background:
+    radial-gradient(circle at 92% 8%, rgba(47, 191, 155, 0.12), transparent 26%),
+    var(--mall-bg);
 }
 
 .bk {
   width: 100%;
-  background: url("@/resource/img/back.jpg") center center no-repeat;
-  background-size: 100% 100%;
+  background:
+    linear-gradient(135deg, rgba(251, 249, 255, 0.94), rgba(255, 255, 255, 0.82)),
+    url("@/resource/img/back.jpg") center center no-repeat;
+  background-size: cover;
 }
 </style>
 

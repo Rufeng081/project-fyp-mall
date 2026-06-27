@@ -1,325 +1,361 @@
 <template>
-    <div class="main-box">
-        <div>
-            <!--    Left image-->
-            <!-- <div class="image-box">
-        <img :src="baseApi + good.imgs" class="image" />
-      </div> -->
+  <div class="product-detail-page mall-page">
+    <section class="detail-card mall-card">
+      <div class="image-container">
+        <img :src="baseApi + good.imgs" :alt="good.name" />
+      </div>
 
-            <div class="image-container">
-                <img :src="baseApi + good.imgs" alt="Your Image" />
-            </div>
-            <!--    Right detail panel-->
-            <div class="detail-box">
-                <!--      Product name and description-->
-                <div>
-                    <span style="font-size: 22px"
-                        ><strong>{{ good.name }}</strong></span
-                    ><br />
-                </div>
-                <div style="margin-top: 20px">
-                    <span style="font-size: 17px">{{ good.description }}</span>
-                </div>
-                <!--      Price panel-->
+      <div class="detail-box">
+        <span class="product-badge">Rufeng Mall Selection</span>
+        <h2>{{ good.name }}</h2>
+        <p class="description">
+          {{ good.description || "A selected product prepared for the FYP mall demonstration." }}
+        </p>
 
-                <div class="price-box" v-if="good.discount < 1">
-                    <dl>
-                        <div>
-                            <dt>Original Price</dt>
-                            <dd style="text-decoration: line-through">
-                                RM <b>{{ price }}</b>
-                            </dd>
-                        </div>
-                        <div>
-                            <dt>Discount</dt>
-                            <dd>{{ discount }}</dd>
-                        </div>
-                        <div>
-                            <dt>Sale Price</dt>
-                            <dd style="color: red; font-size: 25px">
-                                RM <b>{{ realPrice }}</b>
-                            </dd>
-                        </div>
-                    </dl>
-                </div>
-                <div class="price-box" v-if="good.discount === 1">
-                    <dl>
-                        <div>
-                            <dt>Price</dt>
-                            <dd style="color: red; font-size: 25px">
-                                RM  <b>{{ price }}</b>
-                            </dd>
-                        </div>
-                    </dl>
-                </div>
-                <!--      Monthly Sales-->
-                <div style="margin-top: 20px">
-                    <span>Monthly Sales:</span>
-                    <span>{{ good.sales }}</span
-                    ><br />
-                    <span style="height: 40px" v-if="showStore"
-                        >Stock: {{ store }}</span
-                    >
-                </div>
-                <!--      Select variant-->
-                <div
-                    style="margin-top: 15px; height: 50px"
-                    v-if="standards.length !== 0"
-                >
-                    <el-radio-group
-                        v-for="(standard, index) in standards"
-                        v-model="checkedStandard"
-                        @change="change(standard)"
-                        :key="index"
-                    >
-                        <el-radio-button
-                            class="standard"
-                            :label="standard.value"
-                        ></el-radio-button>
-                    </el-radio-group>
-                </div>
-                <!--      Select quantity-->
-                <div style="margin-top: 20px">
-                    <el-input-number
-                        v-model="count"
-                        controls-position="right"
-                        :min="1"
-                        :max="store"
-                    ></el-input-number>
-                </div>
-                <!--      Purchase buttons-->
-                <div style="margin-top: 30px">
-                    <el-button type="success" @click="goToOrder"
-                        >Buy Now</el-button
-                    >
-                    <el-button
-                        type="primary"
-                        @click="addToCart"
-                        icon="el-icon-shopping-cart-1"
-                        >Add to Cart</el-button
-                    >
-                </div>
-            </div>
+        <div class="price-box" v-if="good.discount < 1">
+          <div class="price-row muted">
+            <span>Original Price</span>
+            <strong class="line-through">RM {{ price }}</strong>
+          </div>
+          <div class="price-row">
+            <span>Discount</span>
+            <strong>{{ discount }}</strong>
+          </div>
+          <div class="price-row sale">
+            <span>Sale Price</span>
+            <strong>RM {{ realPrice }}</strong>
+          </div>
         </div>
-    </div>
+        <div class="price-box" v-if="good.discount === 1">
+          <div class="price-row sale">
+            <span>Price</span>
+            <strong>RM {{ price }}</strong>
+          </div>
+        </div>
+
+        <div class="meta-grid">
+          <div>
+            <span>Monthly Sales</span>
+            <strong>{{ good.sales || 0 }}</strong>
+          </div>
+          <div v-if="showStore">
+            <span>Stock</span>
+            <strong>{{ store }}</strong>
+          </div>
+        </div>
+
+        <div class="option-section" v-if="standards.length !== 0">
+          <label>Choose Variant</label>
+          <el-radio-group
+            v-for="(standard, index) in standards"
+            v-model="checkedStandard"
+            @change="change(standard)"
+            :key="index"
+          >
+            <el-radio-button class="standard" :label="standard.value"></el-radio-button>
+          </el-radio-group>
+        </div>
+
+        <div class="option-section">
+          <label>Quantity</label>
+          <el-input-number
+            v-model="count"
+            controls-position="right"
+            :min="1"
+            :max="store"
+          ></el-input-number>
+        </div>
+
+        <div class="action-row">
+          <el-button type="primary" @click="goToOrder">Buy Now</el-button>
+          <el-button type="success" @click="addToCart" icon="el-icon-shopping-cart-1">
+            Add to Cart
+          </el-button>
+        </div>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
-import API from "@/utils/request";
-
 export default {
-    name: "GoodView",
-    data() {
-        return {
-            baseApi: this.$store.state.baseApi,
-            good: {},
-            goodId: Number,
-            price: -1,
-            isDiscount: false,
-            discount: "",
-            standards: [],
-            checkedStandard: "",
-            store: 0,
-            showStore: false,
-            count: 1,
+  name: "GoodView",
+  data() {
+    return {
+      baseApi: this.$store.state.baseApi,
+      good: {},
+      goodId: Number,
+      price: -1,
+      isDiscount: false,
+      discount: "",
+      standards: [],
+      checkedStandard: "",
+      store: 0,
+      showStore: false,
+      count: 1,
+    };
+  },
+  methods: {
+    getPriceRange(standards) {
+      let arr = standards.map((item) => {
+        return item.price;
+      });
+      for (let i = 0; i < arr.length; i++) {
+        let min = i;
+        for (let j = i + 1; j < arr.length; j++) {
+          if (arr[j] < arr[min]) {
+            min = j;
+          }
+        }
+        [arr[i], arr[min]] = [arr[min], arr[i]];
+      }
+      if (arr[0] === arr[arr.length - 1]) {
+        return arr[0];
+      } else {
+        return arr[0] + " ~ " + arr[arr.length - 1];
+      }
+    },
+    change(standard) {
+      this.showStore = true;
+      this.price = standard.price;
+      this.store = standard.store;
+    },
+    goToOrder() {
+      if (this.standards.length !== 0) {
+        if (this.checkedStandard === "") {
+          this.$message.warning("Please select a variant");
+          return false;
+        }
+      }
+      this.$router.push({
+        name: "preOrder",
+        query: {
+          good: JSON.stringify(this.good),
+          realPrice: this.realPrice,
+          num: this.count,
+          standard: this.checkedStandard,
+        },
+      });
+    },
+    addToCart() {
+      if (!localStorage.getItem("user")) {
+        this.$router.push("/login");
+        return false;
+      }
+      if (!this.checkedStandard) {
+        this.$message.error("Please select a variant");
+        return false;
+      }
+      this.request.get("/userid").then((res) => {
+        let userId = res;
+        let cart = {
+          userId: userId,
+          goodId: this.goodId,
+          standard: this.checkedStandard,
+          count: this.count,
         };
+        this.request.post("/api/cart", cart).then((res) => {
+          if (res.code === "200") {
+            this.$message.success("Added to cart successfully");
+          }
+        });
+      });
     },
-    methods: {
-        getPriceRange(standards) {
-            let arr = standards.map((item) => {
-                return item.price;
-            });
-            //Selection sort
-            for (let i = 0; i < arr.length; i++) {
-                // Assume the current item is the minimum and scan the rest
-                let min = i;
-                for (let j = i + 1; j < arr.length; j++) {
-                    // Compare with later values and keep the minimum index
-                    if (arr[j] < arr[min]) {
-                        min = j;
-                    }
-                }
-                [arr[i], arr[min]] = [arr[min], arr[i]];
-            }
-            if (arr[0] === arr[arr.length - 1]) {
-                return arr[0];
-            } else {
-                return arr[0] + " ~ " + arr[arr.length - 1];
-            }
-        },
-        change(standard) {
-            this.showStore = true;
-            this.price = standard.price;
-            this.store = standard.store;
-        },
-        goToOrder() {
-            if (this.standards.length !== 0) {
-                if (this.checkedStandard === "") {
-                    this.$message.warning("Please select a variant");
-                    return false;
-                }
-            }
-            console.log(this.good);
-            console.log(this.checkedStandard);
-            this.$router.push({
-                name: "preOrder",
-                query: {
-                    good: JSON.stringify(this.good),
-                    realPrice: this.realPrice,
-                    num: this.count,
-                    standard: this.checkedStandard,
-                },
-            });
-        },
-        addToCart() {
-            //Redirect guests to login
-            console.log(localStorage.getItem("user"));
-            if (!localStorage.getItem("user")) {
-                this.$router.push("/login");
-                return false;
-            }
-            if (!this.checkedStandard) {
-                this.$message.error("Please select a variant");
-                return false;
-            }
-            // Get current user ID from the server
-            this.request.get("/userid").then((res) => {
-                let userId = res;
-                let cart = {
-                    userId: userId,
-                    goodId: this.goodId,
-                    standard: this.checkedStandard,
-                    count: this.count,
-                };
-                this.request.post("/api/cart", cart).then((res) => {
-                    if (res.code === "200") {
-                        this.$message.success("Added to cart successfully");
-                    }
-                });
-            });
-        },
-    },
+  },
 
-    created() {
-        //Initialize product information
-        // this.good = JSON.parse(this.$route.query.good)
-        this.goodId = this.$route.params.goodId;
-        this.request.get("/api/good/" + this.goodId).then((res) => {
-            if (res.code === "200") {
-                this.good = res.data;
-                let discount = this.good.discount;
-                if (discount < 1) {
-                    this.isDiscount = true;
-                    this.discount = (discount * 100).toFixed(0) + "% of original price";
-                }
-            } else {
-                this.$router.go(0);
-            }
-        });
-        //Get product variant information from the server
-        this.request.get("/api/good/standard/" + this.goodId).then((res) => {
-            if (res.code === "200") {
-                let standards = JSON.parse(res.data);
-                this.standards = standards;
-                //Select the first variant by default
-                this.price = this.getPriceRange(standards);
-            } else {
-                //No variants
-                this.price = this.good.price;
-                this.store = this.good.store;
-                this.showStore = true;
-            }
-        });
+  created() {
+    this.goodId = this.$route.params.goodId;
+    this.request.get("/api/good/" + this.goodId).then((res) => {
+      if (res.code === "200") {
+        this.good = res.data;
+        let discount = this.good.discount;
+        if (discount < 1) {
+          this.isDiscount = true;
+          this.discount = (discount * 100).toFixed(0) + "% of original price";
+        }
+      } else {
+        this.$router.go(0);
+      }
+    });
+    this.request.get("/api/good/standard/" + this.goodId).then((res) => {
+      if (res.code === "200") {
+        let standards = JSON.parse(res.data);
+        this.standards = standards;
+        this.price = this.getPriceRange(standards);
+      } else {
+        this.price = this.good.price;
+        this.store = this.good.store;
+        this.showStore = true;
+      }
+    });
+  },
+  computed: {
+    realPrice: function () {
+      if (this.good.discount < 1) {
+        if (isNaN(this.price)) {
+          let prices = this.price.split(" ~ ");
+          let down = Number(prices[0]) * this.good.discount;
+          let up = Number(prices[1]) * this.good.discount;
+          return down.toFixed(2) + " ~ " + up.toFixed(2);
+        } else {
+          return (this.price * this.good.discount).toFixed(2);
+        }
+      }
+      return this.price;
     },
-    mounted() {},
-    computed: {
-        // Discounted price with two decimal places.
-        realPrice: function () {
-            if (this.good.discount < 1) {
-                //When price is a range, calculate both bounds
-                if (isNaN(this.price)) {
-                    let prices = this.price.split(" ~ ");
-                    let down = Number(prices[0]) * this.good.discount;
-                    let up = Number(prices[1]) * this.good.discount;
-                    return down.toFixed(2) + " ~ " + up.toFixed(2);
-                } else {
-                    return (this.price * this.good.discount).toFixed(2);
-                }
-            }
-            return this.price;
-        },
-    },
+  },
 };
 </script>
 
 <style scoped>
-.main-box {
-    width: 1060px;
-    margin: 20px auto;
-    padding: 30px;
-    background-color: #ffffff;
-    overflow: hidden;
+.product-detail-page {
+  padding: 28px 0 42px;
 }
 
-.image {
-    height: 100%;
-    width: 350px;
+.detail-card {
+  padding: clamp(20px, 3vw, 36px);
+  display: grid;
+  grid-template-columns: minmax(320px, 48%) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
 }
+
 .image-container {
-    width: 420px; /* Set fixed container width */
-    height: 420px; /* Set fixed container height */
-    overflow: hidden; /* Hide overflow */
-    text-align: center;
-    margin-left: 80px;
-    margin-top: 30px;
-    display: inline-block;
-    overflow: hidden;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--mall-radius-lg);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(91, 43, 214, 0.12), transparent 26%),
+    var(--mall-surface-soft);
 }
 
 .image-container img {
-    display: block; /* Display image as a block element */
-    width: 100%; /* Image width fills the container */
-    height: auto; /* Auto-adjust height by aspect ratio */
-    object-fit: cover; /* Scale image to cover the container */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .detail-box {
-    width: 420px;
-    display: inline-block;
-    margin-left: 50px;
-    overflow: hidden;
+  min-width: 0;
 }
+
+.product-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--mall-primary-soft);
+  color: var(--mall-primary);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.detail-box h2 {
+  margin: 16px 0 10px;
+  color: var(--mall-text);
+  font-size: clamp(30px, 4vw, 46px);
+  line-height: 1.08;
+}
+
+.description {
+  margin: 0;
+  color: var(--mall-text-muted);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
 .price-box {
-    background-color: #e9e9e9;
-    border-radius: 5px;
-    font: 12px/1.5 "Microsoft Yahei", tahoma, arial;
-    padding-bottom: 1px;
-    padding-top: 1px;
-    margin-right: 20px;
-    margin-top: 30px;
+  margin-top: 28px;
+  padding: 18px;
+  border-radius: var(--mall-radius-md);
+  background: linear-gradient(135deg, #fbf8ff, #fffaf4);
+  border: 1px solid var(--mall-border);
 }
-.price-box div {
-    line-height: 20px;
-    margin-left: 8px;
-    margin-bottom: 5px;
+
+.price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  color: var(--mall-text);
+  line-height: 1.6;
 }
-.price-box dl dt {
-    float: left;
-    font-size: 14px;
-    line-height: 20px;
+
+.price-row span {
+  color: var(--mall-text-muted);
+  font-size: 14px;
 }
-.price-box dl dd {
-    font-size: 18px;
-    line-height: 20px;
+
+.price-row strong {
+  font-size: 17px;
 }
-.button {
-    width: 130px;
-    height: 45px;
-    background-color: #96e2e0;
-    color: #710a0a;
+
+.price-row.sale strong {
+  color: var(--mall-primary);
+  font-size: 30px;
 }
+
+.line-through {
+  text-decoration: line-through;
+}
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(120px, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.meta-grid div {
+  padding: 14px;
+  border-radius: var(--mall-radius-md);
+  background: #ffffff;
+  border: 1px solid var(--mall-border);
+}
+
+.meta-grid span,
+.option-section label {
+  display: block;
+  color: var(--mall-text-muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.meta-grid strong {
+  display: block;
+  margin-top: 6px;
+  color: var(--mall-text);
+  font-size: 20px;
+}
+
+.option-section {
+  margin-top: 22px;
+}
+
+.option-section label {
+  margin-bottom: 10px;
+}
+
 .standard {
-    height: 30px;
-    margin-right: 10px;
+  margin: 0 10px 10px 0;
+}
+
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.action-row .el-button {
+  min-width: 150px;
+  height: 46px;
+  border-radius: 10px;
+  font-weight: 900;
+}
+
+@media (max-width: 860px) {
+  .detail-card {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

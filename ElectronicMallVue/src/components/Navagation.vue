@@ -1,78 +1,75 @@
 <template>
-  <div class="navagation">
-    <el-row>
-      <el-col :span="3">
-        <div style="font-size: 20px; font-weight: bold; text-align: center">
-          <a href="/"><i class="el-icon-a-011"></i> Rufeng Mall</a>
-        </div>
-      </el-col>
-      <el-col :span="17">
-        <el-menu
-          :default-active="activeIndex"
-          class="el-menu-demo"
-          mode="horizontal"
-          router
-        >
-          <el-menu-item index="/" class="menu-item">Home</el-menu-item>
-          
-          <el-menu-item index="/goodList" class="menu-item"
-            >Category</el-menu-item
-          >
-          <el-menu-item index="/cart" class="menu-item"
-            >My Cart</el-menu-item
-          >
-          <el-menu-item index="/orderList" class="menu-item"
-            >My Orders</el-menu-item
-          >
-          <el-menu-item
-            index="/manage"
-            class="menu-item"
-            v-if="role === 'admin'"
-            >Admin</el-menu-item
-          >
-        </el-menu>
-      </el-col>
-      <el-col :span="4">
-        <!--         Top-right profile-->
-        <el-dropdown style="cursor: pointer; float: right; margin-right: 60px">
-          <span class="el-dropdown-link">
-            <div style="display: inline-block">
-              <img
-                v-if="user.avatarUrl != null"
-                :src="baseApi + user.avatarUrl"
-                class="avatar"
-              />
-              {{ user.nickname }}
-              <i
-                class="el-icon-arrow-down el-icon--right"
-                style="margin-right: 5px"
-              ></i>
-            </div>
-          </span>
-          <!--          Dropdown menu-->
-          <el-dropdown-menu slot="dropdown" style="text-align: center">
-            <el-dropdown-item>
-              <!--              After login, redirect to the storefront path-->
-              <div
-                @click="$router.push({ path: '/login', query: { to: '/' } })"
-                v-show="!loginStatus"
-              >
-                Login
-              </div>
-            </el-dropdown-item>
-            <el-dropdown-item v-show="loginStatus">
-              <div @click="$router.push('/person')">Profile</div>
-            </el-dropdown-item>
-            <el-dropdown-item v-show="loginStatus">
-              <div @click="logout">Logout</div>
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </el-col>
-    </el-row>
-  </div>
-</template>
+  <header class="mall-navbar">
+    <router-link class="brand-section" to="/topview" aria-label="Rufeng Mall Home">
+      <div class="brand-icon">
+        <i class="el-icon-shopping-bag-1"></i>
+      </div>
+      <div>
+        <h1>Rufeng Mall</h1>
+        <p>FYP-UKM Demo</p>
+      </div>
+    </router-link>
 
+    <nav class="main-menu" aria-label="Primary navigation">
+      <router-link to="/topview">Home</router-link>
+      <router-link to="/goodList">Category</router-link>
+      <router-link to="/cart">My Cart</router-link>
+      <router-link to="/orderList">My Orders</router-link>
+      <router-link v-if="role === 'admin'" to="/manage">Admin</router-link>
+    </nav>
+
+    <div class="nav-actions">
+      <form class="nav-search" @submit.prevent="submitSearch">
+        <input
+          v-model.trim="searchText"
+          type="search"
+          placeholder="Search products..."
+          aria-label="Search products"
+        />
+        <button type="submit" aria-label="Search">
+          <i class="el-icon-search"></i>
+        </button>
+      </form>
+
+      <router-link class="icon-button" to="/cart" aria-label="Open cart">
+        <i class="el-icon-shopping-cart-2"></i>
+      </router-link>
+
+      <button class="icon-button" type="button" aria-label="Notifications">
+        <i class="el-icon-bell"></i>
+      </button>
+
+      <el-dropdown class="user-profile" trigger="click">
+        <span class="el-dropdown-link">
+          <img
+            v-if="user.avatarUrl != null"
+            :src="baseApi + user.avatarUrl"
+            class="avatar"
+            alt="User avatar"
+          />
+          <span v-else class="avatar avatar-fallback">
+            <i class="el-icon-user-solid"></i>
+          </span>
+          <span class="profile-name">{{ user.nickname || "Guest" }}</span>
+          <i class="el-icon-arrow-down"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown" class="profile-menu">
+          <el-dropdown-item v-show="!loginStatus">
+            <div @click="$router.push({ path: '/login', query: { to: '/' } })">
+              Login
+            </div>
+          </el-dropdown-item>
+          <el-dropdown-item v-show="loginStatus">
+            <div @click="$router.push('/person')">Profile</div>
+          </el-dropdown-item>
+          <el-dropdown-item v-show="loginStatus">
+            <div @click="logout">Logout</div>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
+  </header>
+</template>
 
 <script>
 export default {
@@ -84,12 +81,17 @@ export default {
   },
   data() {
     return {
-      activeIndex: "1",
-      activeIndex2: "1",
       baseApi: this.$store.state.baseApi,
+      searchText: "",
     };
   },
   methods: {
+    submitSearch() {
+      this.$router.push({
+        path: "/goodList",
+        query: { searchText: this.searchText },
+      });
+    },
     logout() {
       localStorage.removeItem("user");
       this.$router.go(0);
@@ -98,26 +100,238 @@ export default {
   },
 };
 </script>
-<style>
-a {
-  text-decoration: none;
-}
-.navagation {
+
+<style scoped>
+.mall-navbar {
   width: 100%;
-  height: 60px;
-  line-height: 60px;
-  background-color: white;
+  min-height: 76px;
+  padding: 0 clamp(18px, 3vw, 48px);
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid var(--mall-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  backdrop-filter: blur(12px);
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 210px;
+}
+
+.brand-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, var(--mall-primary), var(--mall-primary-dark));
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 20px rgba(91, 43, 214, 0.22);
+}
+
+.brand-section h1 {
+  margin: 0;
+  color: var(--mall-primary);
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.brand-section p {
+  margin: 4px 0 0;
+  color: var(--mall-text-muted);
+  font-size: 13px;
+  line-height: 1;
+}
+
+.main-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 2vw, 34px);
+  flex: 1;
+}
+
+.main-menu a {
+  position: relative;
+  min-height: 76px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--mall-text);
+  font-size: 15px;
+  font-weight: 700;
+  transition: color 0.2s ease;
+}
+
+.main-menu a:hover,
+.main-menu a.router-link-active,
+.main-menu a.router-link-exact-active {
+  color: var(--mall-primary);
+}
+
+.main-menu a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--mall-primary);
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.main-menu a:hover::after,
+.main-menu a.router-link-active::after,
+.main-menu a.router-link-exact-active::after {
+  transform: scaleX(1);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+}
+
+.nav-search {
+  width: clamp(220px, 24vw, 380px);
+  height: 42px;
+  border: 1px solid #ded7f5;
+  border-radius: 11px;
+  background: #ffffff;
+  display: flex;
   overflow: hidden;
 }
-.avatar {
-  width: 45px;
-  border-radius: 5px;
-  position: relative;
-  top: 10px;
-  right: 5px;
+
+.nav-search input {
+  min-width: 0;
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0 16px;
+  color: var(--mall-text);
+  font-size: 14px;
 }
-.menu-item {
-  padding-left: 50px;
-  padding-right: 50px;
+
+.nav-search button {
+  width: 48px;
+  border: none;
+  background: var(--mall-primary);
+  color: #ffffff;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.nav-search button:hover {
+  background: var(--mall-primary-dark);
+}
+
+.icon-button {
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--mall-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.icon-button:hover {
+  background: var(--mall-primary-soft);
+  color: var(--mall-primary);
+}
+
+.user-profile {
+  min-width: 0;
+}
+
+.el-dropdown-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--mall-text);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: var(--mall-primary-soft);
+}
+
+.avatar-fallback {
+  color: var(--mall-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-name {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 1180px) {
+  .mall-navbar {
+    flex-wrap: wrap;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  .brand-section {
+    min-width: auto;
+  }
+
+  .main-menu {
+    order: 3;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .main-menu a {
+    min-height: 38px;
+  }
+}
+
+@media (max-width: 760px) {
+  .mall-navbar {
+    align-items: flex-start;
+  }
+
+  .nav-actions {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .nav-search {
+    width: 100%;
+  }
+
+  .profile-name {
+    max-width: 92px;
+  }
 }
 </style>
