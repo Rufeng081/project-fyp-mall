@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="FYP Mall - Homepage" enabled="true">
+      <stringProp name="TestPlan.comments">Loads the public homepage and core homepage APIs.</stringProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="BASE_PROTOCOL" elementType="Argument"><stringProp name="Argument.name">BASE_PROTOCOL</stringProp><stringProp name="Argument.value">http</stringProp></elementProp>
+          <elementProp name="BASE_HOST" elementType="Argument"><stringProp name="Argument.name">BASE_HOST</stringProp><stringProp name="Argument.value">34.143.225.11</stringProp></elementProp>
+          <elementProp name="BASE_PORT" elementType="Argument"><stringProp name="Argument.name">BASE_PORT</stringProp><stringProp name="Argument.value">80</stringProp></elementProp>
+          <elementProp name="API_PREFIX" elementType="Argument"><stringProp name="Argument.name">API_PREFIX</stringProp><stringProp name="Argument.value">/api</stringProp></elementProp>
+        </collectionProp>
+      </elementProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Homepage Smoke Users" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true"><boolProp name="LoopController.continue_forever">false</boolProp><stringProp name="LoopController.loops">${__P(LOOPS,1)}</stringProp></elementProp>
+        <stringProp name="ThreadGroup.num_threads">${__P(THREADS,1)}</stringProp><stringProp name="ThreadGroup.ramp_time">${__P(RAMP_UP,1)}</stringProp><longProp name="ThreadGroup.duration">0</longProp><longProp name="ThreadGroup.delay">0</longProp><boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="JSON Headers" enabled="true"><collectionProp name="HeaderManager.headers"><elementProp name="" elementType="Header"><stringProp name="Header.name">Accept</stringProp><stringProp name="Header.value">application/json,text/html,*/*</stringProp></elementProp></collectionProp></HeaderManager>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Homepage HTML" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments"><collectionProp name="Arguments.arguments"/></elementProp>
+          <stringProp name="HTTPSampler.domain">${BASE_HOST}</stringProp><stringProp name="HTTPSampler.port">${BASE_PORT}</stringProp><stringProp name="HTTPSampler.protocol">${BASE_PROTOCOL}</stringProp><stringProp name="HTTPSampler.path">/</stringProp><stringProp name="HTTPSampler.method">GET</stringProp><boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+        </HTTPSamplerProxy>
+        <hashTree><ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Homepage Vue Mount" enabled="true"><collectionProp name="Asserion.test_strings"><stringProp name="0">id=&quot;app&quot;</stringProp></collectionProp><stringProp name="Assertion.custom_message"></stringProp><stringProp name="Assertion.test_field">Assertion.response_data</stringProp><boolProp name="Assertion.assume_success">false</boolProp><intProp name="Assertion.test_type">2</intProp></ResponseAssertion><hashTree/></hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Recommended Products" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments"><collectionProp name="Arguments.arguments"/></elementProp>
+          <stringProp name="HTTPSampler.domain">${BASE_HOST}</stringProp><stringProp name="HTTPSampler.port">${BASE_PORT}</stringProp><stringProp name="HTTPSampler.protocol">${BASE_PROTOCOL}</stringProp><stringProp name="HTTPSampler.path">${API_PREFIX}/api/good</stringProp><stringProp name="HTTPSampler.method">GET</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree><ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert JSON code 200" enabled="true"><collectionProp name="Asserion.test_strings"><stringProp name="0">&quot;code&quot;:&quot;200&quot;</stringProp></collectionProp><stringProp name="Assertion.custom_message"></stringProp><stringProp name="Assertion.test_field">Assertion.response_data</stringProp><boolProp name="Assertion.assume_success">false</boolProp><intProp name="Assertion.test_type">2</intProp></ResponseAssertion><hashTree/></hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Category Icons" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments"><collectionProp name="Arguments.arguments"/></elementProp>
+          <stringProp name="HTTPSampler.domain">${BASE_HOST}</stringProp><stringProp name="HTTPSampler.port">${BASE_PORT}</stringProp><stringProp name="HTTPSampler.protocol">${BASE_PROTOCOL}</stringProp><stringProp name="HTTPSampler.path">${API_PREFIX}/api/icon</stringProp><stringProp name="HTTPSampler.method">GET</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree><ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert JSON code 200" enabled="true"><collectionProp name="Asserion.test_strings"><stringProp name="0">&quot;code&quot;:&quot;200&quot;</stringProp></collectionProp><stringProp name="Assertion.custom_message"></stringProp><stringProp name="Assertion.test_field">Assertion.response_data</stringProp><boolProp name="Assertion.assume_success">false</boolProp><intProp name="Assertion.test_type">2</intProp></ResponseAssertion><hashTree/></hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET Carousel" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments"><collectionProp name="Arguments.arguments"/></elementProp>
+          <stringProp name="HTTPSampler.domain">${BASE_HOST}</stringProp><stringProp name="HTTPSampler.port">${BASE_PORT}</stringProp><stringProp name="HTTPSampler.protocol">${BASE_PROTOCOL}</stringProp><stringProp name="HTTPSampler.path">${API_PREFIX}/api/carousel</stringProp><stringProp name="HTTPSampler.method">GET</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree><ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert JSON code 200" enabled="true"><collectionProp name="Asserion.test_strings"><stringProp name="0">&quot;code&quot;:&quot;200&quot;</stringProp></collectionProp><stringProp name="Assertion.custom_message"></stringProp><stringProp name="Assertion.test_field">Assertion.response_data</stringProp><boolProp name="Assertion.assume_success">false</boolProp><intProp name="Assertion.test_type">2</intProp></ResponseAssertion><hashTree/></hashTree>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

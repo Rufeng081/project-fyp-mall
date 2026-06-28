@@ -1,0 +1,36 @@
+category,scenario,threads,samples,errors,error_rate_pct,avg_ms,median_ms,p90_ms,min_ms,max_ms,throughput_per_sec,file
+authenticated load,04_login,10,10,0,0.00,2238.10,2265,2784,1409,3147,0.89,docs/testing/jmeter/results/phase6-load/run-20260616-1456/auth_04_login_t10.jtl
+authenticated load,04_login,50,50,0,0.00,1085.98,859,2012,486,2125,2.31,docs/testing/jmeter/results/phase6-load/run-20260616-1456/auth_04_login_t50.jtl
+authenticated load,04_login,100,100,0,0.00,2067.24,2128,3116,674,3643,2.32,docs/testing/jmeter/results/phase6-load/run-20260616-1456/auth_04_login_t100.jtl
+authenticated load,08_order_history,10,20,0,0.00,2009.30,1915,2468,1498,2569,1.65,docs/testing/jmeter/results/phase6-load/run-20260616-1456/auth_08_order_history_t10.jtl
+authenticated load,08_order_history,50,100,0,0.00,1074.81,849,1971,457,3036,4.27,docs/testing/jmeter/results/phase6-load/run-20260616-1456/auth_08_order_history_t50.jtl
+authenticated load,08_order_history,100,200,0,0.00,1170.88,973,1986,588,2644,4.61,docs/testing/jmeter/results/phase6-load/run-20260616-1456/auth_08_order_history_t100.jtl
+controlled mutation,05_add_to_cart,1,2,0,0.00,611.50,441,782,441,782,1.61,docs/testing/jmeter/results/phase6-load/run-20260616-1456/mutation_05_add_to_cart_t1.jtl
+controlled mutation,05_add_to_cart,5,10,0,0.00,1045.70,901,1192,637,1869,1.80,docs/testing/jmeter/results/phase6-load/run-20260616-1456/mutation_05_add_to_cart_t5.jtl
+controlled mutation,05_add_to_cart,10,20,0,0.00,949.70,730,2035,439,2218,1.51,docs/testing/jmeter/results/phase6-load/run-20260616-1456/mutation_05_add_to_cart_t10.jtl
+controlled mutation,06_place_order,1,4,0,0.00,1835.25,1794,2391,1011,2391,0.54,docs/testing/jmeter/results/phase6-load/run-20260616-1456/mutation_06_place_order_t1.jtl
+controlled mutation,06_place_order,5,20,0,0.00,737.90,605,1071,400,1388,3.15,docs/testing/jmeter/results/phase6-load/run-20260616-1456/mutation_06_place_order_t5.jtl
+controlled mutation,06_place_order,10,40,0,0.00,1320.25,1269,1882,608,2483,3.00,docs/testing/jmeter/results/phase6-load/run-20260616-1456/mutation_06_place_order_t10.jtl
+controlled mutation,07_simulated_payment,1,5,0,0.00,209.00,175,346,124,346,4.68,docs/testing/jmeter/results/phase6-load/run-20260616-1456/mutation_07_simulated_payment_t1.jtl
+controlled mutation,07_simulated_payment,5,25,0,0.00,256.64,256,415,99,530,4.48,docs/testing/jmeter/results/phase6-load/run-20260616-1456/mutation_07_simulated_payment_t5.jtl
+controlled mutation,07_simulated_payment,10,50,0,0.00,254.82,213,441,103,756,4.79,docs/testing/jmeter/results/phase6-load/run-20260616-1456/mutation_07_simulated_payment_t10.jtl
+read-only load,01_homepage,10,40,0,0.00,1071.90,1009,1607,335,1924,2.62,docs/testing/jmeter/results/phase6-load/run-20260616-1456/read_01_homepage_t10.jtl
+read-only load,01_homepage,50,200,0,0.00,2273.58,1666,5428,554,10588,7.22,docs/testing/jmeter/results/phase6-load/run-20260616-1456/read_01_homepage_t50.jtl
+read-only load,01_homepage,100,400,0,0.00,3283.55,3160,5478,480,13342,8.53,docs/testing/jmeter/results/phase6-load/run-20260616-1456/read_01_homepage_t100.jtl
+read-only load,01_homepage,200,800,0,0.00,1491.54,954,2457,257,12307,12.32,docs/testing/jmeter/results/phase6-load/run-20260616-1456/read_01_homepage_t200.jtl
+read-only load,02_product_list,10,10,0,0.00,1184.30,1084,1663,570,2036,1.01,docs/testing/jmeter/results/phase6-load/run-20260616-1456/read_02_product_list_t10.jtl
+read-only load,02_product_list,50,50,0,0.00,733.78,734,968,384,1069,2.47,docs/testing/jmeter/results/phase6-load/run-20260616-1456/read_02_product_list_t50.jtl
+read-only load,02_product_list,100,100,0,0.00,1954.46,1535,3473,646,5075,2.47,docs/testing/jmeter/results/phase6-load/run-20260616-1456/read_02_product_list_t100.jtl
+read-only load,02_product_list,200,200,0,0.00,1936.82,1922,3400,138,4340,3.28,docs/testing/jmeter/results/phase6-load/run-20260616-1456/read_02_product_list_t200.jtl
+read-only load,03_product_detail,10,20,0,0.00,1498.30,1516,1751,1124,1893,1.70,docs/testing/jmeter/results/phase6-load/run-20260616-1456/read_03_product_detail_t10.jtl
+read-only load,03_product_detail,50,100,0,0.00,1947.56,1951,2537,897,3210,4.56,docs/testing/jmeter/results/phase6-load/run-20260616-1456/read_03_product_detail_t50.jtl
+read-only load,03_product_detail,100,200,0,0.00,1729.99,1160,3634,84,4163,4.37,docs/testing/jmeter/results/phase6-load/run-20260616-1456/read_03_product_detail_t100.jtl
+read-only load,03_product_detail,200,400,0,0.00,2302.22,1849,3659,492,7642,6.09,docs/testing/jmeter/results/phase6-load/run-20260616-1456/read_03_product_detail_t200.jtl
+smoke,01_homepage,1,4,0,0.00,731.75,721,791,654,791,1.36,docs/testing/jmeter/results/phase6-smoke/run-20260616-1452/01_homepage.jtl
+smoke,02_product_list,1,1,0,0.00,746.00,746,746,746,746,1.34,docs/testing/jmeter/results/phase6-smoke/run-20260616-1452/02_product_list.jtl
+smoke,03_product_detail,1,2,0,0.00,725.50,631,820,631,820,1.38,docs/testing/jmeter/results/phase6-smoke/run-20260616-1452/03_product_detail.jtl
+smoke,04_login,1,1,0,0.00,994.00,994,994,994,994,1.01,docs/testing/jmeter/results/phase6-smoke/run-20260616-1452/04_login.jtl
+smoke,05_add_to_cart,1,2,0,0.00,1002.50,597,1408,597,1408,0.99,docs/testing/jmeter/results/phase6-smoke/run-20260616-1452/05_add_to_cart.jtl
+smoke,06_place_order,1,4,0,0.00,1300.25,1192,1705,935,1705,0.77,docs/testing/jmeter/results/phase6-smoke/run-20260616-1452/06_place_order.jtl
+smoke,07_simulated_payment,1,5,0,0.00,2169.60,2243,2922,1062,2922,0.46,docs/testing/jmeter/results/phase6-smoke/run-20260616-1452/07_simulated_payment.jtl
+smoke,08_order_history,1,2,0,0.00,1797.00,1617,1977,1617,1977,0.55,docs/testing/jmeter/results/phase6-smoke/run-20260616-1452/08_order_history.jtl
