@@ -59,7 +59,7 @@
             <img :src="baseApi + product.imgs" :alt="product.name" />
           </div>
           <div class="product-info">
-            <span class="product-category">Rufeng Mall</span>
+            <span class="product-category">{{ categoryName(product.categoryId) }}</span>
             <h4>{{ product.name }}</h4>
             <p>{{ product.description || "A selected product prepared for the FYP mall demo." }}</p>
             <strong>RM {{ Number(product.price).toFixed(2) }}</strong>
@@ -131,6 +131,16 @@ export default {
       this.currentPage = 1;
       this.$router.push({ path: "/goodList" });
       this.load();
+    },
+    categoryName(categoryId) {
+      const groups = this.icons || [];
+      for (const group of groups) {
+        const match = (group.categories || []).find((category) => Number(category.id) === Number(categoryId));
+        if (match) {
+          return match.name;
+        }
+      }
+      return "Rufeng Mall";
     },
     load(categoryId) {
       if (categoryId != undefined) {
@@ -316,13 +326,20 @@ export default {
   height: 220px;
   border-radius: 10px;
   overflow: hidden;
-  background: var(--mall-surface-soft);
+  background:
+    radial-gradient(circle at 50% 10%, rgba(255, 255, 255, 0.78), transparent 46%),
+    linear-gradient(135deg, #f8f3ea, #ffffff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .product-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  padding: 14px;
+  box-sizing: border-box;
 }
 
 .product-info {

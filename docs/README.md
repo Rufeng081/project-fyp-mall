@@ -75,6 +75,7 @@ Current public Nginx routing note: frontend-generated backend `/api/*` calls are
 | [records/phase-6-jmeter-execution-record-2026-06-16.md](records/phase-6-jmeter-execution-record-2026-06-16.md) | Chronological Phase 6 JMeter execution record, backup/data-impact notes, and verification evidence. |
 | [records/github-vm-sync-2026-06-18.md](records/github-vm-sync-2026-06-18.md) | GitHub push and Google Cloud VM synchronization record for the completed demo-readiness and Phase 6 work. |
 | [records/product-catalog-image-review-cloud-sync-2026-06-27.md](records/product-catalog-image-review-cloud-sync-2026-06-27.md) | Product catalog expansion, user-provided product image review, and GitHub/VM/database synchronization record. |
+| [records/product-catalog-ui-quality-audit-2026-06-28.md](records/product-catalog-ui-quality-audit-2026-06-28.md) | Product catalog UI thumbnail cleanup, active product category/image audit, and regression-check record. |
 
 ## Testing
 

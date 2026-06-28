@@ -21,7 +21,9 @@
       <el-table-column prop="name" label="Product Name"></el-table-column>
       <el-table-column label="Product Image" width="120px">
         <template slot-scope="scope">
-          <img :src="baseApi + scope.row.imgs" style="width: 90px;height: 80px">
+          <div class="admin-product-thumb">
+            <img :src="baseApi + scope.row.imgs" :alt="scope.row.name">
+          </div>
         </template>
       </el-table-column>
       <el-table-column prop="description" label="Product Description"></el-table-column>
@@ -251,4 +253,23 @@ export default {
 </script>
 
 <style scoped>
+.admin-product-thumb {
+  width: 92px;
+  height: 76px;
+  border: 1px solid #ebe3d8;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #fbf7f0, #ffffff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.admin-product-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 6px;
+  box-sizing: border-box;
+}
 </style>

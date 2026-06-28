@@ -140,18 +140,18 @@ CREATE TABLE `good`  (
 -- Records of good
 -- ----------------------------
 INSERT INTO `good` VALUES (2, 'Men Casual Shirt', 'Lightweight casual shirt suitable for daily wear and campus activities.', 0.95, 35, 1370.50, 2, '/file/74488020672944968462e9e4a9c89096.png', '2026-03-27 13:32:44', 1, 0);
-INSERT INTO `good` VALUES (3, 'Study Desk and Chair Set', 'Compact desk and chair set for dormitory study spaces and home offices.', 0.98, 0, 0.00, 13, '/file/b4ac53ed62c74c298366619399c39f99.jpg', '2026-03-31 20:44:00', 1, 0);
+INSERT INTO `good` VALUES (3, 'Study Desk and Chair Set', 'Compact desk and chair set for dormitory study spaces and home offices.', 0.98, 0, 0.00, 23, '/file/b4ac53ed62c74c298366619399c39f99.jpg', '2026-03-31 20:44:00', 1, 0);
 INSERT INTO `good` VALUES (5, 'Women Cotton T-Shirt', 'Comfortable cotton T-shirt with a clean white design for casual wear.', 0.80, 1, 116.00, 1, '/file/15cb9fc604984dfa97e0e968eb1d196d.jpg', '2026-03-31 20:47:59', 1, 0);
 INSERT INTO `good` VALUES (6, 'English Psalms Book', 'A compact English reading book suitable for personal study and gifting.', 1.00, 0, 0.00, 14, '/file/8dc5354c7332454796c614bb4a0572fb.jpg', '2026-03-31 20:48:51', 1, 0);
 INSERT INTO `good` VALUES (7, 'Men Casual Sneakers', 'Breathable black-grey casual sneakers with a comfortable walking sole.', 0.96, 1, 110.40, 11, '/file/0afa4eb1c51943808f6e83cd9ced25e8.jpg', '2026-03-31 20:49:36', 1, 0);
 INSERT INTO `good` VALUES (8, 'Archived Demo Product', 'Archived product retained for delete-state testing.', 1.00, 43, 528.90, 1, '/file/09bb6edab07a4c68a44cce41a3300d97.jpg', '2026-06-12 00:55:57', 0, 1);
 INSERT INTO `good` VALUES (9, 'Children Drawing Book', 'Simple line-art practice book for children to colour and draw.', 1.00, 0, 0.00, 13, '/file/2e2a1df657324a3293642344327310cb.png', '2026-08-10 20:28:58', 1, 0);
-INSERT INTO `good` VALUES (10, 'UV Protection Sunglasses', 'Lightweight sunglasses with UV protection for outdoor activities.', 1.00, 0, 0.00, 22, '/file/449ab0163ba648c08cb4a76b40a9dcec.jpg', '2026-08-10 20:29:47', 1, 0);
+INSERT INTO `good` VALUES (10, 'UV Protection Sunglasses', 'Lightweight sunglasses with UV protection for outdoor activities.', 1.00, 0, 0.00, 22, '/file/catalog_010_uv_protection_sunglasses.png', '2026-08-10 20:29:47', 1, 0);
 INSERT INTO `good` VALUES (11, 'Women Long Sleeve Top', 'Soft long sleeve top with a modest relaxed cut for class, work, and casual outings.', 0.92, 0, 0.00, 1, '/file/seed_011_women_long_sleeve_top.jpg', '2026-06-27 10:01:00', 1, 0);
 INSERT INTO `good` VALUES (12, 'Men Linen Blend Shirt', 'Breathable linen blend shirt designed for warm weather and smart casual use.', 0.94, 0, 0.00, 2, '/file/seed_012_men_linen_blend_shirt.jpg', '2026-06-27 10:02:00', 1, 0);
 INSERT INTO `good` VALUES (13, 'Relaxed Fit T-Shirt', 'Everyday cotton T-shirt with a neat fit and comfortable fabric for campus wear.', 0.90, 0, 0.00, 1, '/file/seed_013_relaxed_fit_tshirt.jpg', '2026-06-27 10:03:00', 1, 0);
 INSERT INTO `good` VALUES (14, 'Lightweight Hoodie', 'Soft hoodie with a clean design for study rooms, travel, and relaxed weekends.', 0.88, 0, 0.00, 1, '/file/seed_014_lightweight_hoodie.jpg', '2026-06-27 10:04:00', 1, 0);
-INSERT INTO `good` VALUES (15, 'Sports Track Pants', 'Stretch track pants for walking, light exercise, and daily movement.', 0.93, 0, 0.00, 10, '/file/seed_015_sports_track_pants.jpg', '2026-06-27 10:05:00', 1, 0);
+INSERT INTO `good` VALUES (15, 'Sports Track Pants', 'Stretch track pants for walking, light exercise, and daily movement.', 0.93, 0, 0.00, 1, '/file/seed_015_sports_track_pants.jpg', '2026-06-27 10:05:00', 1, 0);
 INSERT INTO `good` VALUES (16, 'Walking Comfort Sneakers', 'Cushioned sneakers with breathable lining for daily commuting and campus walks.', 0.91, 0, 0.00, 11, '/file/seed_016_walking_comfort_sneakers.jpg', '2026-06-27 10:06:00', 1, 0);
 INSERT INTO `good` VALUES (17, 'Court Training Shoes', 'Supportive training shoes for indoor courts, gym sessions, and everyday sport use.', 0.89, 0, 0.00, 10, '/file/seed_017_court_training_shoes.jpg', '2026-06-27 10:07:00', 1, 0);
 INSERT INTO `good` VALUES (18, 'Slip-On Canvas Shoes', 'Easy slip-on canvas shoes with a flexible sole for short trips and casual outfits.', 0.95, 0, 0.00, 11, '/file/seed_018_slip_on_canvas_shoes.jpg', '2026-06-27 10:08:00', 1, 0);
@@ -224,7 +224,7 @@ INSERT INTO `good_standard` VALUES (2, 'S', 129.00, 498);
 INSERT INTO `good_standard` VALUES (2, 'M', 129.00, 496);
 INSERT INTO `good_standard` VALUES (2, 'L', 129.00, 496);
 INSERT INTO `good_standard` VALUES (9, 'Standard Edition', 50.00, 600);
-INSERT INTO `good_standard` VALUES (10, '30 cm', 60.00, 500);
+INSERT INTO `good_standard` VALUES (10, 'Standard', 60.00, 500);
 INSERT INTO `good_standard` VALUES (11, 'S', 89.00, 180);
 INSERT INTO `good_standard` VALUES (11, 'M', 89.00, 220);
 INSERT INTO `good_standard` VALUES (11, 'L', 89.00, 180);

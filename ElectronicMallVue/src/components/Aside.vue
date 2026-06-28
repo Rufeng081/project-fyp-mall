@@ -10,7 +10,6 @@
       <router-link to="/manage/home">
         <img src="../resource/logo.png" style="width: 32px;position: relative; top: 7px;right: 6px;">
       </router-link>
-      <span slot="title" style="color: aliceblue;font-size: 20px" v-show="!isCollapse">Admin Dashboard</span>
     </div>
     <el-menu-item index="/manage/home">
       <i class="el-icon-a-011" style="font-size: 22px;color: white;"></i><span slot="title">Dashboard</span>

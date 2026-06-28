@@ -10,7 +10,8 @@
     "check:routes": "node scripts/check-history-routes.js",
     "check:auth": "node scripts/check-auth-flows.js",
     "check:deployment": "node scripts/check-deployment-config.js",
-    "check:homepage-admin": "node scripts/check-homepage-admin-regression.js"
+    "check:homepage-admin": "node scripts/check-homepage-admin-regression.js",
+    "check:catalog": "node scripts/check-product-catalog-quality.js"
   },
   "dependencies": {
     "axios": "^0.26.1",

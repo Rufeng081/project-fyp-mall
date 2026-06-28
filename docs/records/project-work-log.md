@@ -1176,3 +1176,29 @@ redis-cli DEL good:id:3
 - Create `docs/testing/jmeter/results/`.
 - Run one-user smoke tests for all eight `.jmx` plans.
 - Only after smoke tests pass, run controlled load levels and prepare result tables/charts for the FYP report.
+
+## Product Catalog UI Quality Audit: 2026-06-28
+
+### Scope
+- Removed the clipped `Admin Dashboard` text from the admin left sidebar.
+- Audited active product name/category/image alignment and image resolution.
+- Improved frontend product-list thumbnails and backend product-management thumbnails.
+- Replaced the low-resolution `UV Protection Sunglasses` image with a new high-resolution product photo.
+- Added a repeatable product catalog quality check.
+
+### Findings
+- All 57 active products had existing local image files.
+- `UV Protection Sunglasses` was the only active product image below the 640px minimum side target at `428x428`.
+- `Sports Track Pants` belonged under `Clothing`, not `Sports Shoes`.
+- `Study Desk and Chair Set` fit `Household Supplies` better than `Stationery` within the current category taxonomy.
+- Backend product-management thumbnails were stretched by fixed inline dimensions.
+
+### Verification
+| Check | Result |
+| --- | --- |
+| `npm run check:catalog` | Passed; 57 active products checked. |
+| `npm run check:ui` | Passed; 31 checks. |
+| `sips -g pixelWidth -g pixelHeight ElectronicMallApi/file/catalog_010_uv_protection_sunglasses.png` | `1254x1254`. |
+
+### Documentation Added
+- [product-catalog-ui-quality-audit-2026-06-28.md](product-catalog-ui-quality-audit-2026-06-28.md)
