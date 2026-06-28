@@ -22,6 +22,9 @@ function assertNotContains(content, unexpected, message) {
 assertContains(loginVue, 'v-model.trim="user.account"', "Login Account input must bind to user.account.");
 assertContains(loginVue, 'account: ""', "Login form state must expose an account field.");
 assertNotContains(loginVue, 'v-model.trim="user.username"', "Login Account input must not bind to user.username.");
+assertContains(loginVue, 'class="back-button"', "Login page must provide a visible back button.");
+assertContains(loginVue, "@click=\"goBack\"", "Login back button must call the goBack handler.");
+assertContains(loginVue, "goBack()", "Login page must implement the goBack handler.");
 assertContains(registerVue, 'localStorage.setItem("user", JSON.stringify(res.data))', "Registration success must store returned login state.");
 assertContains(loginVue, 'localStorage.setItem("user", JSON.stringify(res.data))', "Password reset success must store returned login state.");
 assertContains(requestJs, "res.code === '401'", "Axios response interceptor must handle backend token-expired 401 responses.");

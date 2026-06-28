@@ -1,6 +1,10 @@
 <template>
   <div id="bk" class="auth-page">
     <section class="auth-card">
+      <button class="back-button" type="button" @click="goBack" aria-label="Back">
+        <i class="iconfont icon-r-left"></i>
+        Back
+      </button>
       <div class="brand-mark">
         <img src="@/resource/03.png" alt="Rufeng Mall logo" />
       </div>
@@ -105,6 +109,13 @@ export default {
     }
   },
   methods: {
+    goBack() {
+      if (window.history.length > 1) {
+        this.$router.go(-1);
+      } else {
+        this.$router.push("/");
+      }
+    },
     isValidEmail(email) {
       return /^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$/.test(email);
     },
@@ -233,6 +244,25 @@ export default {
   border: 1px solid var(--mall-border);
   box-shadow: var(--mall-shadow-md);
   backdrop-filter: blur(10px);
+}
+
+.back-button {
+  min-height: 38px;
+  margin: -8px 0 18px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--mall-text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  color: var(--mall-primary);
 }
 
 .brand-mark {
