@@ -23,8 +23,15 @@ function assertNotContains(file, text, message) {
 
 const checks = [
   () => assertContains("src/resource/global.css", "--mall-primary", "Global design tokens are missing"),
+  () => assertContains("src/resource/global.css", "--mall-bg: #FAFAF8", "Natural neutral background token is missing"),
+  () => assertContains("src/resource/global.css", "--mall-border: #E8E8E6", "Neutral border token is missing"),
+  () => assertContains("src/resource/global.css", "background: var(--mall-primary);", "Primary buttons must use solid brand colour"),
+  () => assertNotContains("src/resource/global.css", "linear-gradient(135deg, var(--mall-primary)", "Primary buttons must not use gradients"),
   () => assertContains("src/components/Navagation.vue", "mall-navbar", "Storefront navigation was not upgraded"),
   () => assertContains("src/views/front/TopView.vue", "hero-banner", "Homepage hero banner is missing"),
+  () => assertNotContains("src/views/front/TopView.vue", "hero-features", "Hero should not contain repeated feature blocks"),
+  () => assertContains("src/views/front/TopView.vue", "lifestyle-section", "Homepage lifestyle storytelling section is missing"),
+  () => assertContains("src/views/front/TopView.vue", "curated-badge", "Product cards need curated marketplace badges"),
   () => assertContains("src/views/front/TopView.vue", "service-section", "Homepage service guarantee section is missing"),
   () => assertNotContains("src/views/front/TopView.vue", "background-color: black", "Homepage carousel still uses black image framing"),
   () => assertContains("src/views/front/good/GoodList.vue", "product-grid", "Product list grid was not upgraded"),

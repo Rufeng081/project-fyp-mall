@@ -104,18 +104,18 @@ export default {
 <style scoped>
 .mall-navbar {
   width: 100%;
-  min-height: 76px;
-  padding: 0 clamp(18px, 3vw, 48px);
-  background: rgba(255, 255, 255, 0.96);
+  min-height: 72px;
+  padding: 0 clamp(24px, 4vw, 64px);
+  background: rgba(255, 255, 255, 0.98);
   border-bottom: 1px solid var(--mall-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
+  gap: 32px;
   position: sticky;
   top: 0;
   z-index: 30;
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(10px);
 }
 
 .brand-section {
@@ -126,20 +126,21 @@ export default {
 }
 
 .brand-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: 11px;
-  background: linear-gradient(135deg, var(--mall-primary), var(--mall-primary-dark));
-  color: #ffffff;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #F4F4F2;
+  border: 1px solid var(--mall-border);
+  color: var(--mall-primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 20px rgba(91, 43, 214, 0.22);
+  box-shadow: none;
 }
 
 .brand-section h1 {
   margin: 0;
-  color: var(--mall-primary);
+  color: var(--mall-text);
   font-size: 24px;
   line-height: 1;
   font-weight: 800;
@@ -156,18 +157,18 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(18px, 2vw, 34px);
+  gap: clamp(22px, 2.4vw, 40px);
   flex: 1;
 }
 
 .main-menu a {
   position: relative;
-  min-height: 76px;
+  min-height: 72px;
   display: inline-flex;
   align-items: center;
   color: var(--mall-text);
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 600;
   transition: color 0.2s ease;
 }
 
@@ -183,7 +184,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 3px;
+  height: 2px;
   border-radius: 999px;
   background: var(--mall-primary);
   transform: scaleX(0);
@@ -205,9 +206,9 @@ export default {
 
 .nav-search {
   width: clamp(220px, 24vw, 380px);
-  height: 42px;
-  border: 1px solid #ded7f5;
-  border-radius: 11px;
+  height: 44px;
+  border: 1px solid var(--mall-border);
+  border-radius: 10px;
   background: #ffffff;
   display: flex;
   overflow: hidden;
@@ -224,7 +225,7 @@ export default {
 }
 
 .nav-search button {
-  width: 48px;
+  width: 46px;
   border: none;
   background: var(--mall-primary);
   color: #ffffff;
@@ -253,8 +254,8 @@ export default {
 }
 
 .icon-button:hover {
-  background: var(--mall-primary-soft);
-  color: var(--mall-primary);
+  background: var(--mall-bg-warm);
+  color: var(--mall-text);
 }
 
 .user-profile {
@@ -276,11 +277,11 @@ export default {
   height: 40px;
   border-radius: 12px;
   object-fit: cover;
-  background: var(--mall-primary-soft);
+  background: var(--mall-bg-warm);
 }
 
 .avatar-fallback {
-  color: var(--mall-primary);
+  color: var(--mall-text);
   display: inline-flex;
   align-items: center;
   justify-content: center;
