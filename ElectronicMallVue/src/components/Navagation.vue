@@ -50,7 +50,10 @@
           <span v-else class="avatar avatar-fallback">
             <i class="el-icon-user-solid"></i>
           </span>
-          <span class="profile-name">{{ user.nickname || "Guest" }}</span>
+          <span class="profile-copy">
+            <span class="profile-name">{{ displayName }}</span>
+            <span class="profile-role">{{ displayRoleLabel }}</span>
+          </span>
           <i class="el-icon-arrow-down"></i>
         </span>
         <el-dropdown-menu slot="dropdown" class="profile-menu">
@@ -61,6 +64,9 @@
           </el-dropdown-item>
           <el-dropdown-item v-show="loginStatus">
             <div @click="$router.push('/person')">Profile</div>
+          </el-dropdown-item>
+          <el-dropdown-item v-show="loginStatus && role === 'admin'">
+            <div @click="$router.push('/manage')">Admin Dashboard</div>
           </el-dropdown-item>
           <el-dropdown-item v-show="loginStatus">
             <div @click="logout">Logout</div>
@@ -84,6 +90,16 @@ export default {
       baseApi: this.$store.state.baseApi,
       searchText: "",
     };
+  },
+  computed: {
+    displayName() {
+      if (!this.loginStatus) return "Not logged in";
+      return this.user.nickname || (this.role === "admin" ? "Administrator" : "Customer");
+    },
+    displayRoleLabel() {
+      if (!this.loginStatus) return "Login / Register";
+      return this.role === "admin" ? "Administrator" : "Customer";
+    },
   },
   methods: {
     submitSearch() {
@@ -129,7 +145,7 @@ export default {
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: #F4F4F2;
+  background: var(--mall-bg-warm);
   border: 1px solid var(--mall-border);
   color: var(--mall-primary);
   display: flex;
@@ -176,6 +192,7 @@ export default {
 .main-menu a.router-link-active,
 .main-menu a.router-link-exact-active {
   color: var(--mall-primary);
+  font-weight: 700;
 }
 
 .main-menu a::after {
@@ -205,7 +222,7 @@ export default {
 }
 
 .nav-search {
-  width: clamp(220px, 24vw, 380px);
+  width: clamp(220px, 20vw, 340px);
   height: 44px;
   border: 1px solid var(--mall-border);
   border-radius: 10px;
@@ -288,10 +305,25 @@ export default {
 }
 
 .profile-name {
+  display: block;
   max-width: 120px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  line-height: 1.1;
+}
+
+.profile-copy {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.profile-role {
+  color: var(--mall-text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.1;
 }
 
 @media (max-width: 1180px) {

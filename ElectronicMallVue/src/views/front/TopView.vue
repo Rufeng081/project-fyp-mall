@@ -3,19 +3,23 @@
     <section class="hero-banner">
       <div class="hero-content">
         <span class="welcome-badge">Rufeng Mall</span>
-        <h2>Good things for everyday life.</h2>
+        <h2>Everyday essentials, thoughtfully selected.</h2>
         <p>
-          Carefully selected products for study, work and daily living in a calm
-          shopping experience.
+          A simple and warm shopping experience for study, work, and daily living.
         </p>
         <el-button class="primary-button" type="primary" @click="$router.push('/goodList')">
           Shop Now
           <i class="el-icon-right"></i>
         </el-button>
+        <div class="hero-trust-points" aria-label="Shopping benefits">
+          <span>Simple browsing</span>
+          <span>Secure orders</span>
+          <span>Daily essentials</span>
+        </div>
       </div>
 
-      <router-link class="hero-image" :to="heroLink" aria-label="View featured product">
-        <img :src="heroImage" alt="Curated everyday shopping products" />
+      <router-link class="hero-image" to="/goodList" aria-label="Browse Rufeng Mall products">
+        <img :src="heroImage" alt="Warm desk scene with laptop, books, notebook, coffee cup, plant and phone" />
       </router-link>
     </section>
 
@@ -48,6 +52,9 @@
           class="category-item"
           :to="{ path: '/goodList', query: { categoryId: category.id } }"
         >
+          <span class="category-icon" aria-hidden="true">
+            <i :class="category.iconClass"></i>
+          </span>
           <div class="category-text">
             <strong>{{ category.name }}</strong>
             <span>{{ category.description }}</span>
@@ -89,10 +96,19 @@
               </div>
               <div class="product-footer">
                 <p class="price">RM {{ Number(product.price).toFixed(2) }}</p>
-                <button class="wishlist-button" type="button" aria-label="Add to wishlist">
+                <button
+                  class="add-cart-button"
+                  type="button"
+                  :aria-label="'Add ' + product.name + ' to cart'"
+                  @click="$router.push('/goodView/' + product.id)"
+                >
                   <i class="el-icon-shopping-cart-2"></i>
+                  Add
                 </button>
               </div>
+              <router-link class="details-button" :to="'/goodView/' + product.id">
+                View details
+              </router-link>
             </div>
           </article>
         </div>
@@ -136,6 +152,8 @@
 </template>
 
 <script>
+const homepageHero = require("@/resource/homepage-hero.png");
+
 const fallbackProducts = [
   {
     id: 35,
@@ -176,11 +194,11 @@ const fallbackProducts = [
 ];
 
 const fallbackCategories = [
-  { id: 1, name: "Study Essentials", description: "Stationery, books and planning tools" },
-  { id: 2, name: "Campus Tech", description: "Headphones, adapters and accessories" },
-  { id: 3, name: "Daily Carry", description: "Bags, bottles and practical items" },
-  { id: 4, name: "Eco Living", description: "Reusable and low-waste products" },
-  { id: 5, name: "Food & Drinks", description: "Simple snacks and pantry basics" },
+  { id: 1, name: "Study Essentials", description: "Stationery, books and planning tools", iconClass: "el-icon-notebook-2" },
+  { id: 2, name: "Campus Tech", description: "Headphones, adapters and accessories", iconClass: "el-icon-monitor" },
+  { id: 3, name: "Daily Carry", description: "Bags, bottles and practical items", iconClass: "el-icon-shopping-bag-1" },
+  { id: 4, name: "Eco Living", description: "Reusable and low-waste products", iconClass: "el-icon-sunrise" },
+  { id: 5, name: "Food & Drinks", description: "Simple snacks and pantry basics", iconClass: "el-icon-coffee-cup" },
 ];
 
 export default {
@@ -198,10 +216,7 @@ export default {
       return this.good.length > 0 ? this.good : fallbackProducts;
     },
     heroImage() {
-      if (this.carousels.length > 0) {
-        return this.baseApi + this.carousels[0].img;
-      }
-      return this.productImage(this.displayGoods[2] || this.displayGoods[0]);
+      return homepageHero;
     },
     heroLink() {
       if (this.carousels.length > 0) {
@@ -220,6 +235,7 @@ export default {
             id: category.id,
             name: category.name,
             description: this.categoryDescription(category.name),
+            iconClass: this.categoryIcon(category.name),
           });
         });
       });
@@ -258,6 +274,16 @@ export default {
       if (normalized.includes("drink") || normalized.includes("beverage")) return "Tea, coffee and simple drinks";
       return "Thoughtfully selected daily goods";
     },
+    categoryIcon(name) {
+      const normalized = String(name || "").toLowerCase();
+      if (normalized.includes("shoe")) return "el-icon-football";
+      if (normalized.includes("cloth")) return "el-icon-s-custom";
+      if (normalized.includes("book") || normalized.includes("station")) return "el-icon-notebook-2";
+      if (normalized.includes("elect") || normalized.includes("laptop") || normalized.includes("phone")) return "el-icon-monitor";
+      if (normalized.includes("food")) return "el-icon-food";
+      if (normalized.includes("drink") || normalized.includes("beverage") || normalized.includes("coffee")) return "el-icon-coffee-cup";
+      return "el-icon-shopping-bag-1";
+    },
     productBadge(index) {
       return ["Best Seller", "New", "Eco Choice", "Trending"][index % 4];
     },
@@ -285,22 +311,22 @@ export default {
 
 <style scoped>
 .home-page {
-  padding-top: 32px;
+  padding-top: 28px;
 }
 
 .hero-banner {
-  min-height: 430px;
+  height: clamp(520px, 42vw, 600px);
   border: 1px solid var(--mall-border);
-  border-radius: 24px;
+  border-radius: 32px;
   overflow: hidden;
-  background: #ffffff;
+  background: linear-gradient(90deg, #fffaf1 0%, #ffffff 48%, #f3efe8 100%);
   display: grid;
-  grid-template-columns: minmax(0, 44%) minmax(0, 56%);
-  box-shadow: var(--mall-shadow-sm);
+  grid-template-columns: minmax(0, 45%) minmax(0, 55%);
+  box-shadow: var(--mall-shadow-md);
 }
 
 .hero-content {
-  padding: clamp(40px, 6vw, 80px) clamp(28px, 5vw, 64px);
+  padding: clamp(48px, 7vw, 88px) clamp(28px, 5vw, 72px);
   align-self: center;
 }
 
@@ -314,16 +340,16 @@ export default {
 }
 
 .hero-content h2 {
-  max-width: 520px;
+  max-width: 560px;
   margin: 20px 0 18px;
   color: var(--mall-text);
-  font-size: clamp(42px, 5vw, 56px);
+  font-size: clamp(44px, 5vw, 64px);
   line-height: 1.05;
   font-weight: 700;
 }
 
 .hero-content p {
-  max-width: 410px;
+  max-width: 440px;
   margin: 0 0 32px;
   color: var(--mall-text-muted);
   font-size: 16px;
@@ -342,14 +368,42 @@ export default {
   margin-left: 8px;
 }
 
+.hero-trust-points {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  color: var(--mall-text-muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.hero-trust-points span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-trust-points span::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--mall-accent);
+}
+
 .hero-image {
-  min-height: 430px;
+  position: relative;
+  height: 100%;
+  min-height: 100%;
   display: block;
   overflow: hidden;
   background: var(--mall-bg-warm);
 }
 
 .hero-image img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -401,16 +455,31 @@ export default {
 
 .category-item {
   display: grid;
-  grid-template-columns: 1fr 16px;
+  grid-template-columns: 42px 1fr 16px;
   align-items: center;
   gap: 12px;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--mall-divider);
-  transition: background 0.2s ease, color 0.2s ease;
+  padding: 12px;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .category-item:hover {
+  background: var(--mall-bg);
+  border-color: var(--mall-border);
   color: var(--mall-primary);
+}
+
+.category-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: var(--mall-bg-warm);
+  color: var(--mall-accent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
 }
 
 .category-text strong {
@@ -457,10 +526,11 @@ export default {
   display: grid;
   grid-template-columns: repeat(4, minmax(180px, 1fr));
   gap: 24px;
+  align-items: stretch;
 }
 
 .product-card {
-  min-height: 392px;
+  min-height: 456px;
   padding: 0;
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -473,9 +543,11 @@ export default {
 
 .product-image {
   position: relative;
-  aspect-ratio: 1 / 1;
+  height: 220px;
+  margin: 16px 16px 0;
+  border-radius: 16px;
   overflow: hidden;
-  background: var(--mall-bg-warm);
+  background: var(--mall-surface-soft);
   display: block;
 }
 
@@ -540,10 +612,11 @@ export default {
 }
 
 .product-footer {
-  margin-top: 14px;
+  margin-top: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
 }
 
 .price {
@@ -553,20 +626,46 @@ export default {
   font-weight: 700;
 }
 
-.wishlist-button {
-  width: 36px;
-  height: 36px;
+.add-cart-button {
+  min-width: 86px;
+  height: 38px;
+  padding: 0 14px;
   border: 1px solid var(--mall-border);
-  border-radius: 50%;
+  border-radius: 999px;
   background: #ffffff;
   color: var(--mall-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
-  transition: border-color 0.2s ease, color 0.2s ease;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
 }
 
-.wishlist-button:hover {
+.add-cart-button:hover {
+  background: var(--mall-primary-soft);
   border-color: var(--mall-primary);
   color: var(--mall-primary);
+}
+
+.details-button {
+  min-height: 42px;
+  margin-top: 14px;
+  border-radius: 12px;
+  background: var(--mall-primary);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  transition: background 0.2s ease;
+}
+
+.details-button:hover {
+  background: var(--mall-primary-dark);
 }
 
 .lifestyle-section {
@@ -625,8 +724,13 @@ export default {
     grid-template-columns: 1fr;
   }
 
+  .hero-banner {
+    height: auto;
+  }
+
   .hero-image {
-    min-height: 280px;
+    height: auto;
+    min-height: 320px;
   }
 
   .lifestyle-section {
@@ -642,6 +746,15 @@ export default {
 
   .hero-content {
     padding: 36px 24px;
+  }
+
+  .hero-banner {
+    border-radius: 24px;
+  }
+
+  .hero-image {
+    height: auto;
+    min-height: 260px;
   }
 
   .service-strip,
