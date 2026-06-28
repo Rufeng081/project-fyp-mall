@@ -33,35 +33,31 @@
 <style>
 .manage-shell,
 .manage-container {
+  height: 100%;
   min-height: 100vh;
 }
 
 .manage-aside {
-  height: 100vh;
-  background: #f4f1fb;
-  border-right: 1px solid var(--mall-border);
+  min-height: 100vh;
+  background-color: rgb(238, 241, 246);
 }
 
 .manage-header {
   height: 80px !important;
   line-height: 80px;
-  border-bottom: 1px solid var(--mall-border);
-  background: rgba(255, 255, 255, 0.94);
-  color: var(--mall-text);
+  border-bottom: 1px solid #ccc;
+  background-color: aliceblue;
+  color: #333;
 }
 
 .manage-main {
-  background:
-    radial-gradient(circle at 92% 8%, rgba(47, 191, 155, 0.12), transparent 26%),
-    var(--mall-bg);
+  background: #ffffff;
 }
 
 .bk {
   width: 100%;
-  background:
-    linear-gradient(135deg, rgba(251, 249, 255, 0.94), rgba(255, 255, 255, 0.82)),
-    url("@/resource/img/back.jpg") center center no-repeat;
-  background-size: cover;
+  background: url("@/resource/img/back.jpg") center center no-repeat;
+  background-size: 100% 100%;
 }
 </style>
 

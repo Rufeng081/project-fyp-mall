@@ -219,13 +219,39 @@ export default {
       return homepageHero;
     },
     heroLink() {
-      if (this.carousels.length > 0) {
-        return "/goodView/" + this.carousels[0].goodId;
+      if (this.carouselGoodIds.length > 0) {
+        return "/goodView/" + this.carouselGoodIds[0];
       }
       return "/goodView/" + this.displayGoods[0].id;
     },
+    carouselGoodIds() {
+      return this.carousels
+        .map((carousel) => Number(carousel.goodId))
+        .filter((goodId) => Number.isFinite(goodId));
+    },
+    carouselFeaturedGoods() {
+      const goodsById = new Map(
+        this.displayGoods.map((product) => [Number(product.id), product])
+      );
+      const seenGoodIds = new Set();
+
+      return this.carouselGoodIds
+        .filter((goodId) => {
+          if (seenGoodIds.has(goodId)) return false;
+          seenGoodIds.add(goodId);
+          return goodsById.has(goodId);
+        })
+        .map((goodId) => goodsById.get(goodId));
+    },
     featuredGoods() {
-      return this.displayGoods.slice(0, 4);
+      const carouselGoodIdSet = new Set(
+        this.carouselFeaturedGoods.map((product) => Number(product.id))
+      );
+      const fallbackGoods = this.displayGoods.filter(
+        (product) => !carouselGoodIdSet.has(Number(product.id))
+      );
+
+      return this.carouselFeaturedGoods.concat(fallbackGoods).slice(0, 4);
     },
     visibleCategories() {
       const categories = [];

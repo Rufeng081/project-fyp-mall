@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div class="recommendation-page-heading">
+      <h2>Homepage Recommendation Management</h2>
+      <p>Choose the products shown in the homepage featured section. The storefront displays up to four products by recommendation order.</p>
+    </div>
     <div>
       <el-table :data="tableData" border stripe style="width: 80%;margin: 2px auto">
         <el-table-column label="Product">
@@ -12,7 +16,7 @@
             <img :src="baseApi + scope.row.img" width="300" height="185" />
           </template>
         </el-table-column>
-        <el-table-column prop="showOrder" label="Carousel Order"></el-table-column>
+        <el-table-column prop="showOrder" label="Recommendation Order"></el-table-column>
 
         <el-table-column
             fixed="right"
@@ -32,20 +36,20 @@
     </div>
 <!--Add button-->
     <div style="text-align: center">
-      <el-button @click="add" type="primary" style="margin: 30px;width: 150px; font-size: 20px;">
+      <el-button @click="add" type="primary" style="margin: 30px;width: 180px; font-size: 20px;">
         <i class="el-icon-a-07"></i>
-        Add
+        Add Product
       </el-button>
     </div>
     <!-- Dialog   -->
 
-    <el-dialog title="Information" :visible.sync="dialogFormVisible" width="30%"
+    <el-dialog title="Homepage Recommendation" :visible.sync="dialogFormVisible" width="30%"
                :close-on-click-modal="false">
       <el-form :model="entity">
         <el-form-item label="Product ID" label-width="150px">
           <el-input v-model="entity.goodId" autocomplete="off" style="width: 80%"></el-input>
         </el-form-item>
-        <el-form-item label="Carousel Order" label-width="150px">
+        <el-form-item label="Recommendation Order" label-width="150px">
 <!--          <el-input v-model="entity.showOrder" autocomplete="off" style="width: 80%"></el-input>-->
           <el-select v-model="entity.showOrder">
             <el-option v-for="index in tableData.length" :key="index" :label="index" :value="index">
@@ -147,4 +151,21 @@ export default {
 </script>
 
 <style scoped>
+.recommendation-page-heading {
+  width: 80%;
+  margin: 2px auto 18px;
+}
+
+.recommendation-page-heading h2 {
+  margin: 0 0 8px;
+  color: #303133;
+  font-size: 24px;
+}
+
+.recommendation-page-heading p {
+  margin: 0;
+  color: #606266;
+  font-size: 14px;
+  line-height: 1.6;
+}
 </style>
