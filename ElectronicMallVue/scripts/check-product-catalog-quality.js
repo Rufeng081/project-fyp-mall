@@ -6,6 +6,7 @@ const vueRoot = path.resolve(__dirname, "..");
 const repoRoot = path.resolve(vueRoot, "..");
 const sqlPath = path.join(repoRoot, "database/electronic_mall.sql");
 const imageRoot = path.join(repoRoot, "ElectronicMallApi/file");
+const goodDtoPath = path.join(repoRoot, "ElectronicMallApi/src/main/java/com/rufeng/em/entity/dto/GoodDTO.java");
 const minImageSide = 640;
 
 const expectedCategoryByProductId = {
@@ -123,6 +124,7 @@ function readDimensions(filePath) {
 }
 
 const sql = fs.readFileSync(sqlPath, "utf8");
+const goodDto = fs.readFileSync(goodDtoPath, "utf8");
 const categories = new Map(parseRows(sql, "category").map((row) => [Number(row[0]), row[1]]));
 const activeProducts = parseRows(sql, "good")
   .map((row) => ({
@@ -138,6 +140,10 @@ const failures = [];
 
 if (activeProducts.length === 0) {
   failures.push("No active products were parsed from database/electronic_mall.sql");
+}
+
+if (!goodDto.includes("private Long categoryId;") || !goodDto.includes("getCategoryId()")) {
+  failures.push("GoodDTO must expose categoryId so product-list API records can display real category labels");
 }
 
 activeProducts.forEach((product) => {

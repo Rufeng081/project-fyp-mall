@@ -17,6 +17,7 @@
 | Product image quality | `UV Protection Sunglasses` used a `428x428` image, below the 640px minimum side target. | Replaced it with `/file/catalog_010_uv_protection_sunglasses.png` at `1254x1254`. |
 | Product category consistency | `Sports Track Pants` was under `Sports Shoes`; `Study Desk and Chair Set` was under `Stationery`. | Updated local seed data and live data intent to `Clothing` and `Household Supplies`. |
 | Product list UI | Frontend product cards displayed a generic category label and used cover-cropped images. | Display real category labels and use contained image rendering on a warm neutral surface. |
+| Product list API | `/api/good/page` returned `GoodDTO` without `categoryId`, forcing category labels to fall back to `Rufeng Mall`. | Added `categoryId` to `GoodDTO` and covered it in `check:catalog`. |
 | Admin product table | Product thumbnails were stretched to fixed dimensions. | Added a stable thumbnail container with `object-fit: contain`. |
 
 ## Files Changed
@@ -27,6 +28,7 @@
 - `ElectronicMallVue/scripts/check-ui-enhancement.js`
 - `ElectronicMallVue/scripts/check-product-catalog-quality.js`
 - `ElectronicMallVue/package.json`
+- `ElectronicMallApi/src/main/java/com/rufeng/em/entity/dto/GoodDTO.java`
 - `ElectronicMallApi/file/catalog_010_uv_protection_sunglasses.png`
 - `database/electronic_mall.sql`
 
@@ -36,6 +38,8 @@
 | --- | --- |
 | `npm run check:catalog` | Passed; 57 active products checked. |
 | `npm run check:ui` | Passed; includes sidebar title and thumbnail regression checks. |
+| `mvn -q test` | Passed after adding `GoodDTO.categoryId`. |
+| `mvn -q package` | Passed after adding `GoodDTO.categoryId`. |
 | `sips -g pixelWidth -g pixelHeight ElectronicMallApi/file/catalog_010_uv_protection_sunglasses.png` | `1254x1254`. |
 
 ## Notes

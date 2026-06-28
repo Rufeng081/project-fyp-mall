@@ -7,6 +7,7 @@ public class GoodDTO {
     private String name;
     private String imgs;
     private BigDecimal price;
+    private Long categoryId;
 
     public Long getId() {
         return id;
@@ -40,6 +41,14 @@ public class GoodDTO {
         this.price = price;
     }
 
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
     @Override
     public String toString() {
         return "GoodDTO{" +
@@ -47,6 +56,7 @@ public class GoodDTO {
                 ", name='" + name + '\'' +
                 ", imgs='" + imgs + '\'' +
                 ", price=" + price +
+                ", categoryId=" + categoryId +
                 '}';
     }
 }

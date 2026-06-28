@@ -1191,6 +1191,7 @@ redis-cli DEL good:id:3
 - `UV Protection Sunglasses` was the only active product image below the 640px minimum side target at `428x428`.
 - `Sports Track Pants` belonged under `Clothing`, not `Sports Shoes`.
 - `Study Desk and Chair Set` fit `Household Supplies` better than `Stationery` within the current category taxonomy.
+- The product list API returned `GoodDTO` without `categoryId`, causing frontend category labels to fall back to `Rufeng Mall`.
 - Backend product-management thumbnails were stretched by fixed inline dimensions.
 
 ### Verification
@@ -1198,6 +1199,8 @@ redis-cli DEL good:id:3
 | --- | --- |
 | `npm run check:catalog` | Passed; 57 active products checked. |
 | `npm run check:ui` | Passed; 31 checks. |
+| `mvn -q test` | Passed after adding `GoodDTO.categoryId`. |
+| `mvn -q package` | Passed after adding `GoodDTO.categoryId`. |
 | `sips -g pixelWidth -g pixelHeight ElectronicMallApi/file/catalog_010_uv_protection_sunglasses.png` | `1254x1254`. |
 
 ### Documentation Added
