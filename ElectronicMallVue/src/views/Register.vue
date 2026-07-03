@@ -3,7 +3,7 @@
     <section class="auth-card register-card">
       <div class="title">
         <span>Create Account</span>
-        <h1>Register for Rufeng Mall</h1>
+        <h1>Register for R Mall</h1>
         <p>Email verification keeps demo accounts clear and trustworthy.</p>
       </div>
 

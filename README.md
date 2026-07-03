@@ -21,7 +21,7 @@ Current cloud checkpoint:
 - Google Cloud VM `fyp-mall-vm` has been provisioned and the server stack is running behind Nginx.
 - Current public endpoint recorded in the deployment notes: `http://34.143.225.11`.
 - The image/resource blocker has been fixed by routing production frontend resources through `/api`, proxying through Nginx, and using `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads` for persistent backend file storage.
-- The email verification service is configured for Brevo SMTP and now sends the FYP-UKM Rufeng Mall Demo verification template. Live sending on the VM still requires the three SMTP environment variables below.
+- The email verification service is configured for Brevo SMTP and now sends the FYP-UKM R Mall Demo verification template. Live sending on the VM still requires the three SMTP environment variables below.
 
 ## Repository Layout
 
@@ -123,7 +123,7 @@ Auth endpoints:
 
 Email verification codes are 6 digits, stored in Redis for 5 minutes, and the same email cannot request another code for 60 seconds.
 
-Outgoing verification emails use the subject `[FYP-UKM] Rufeng Mall Demo Verification Code` and identify the sender system as `FYP-UKM Rufeng Mall Demo System / LI RUFENG / A206331`.
+Outgoing verification emails use the subject `[FYP-UKM] R Mall Demo Verification Code` and identify the sender system as `FYP-UKM R Mall Demo System / LI RUFENG / A206331`.
 
 If the backend returns `Email sender is not configured`, verify that all three SMTP variables are present in the runtime environment. This project keeps email verification enabled and does not enable direct registration as a fallback.
 

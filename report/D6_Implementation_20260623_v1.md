@@ -2,7 +2,7 @@
 
 ## Development and Network Performance Evaluation of a Cloud-Based Small E-Commerce Platform
 
-**Project Name:** Rufeng Mall  
+**Project Name:** R Mall  
 **Programme:** Network Technology Final Year Project  
 **Document Type:** D6 — Implementation  
 **Date:** June 2026
@@ -13,7 +13,7 @@
 
 ### 1.1 Purpose of the Document
 
-This document describes the implementation of Rufeng Mall, a cloud-based small e-commerce platform developed as a Network Technology Final Year Project. It records how the functional requirements and design specification were translated into an operational web system. The implementation covers the customer-facing storefront, administrator functions, RESTful backend services, database, authentication and email verification mechanisms, cloud deployment, and performance-testing artefacts.
+This document describes the implementation of R Mall, a cloud-based small e-commerce platform developed as a Network Technology Final Year Project. It records how the functional requirements and design specification were translated into an operational web system. The implementation covers the customer-facing storefront, administrator functions, RESTful backend services, database, authentication and email verification mechanisms, cloud deployment, and performance-testing artefacts.
 
 The purpose of this document is not to reproduce the entire source code. Instead, it explains selected implementation components that are critical to the operation, integrity, security, and network behaviour of the system. The selected extracts demonstrate how the system handles user sessions, email verification, order creation, simulated payment, client-server communication, route protection, and reverse-proxy deployment.
 
@@ -440,7 +440,7 @@ Verification was integrated throughout development rather than deferred until th
 
 ### 3.1 Implementation Summary
 
-Rufeng Mall was implemented as a complete but deliberately bounded cloud-based e-commerce platform. The Vue frontend provides separate customer and administrator interfaces. The Spring Boot backend implements REST APIs, business rules, transactional order handling, email verification, session control, and access-control enforcement. MySQL stores durable business data, while Redis manages temporary session, verification-code, and cache state. Nginx provides the public web entry point and reverse-proxies requests to the internal backend service. Apache JMeter provides an executable, parameterised method for evaluating the deployed system under controlled network load.
+R Mall was implemented as a complete but deliberately bounded cloud-based e-commerce platform. The Vue frontend provides separate customer and administrator interfaces. The Spring Boot backend implements REST APIs, business rules, transactional order handling, email verification, session control, and access-control enforcement. MySQL stores durable business data, while Redis manages temporary session, verification-code, and cache state. Nginx provides the public web entry point and reverse-proxies requests to the internal backend service. Apache JMeter provides an executable, parameterised method for evaluating the deployed system under controlled network load.
 
 The implementation satisfies the main FYP need for a realistic client-server-database workload. It enables the complete shopper flow from account access through simulated payment and allows the resulting network communication to be measured through response time, throughput, and error rate.
 

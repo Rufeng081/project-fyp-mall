@@ -6,11 +6,11 @@
         Back
       </button>
       <div class="brand-mark">
-        <img src="@/resource/03.png" alt="Rufeng Mall logo" />
+        <img src="@/resource/03.png" alt="R Mall logo" />
       </div>
       <div class="title">
         <span>Welcome back</span>
-        <h1>Login to Rufeng Mall</h1>
+        <h1>Login to R Mall</h1>
         <p>Access your cart, orders and profile for the FYP-UKM demo store.</p>
       </div>
 

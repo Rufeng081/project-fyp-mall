@@ -22,7 +22,7 @@ public class EmailVerificationService {
     private static final Logger log = LoggerFactory.getLogger(EmailVerificationService.class);
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
     private static final SecureRandom RANDOM = new SecureRandom();
-    private static final String EMAIL_SUBJECT = "[FYP-UKM] Rufeng Mall Demo Verification Code";
+    private static final String EMAIL_SUBJECT = "[FYP-UKM] R Mall Demo Verification Code";
 
     private final RedisTemplate<String, Object> redisTemplate;
     private final JavaMailSender mailSender;
@@ -125,7 +125,7 @@ public class EmailVerificationService {
 
     private String buildEmailText(String code) {
         return "Dear User,\n\n"
-                + "Your verification code for the FYP-UKM Rufeng Mall Demo System is:\n\n"
+                + "Your verification code for the FYP-UKM R Mall Demo System is:\n\n"
                 + "====================\n"
                 + "      " + code + "\n"
                 + "====================\n\n"
@@ -133,7 +133,7 @@ public class EmailVerificationService {
                 + "This email was sent automatically by the FYP Mall demo system for account registration or password reset verification.\n\n"
                 + "If you did not request this code, you can safely ignore this email.\n\n"
                 + "Regards,\n"
-                + "FYP-UKM Rufeng Mall Demo System\n"
+                + "FYP-UKM R Mall Demo System\n"
                 + "LI RUFENG\n"
                 + "A206331";
     }

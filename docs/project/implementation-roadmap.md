@@ -407,7 +407,7 @@ After this phase, the registration function should support:
 
 As of 2026-05-20, the Google Cloud VM has been provisioned, the core server stack is running, and the public image/resource display issue has been fixed. Production frontend resources now use `/api`, Nginx proxies requests to Spring Boot, and uploaded files are expected under `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads`.
 
-The email verification service is configured through Brevo SMTP environment variables and sends the FYP-UKM Rufeng Mall Demo verification email template. Runtime deployments must keep `BREVO_SMTP_USERNAME`, `BREVO_SMTP_KEY`, and `BREVO_SENDER_EMAIL` configured because direct registration without email verification is not enabled.
+The email verification service is configured through Brevo SMTP environment variables and sends the FYP-UKM R Mall Demo verification email template. Runtime deployments must keep `BREVO_SMTP_USERNAME`, `BREVO_SMTP_KEY`, and `BREVO_SENDER_EMAIL` configured because direct registration without email verification is not enabled.
 
 ## Objective
 

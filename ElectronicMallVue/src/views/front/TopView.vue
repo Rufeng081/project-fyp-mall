@@ -2,7 +2,7 @@
   <div class="home-page mall-page">
     <section class="hero-banner">
       <div class="hero-content">
-        <span class="welcome-badge">Rufeng Mall</span>
+        <span class="welcome-badge">R Mall</span>
         <h2>Everyday essentials, thoughtfully selected.</h2>
         <p>
           A simple and warm shopping experience for study, work, and daily living.
@@ -18,7 +18,7 @@
         </div>
       </div>
 
-      <router-link class="hero-image" to="/goodList" aria-label="Browse Rufeng Mall products">
+      <router-link class="hero-image" to="/goodList" aria-label="Browse R Mall products">
         <img :src="heroImage" alt="Warm desk scene with laptop, books, notebook, coffee cup, plant and phone" />
       </router-link>
     </section>
@@ -120,7 +120,7 @@
         <span class="section-kicker">Campus Collection</span>
         <h3>Objects that make daily routines feel easier.</h3>
         <p>
-          From study essentials to weekend carry items, Rufeng Mall presents
+          From study essentials to weekend carry items, R Mall presents
           practical products with a quieter, more thoughtful shopping rhythm.
         </p>
       </div>

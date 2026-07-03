@@ -17,7 +17,7 @@
 | Product image quality | `UV Protection Sunglasses` used a `428x428` image, below the 640px minimum side target. | Replaced it with `/file/catalog_010_uv_protection_sunglasses.png` at `1254x1254`. |
 | Product category consistency | `Sports Track Pants` was under `Sports Shoes`; `Study Desk and Chair Set` was under `Stationery`. | Updated local seed data and live data intent to `Clothing` and `Household Supplies`. |
 | Product list UI | Frontend product cards displayed a generic category label and used cover-cropped images. | Display real category labels and use contained image rendering on a warm neutral surface. |
-| Product list API | `/api/good/page` returned `GoodDTO` without `categoryId`, forcing category labels to fall back to `Rufeng Mall`. | Added `categoryId` to `GoodDTO` and covered it in `check:catalog`. |
+| Product list API | `/api/good/page` returned `GoodDTO` without `categoryId`, forcing category labels to fall back to `R Mall`. | Added `categoryId` to `GoodDTO` and covered it in `check:catalog`. |
 | Admin product table | Product thumbnails were stretched to fixed dimensions. | Added a stable thumbnail container with `object-fit: contain`. |
 
 ## Files Changed
@@ -46,4 +46,4 @@
 
 - The product catalog quality script reads `database/electronic_mall.sql` and validates active products against local files in `ElectronicMallApi/file`.
 - Archived products are excluded from the active catalog check because they are not rendered in normal product lists.
-- The `UV Protection Sunglasses` replacement image was generated as a clean product photograph to match the current warm, restrained Rufeng Mall design direction.
+- The `UV Protection Sunglasses` replacement image was generated as a clean product photograph to match the current warm, restrained R Mall design direction.

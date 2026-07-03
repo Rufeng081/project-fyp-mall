@@ -12,10 +12,10 @@ const routes = [
     name: 'front',
     redirect: "/topview",
     component: () => import('../views/front/Front.vue'),
-    meta: {title:'Rufeng Mall | FYP E-Commerce System', path: 'Rufeng Mall', requireAuth: false},
+    meta: {title:'R Mall | FYP E-Commerce System', path: 'R Mall', requireAuth: false},
     children: [
       {path: 'person', name: 'person', meta: {title:'Profile',requireLogin: true}, component: () => import('../views/Person.vue'),},
-      {path: 'topview', name: 'topview', meta: {title:'Rufeng Mall | FYP E-Commerce System'}, component: () => import('../views/front/TopView.vue'),},
+      {path: 'topview', name: 'topview', meta: {title:'R Mall | FYP E-Commerce System'}, component: () => import('../views/front/TopView.vue'),},
       {path: 'cart', name: 'cart', meta: {title:'My Cart',requireLogin: true}, component: () => import('../views/front/good/Cart.vue'),},
       {path: 'goodList', name: 'goodList', meta: {title:'Product List'}, component: () => import('../views/front/good/GoodList.vue'),},
       {path: 'goodView/:goodId', name: 'goodview', meta: {title:'Product Details'}, component: () => import('../views/front/good/GoodView.vue'),},

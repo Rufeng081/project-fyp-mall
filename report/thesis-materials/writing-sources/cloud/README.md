@@ -9,13 +9,13 @@ As of 2026-06-16:
 - Google Cloud VM provisioning is complete.
 - The VM server stack is running with Nginx, Spring Boot, MySQL, and Redis.
 - Public HTTP endpoint recorded during deployment: `http://34.143.225.11`.
-- Public homepage/browser check passed: the app loads `/topview`, title `Rufeng Mall | FYP E-Commerce System`, and visible storefront/category content without captured console errors.
+- Public homepage/browser check passed: the app loads `/topview`, title `R Mall | FYP E-Commerce System`, and visible storefront/category content without captured console errors.
 - Public demo user login and authenticated read checks passed for user ID, addresses, cart, and order history.
 - `gcloud` read-only verification confirmed VM `fyp-mall-vm` is RUNNING, and VM services `nginx`, `project-fyp-mall.service`, `mysql`, and `redis-server` are active.
 - Live MySQL has the expected core tables, key indexes, and foreign keys. Checked counts: `good=9`, `sys_user=2`, `t_order=3`.
 - Recent VM error logs for Spring Boot and Nginx had no entries in the last 30 minutes during the 2026-06-16 audit.
 - Public image/resource display has been fixed after production resource URLs were routed through `/api`, Nginx proxy behavior was documented, and backend upload storage was moved behind `MALL_UPLOAD_DIR`.
-- Email verification service is configured through Brevo SMTP environment variables and uses the FYP-UKM Rufeng Mall Demo verification email template. VM runtime email sending requires `BREVO_SMTP_USERNAME`, `BREVO_SMTP_KEY`, and `BREVO_SENDER_EMAIL`.
+- Email verification service is configured through Brevo SMTP environment variables and uses the FYP-UKM R Mall Demo verification email template. VM runtime email sending requires `BREVO_SMTP_USERNAME`, `BREVO_SMTP_KEY`, and `BREVO_SENDER_EMAIL`.
 - The active Spring Boot systemd unit on the VM is `project-fyp-mall.service`.
 - A stale Redis product cache key from the old Java package namespace was removed on 2026-06-15; product detail API `/api/api/good/3` returned HTTP 200 after the cache cleanup.
 - phpMyAdmin is installed for browser-based MySQL administration at `http://34.143.225.11/phpmyadmin/`; Nginx remains the public HTTP server on port `80`, while Apache serves phpMyAdmin only on `127.0.0.1:8081`.

@@ -83,9 +83,9 @@ class EmailVerificationServiceTest {
         verify(mailSender).send(messageCaptor.capture());
         SimpleMailMessage message = messageCaptor.getValue();
 
-        assertEquals("[FYP-UKM] Rufeng Mall Demo Verification Code", message.getSubject());
+        assertEquals("[FYP-UKM] R Mall Demo Verification Code", message.getSubject());
         assertEquals("Dear User,\n\n"
-                + "Your verification code for the FYP-UKM Rufeng Mall Demo System is:\n\n"
+                + "Your verification code for the FYP-UKM R Mall Demo System is:\n\n"
                 + "====================\n"
                 + "      " + codeCaptor.getValue() + "\n"
                 + "====================\n\n"
@@ -93,7 +93,7 @@ class EmailVerificationServiceTest {
                 + "This email was sent automatically by the FYP Mall demo system for account registration or password reset verification.\n\n"
                 + "If you did not request this code, you can safely ignore this email.\n\n"
                 + "Regards,\n"
-                + "FYP-UKM Rufeng Mall Demo System\n"
+                + "FYP-UKM R Mall Demo System\n"
                 + "LI RUFENG\n"
                 + "A206331", message.getText());
     }

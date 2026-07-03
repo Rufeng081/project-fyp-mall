@@ -2,7 +2,7 @@ const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   pages: {
     index: {
-      title: 'Rufeng Mall | FYP E-Commerce System',
+      title: 'R Mall | FYP E-Commerce System',
       entry: 'src/main.js',
       template: 'public/index.html',
       filename: 'index.html',

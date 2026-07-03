@@ -189,7 +189,7 @@ Current checkpoint as of 2026-05-20:
 - User confirmed the public image/resource display issue is fixed and the project is running normally.
 - Product images and user avatars now route through `/api` instead of browser-side `localhost:9191`.
 - Backend upload storage is documented and configured around `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads`.
-- Email verification service is configured through Brevo SMTP environment variables and the FYP-UKM Rufeng Mall Demo email template.
+- Email verification service is configured through Brevo SMTP environment variables and the FYP-UKM R Mall Demo email template.
 
 Primary files:
 
@@ -211,8 +211,8 @@ Status: complete.
 
 Completed outcomes:
 
-- Configured outgoing verification email subject as `[FYP-UKM] Rufeng Mall Demo Verification Code`.
-- Configured outgoing verification email body for the FYP-UKM Rufeng Mall Demo System, including the generated 6-digit code, 5-minute validity notice, automated-email notice, ignore-if-not-requested notice, and `LI RUFENG / A206331` signature.
+- Configured outgoing verification email subject as `[FYP-UKM] R Mall Demo Verification Code`.
+- Configured outgoing verification email body for the FYP-UKM R Mall Demo System, including the generated 6-digit code, 5-minute validity notice, automated-email notice, ignore-if-not-requested notice, and `LI RUFENG / A206331` signature.
 - Confirmed no additional backend flow changes were needed: Redis stores the code for 5 minutes, resend cooldown remains 60 seconds, and registration/reset flows already use the same email verification service.
 - Updated root and `docs/` progress notes so the current state says the email verification service is configured rather than listing email fallback as the next implementation task.
 
@@ -844,7 +844,7 @@ Phase 1 and Phase 2 complete; Phase 3 Brevo email verification implementation an
 - Verified the same user could log in with the reset password; response code was `200`.
 - Confirmed both Redis verification keys were deleted after successful registration/reset consumption.
 - Confirmed the local MySQL `sys_user` table contains the new live-test user with role `user`.
-- Confirmed Brevo Transactional Email Logs show `Rufeng Mall verification code` entries with `Sent`, `Delivered`, and `First opening` events.
+- Confirmed Brevo Transactional Email Logs show `R Mall verification code` entries with `Sent`, `Delivered`, and `First opening` events.
 - Ran backend tests with `mvn -q test`; exit code `0`.
 - Ran frontend production build with `npm run build`; exit code `0` with existing Browserslist and asset-size warnings only.
 - Started Vue dev server on `http://localhost:9192` and verified `npm run check:routes`; 12 routes passed.
@@ -1139,7 +1139,7 @@ redis-cli DEL good:id:3
 | `mvn -q test` | Passed |
 | `mvn -q package` | Passed |
 | `npm run build` | Passed with existing Browserslist and asset-size warnings |
-| Public homepage/browser check | Passed; `/topview` loaded with title `Rufeng Mall | FYP E-Commerce System` |
+| Public homepage/browser check | Passed; `/topview` loaded with title `R Mall | FYP E-Commerce System` |
 | Public demo login and authenticated read APIs | Passed |
 | `gcloud` VM service checks | `nginx`, `project-fyp-mall.service`, `mysql`, and `redis-server` active |
 | Live MySQL checks | Expected core tables, key indexes, and foreign keys present |
@@ -1191,7 +1191,7 @@ redis-cli DEL good:id:3
 - `UV Protection Sunglasses` was the only active product image below the 640px minimum side target at `428x428`.
 - `Sports Track Pants` belonged under `Clothing`, not `Sports Shoes`.
 - `Study Desk and Chair Set` fit `Household Supplies` better than `Stationery` within the current category taxonomy.
-- The product list API returned `GoodDTO` without `categoryId`, causing frontend category labels to fall back to `Rufeng Mall`.
+- The product list API returned `GoodDTO` without `categoryId`, causing frontend category labels to fall back to `R Mall`.
 - Backend product-management thumbnails were stretched by fixed inline dimensions.
 
 ### Verification

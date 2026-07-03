@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Apply the latest Rufeng Mall UI/UX optimization plan and replace the homepage hero image with the supplied warm lifestyle image. The intent was to make the homepage feel more professional, warm, human-centered, student-friendly, and suitable for FYP presentation screenshots.
+Apply the latest R Mall UI/UX optimization plan and replace the homepage hero image with the supplied warm lifestyle image. The intent was to make the homepage feel more professional, warm, human-centered, student-friendly, and suitable for FYP presentation screenshots.
 
 ## Scope
 

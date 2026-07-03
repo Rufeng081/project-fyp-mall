@@ -34,7 +34,7 @@
 - Runtime status:
   - Public image/resource display has been fixed after production resource routing and upload storage were corrected.
   - Production upload storage should use `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads` with writable `file/` and `avatar/` subdirectories.
-  - Email verification service is configured through Brevo SMTP environment variables and uses the FYP-UKM Rufeng Mall Demo verification email template.
+  - Email verification service is configured through Brevo SMTP environment variables and uses the FYP-UKM R Mall Demo verification email template.
   - Runtime email sending requires `BREVO_SMTP_USERNAME`, `BREVO_SMTP_KEY`, and `BREVO_SENDER_EMAIL`; direct registration without email verification is not enabled.
 - Related files:
   - `docs/cloud/phase-4-vm-diagnostics-2026-05-19.md`.

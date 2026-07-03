@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Upgrade Rufeng Mall from a functional student-project interface to a warmer, cleaner, and more professional FYP demonstration storefront. The work followed the provided UI enhancement plan and the approved reference homepage style.
+Upgrade R Mall from a functional student-project interface to a warmer, cleaner, and more professional FYP demonstration storefront. The work followed the provided UI enhancement plan and the approved reference homepage style.
 
 ## Branch
 
@@ -13,7 +13,7 @@ Upgrade Rufeng Mall from a functional student-project interface to a warmer, cle
 ## Implementation Summary
 
 - Added global design tokens in `ElectronicMallVue/src/resource/global.css` for deep purple, soft green, warm background, text, borders, radius, shadows, buttons, inputs, cards, responsive sizing, and reduced-motion behavior.
-- Reworked the storefront navigation into a sticky, branded `Rufeng Mall / FYP-UKM Demo` header with responsive menu, search, cart, notification, and user dropdown areas.
+- Reworked the storefront navigation into a sticky, branded `R Mall / FYP-UKM Demo` header with responsive menu, search, cart, notification, and user dropdown areas.
 - Redesigned the homepage with a large rounded hero banner, welcome message, feature highlights, category panel, recommended product grid, and service guarantee section.
 - Restyled product list, product detail, cart, checkout, payment, order history, login, register, password reset dialog, user profile, and admin dashboard shell.
 - Added `ElectronicMallVue/scripts/check-ui-enhancement.js` and `npm run check:ui` to enforce key UI structure acceptance points.

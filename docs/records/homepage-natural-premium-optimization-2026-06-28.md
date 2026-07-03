@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Continue the Rufeng Mall homepage optimization from the new design plan and design system specification. The goal was to move the homepage away from a Material Design and AI mockup impression toward a calmer, warmer, more product-designed direction inspired by Apple Store, MUJI, Aesop, Nothing, and Arc Browser.
+Continue the R Mall homepage optimization from the new design plan and design system specification. The goal was to move the homepage away from a Material Design and AI mockup impression toward a calmer, warmer, more product-designed direction inspired by Apple Store, MUJI, Aesop, Nothing, and Arc Browser.
 
 ## Scope
 
@@ -12,7 +12,7 @@ Continue the Rufeng Mall homepage optimization from the new design plan and desi
 
 ## Implementation Summary
 
-- Updated the global visual tokens to match the new Rufeng Mall Design System v1.0:
+- Updated the global visual tokens to match the new R Mall Design System v1.0:
   - Neutral page background `#FAFAF8`.
   - Neutral borders and dividers `#E8E8E6` / `#EFEFEC`.
   - Purple `#5A31F4` retained only for brand, active navigation, primary CTA, and meaningful accents.

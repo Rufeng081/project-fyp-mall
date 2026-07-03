@@ -48,7 +48,7 @@ Deploy Project FYP Mall to Google Cloud so it is accessible through a public IP 
 
 As of 2026-05-20, the production image/resource display issue has been fixed. The deployed frontend no longer depends on browser-side `localhost:9191` for product images, user avatars, uploads, or role checks. Production requests use `/api`, Nginx proxies them to the Spring Boot service on `127.0.0.1:9191`, and backend file storage is configured through `MALL_UPLOAD_DIR=/opt/project-fyp-mall/uploads`.
 
-The email verification service is configured through Brevo SMTP environment variables and sends the FYP-UKM Rufeng Mall Demo verification email template. VM runtime email sending still depends on `BREVO_SMTP_USERNAME`, `BREVO_SMTP_KEY`, and `BREVO_SENDER_EMAIL`; direct registration without email verification is not enabled.
+The email verification service is configured through Brevo SMTP environment variables and sends the FYP-UKM R Mall Demo verification email template. VM runtime email sending still depends on `BREVO_SMTP_USERNAME`, `BREVO_SMTP_KEY`, and `BREVO_SENDER_EMAIL`; direct registration without email verification is not enabled.
 
 ## Deployment Verification
 
@@ -81,7 +81,7 @@ The email verification service is configured through Brevo SMTP environment vari
 | 2026-05-19 | Ran full local verification for the cloud fix. | `npm run check:deployment`, `npm run check:auth`, `npm run build`, `mvn -q test`, and `mvn -q package` passed. |
 | 2026-05-20 | Synchronized documentation after confirming the VM was built and image display was the active blocker at that time. | Root README, docs index, roadmap, cloud notes, setup log, and work log updated. |
 | 2026-05-20 | User confirmed the image display issue is fixed and the project is running normally. | Documentation updated to close the image/resource blocker; email verification configuration was reviewed next. |
-| 2026-05-20 | Configured the outgoing verification email content for the FYP-UKM Rufeng Mall Demo identity. | Backend email template and documentation updated; targeted email service test passed locally. |
+| 2026-05-20 | Configured the outgoing verification email content for the FYP-UKM R Mall Demo identity. | Backend email template and documentation updated; targeted email service test passed locally. |
 
 ## Notes
 

@@ -5,7 +5,7 @@
     <section class="list-hero mall-card">
       <div>
         <span class="eyebrow">Product Catalogue</span>
-        <h2>Browse Rufeng Mall products</h2>
+        <h2>Browse R Mall products</h2>
         <p>Find lifestyle, stationery, electronics, food and campus essentials in one clean catalogue.</p>
       </div>
       <div class="catalogue-stats">
@@ -140,7 +140,7 @@ export default {
           return match.name;
         }
       }
-      return "Rufeng Mall";
+      return "R Mall";
     },
     load(categoryId) {
       if (categoryId != undefined) {

@@ -23,7 +23,7 @@ This record tracks the full project readiness audit requested on 2026-06-16. The
 | 12:44 | Reviewed frontend router/request/store/env and validation scripts. | Fixed protected-route guard to stop after unauthenticated redirect; added a `check:auth` static assertion for the fix. |
 | 12:47 | Checked GitHub/local git state and ran database schema static validation. | GitHub repo `Rufeng081/project-fyp-mall` is reachable; local `main` matched `origin/main` before audit edits; `node tools/check-database-schema.js` passed. |
 | 12:50 | Ran local verification commands. | `npm run check:auth`, `npm run check:deployment`, `mvn -q test`, `mvn -q package`, and `npm run build` passed. Build warnings remain for Browserslist and large assets. |
-| 12:54 | Checked public endpoint and live read flows. | Homepage loads in browser with title `Rufeng Mall | FYP E-Commerce System`; demo login and authenticated read APIs passed. Direct `/api/good` returns 401 due to current Nginx prefix-stripping path map, while `/api/api/good` works. |
+| 12:54 | Checked public endpoint and live read flows. | Homepage loads in browser with title `R Mall | FYP E-Commerce System`; demo login and authenticated read APIs passed. Direct `/api/good` returns 401 due to current Nginx prefix-stripping path map, while `/api/api/good` works. |
 | 12:58 | Updated documentation. | Refreshed docs index, verification workflow, cloud notes, deployment docs, and this audit record. |
 | 13:04 | Ran read-only `gcloud` VM checks. | VM is running; Nginx, Spring Boot, MySQL, and Redis are active; upload directories exist; live MySQL tables, key indexes, and foreign keys are present; recent backend/Nginx error logs are empty. |
 | 13:08 | Ran final lightweight verification. | `git diff --check`, `node tools/check-database-schema.js`, and `npm run check:auth` passed. Only CRLF-to-LF warning reported for `ElectronicMallVue/src/router/index.js`. |
@@ -71,7 +71,7 @@ Remaining risks should be handled before final thesis screenshots or performance
 | `mvn -q package` | Passed |
 | `npm run build` | Passed with existing Browserslist/asset-size warnings |
 | `curl -I http://34.143.225.11/` | HTTP 200 from Nginx |
-| Browser load `http://34.143.225.11/` | Loaded `/topview`, title `Rufeng Mall | FYP E-Commerce System`, storefront content visible, no captured console errors/warnings |
+| Browser load `http://34.143.225.11/` | Loaded `/topview`, title `R Mall | FYP E-Commerce System`, storefront content visible, no captured console errors/warnings |
 | Public demo login | Passed for `user` |
 | Public authenticated `userid`, address, cart, order history reads | Passed |
 | `gcloud compute instances list --filter=name=fyp-mall-vm` | VM RUNNING at `34.143.225.11` |

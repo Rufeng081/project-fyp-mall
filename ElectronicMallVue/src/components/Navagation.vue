@@ -1,11 +1,11 @@
 <template>
   <header class="mall-navbar">
-    <router-link class="brand-section" to="/topview" aria-label="Rufeng Mall Home">
+    <router-link class="brand-section" to="/topview" aria-label="R Mall Home">
       <div class="brand-icon">
         <i class="el-icon-shopping-bag-1"></i>
       </div>
       <div>
-        <h1>Rufeng Mall</h1>
+        <h1>R Mall</h1>
         <p>FYP-UKM Demo</p>
       </div>
     </router-link>

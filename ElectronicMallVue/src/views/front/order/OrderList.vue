@@ -3,7 +3,7 @@
     <section class="orders-heading">
       <div>
         <span class="eyebrow">Order History</span>
-        <h2>Track your Rufeng Mall orders</h2>
+        <h2>Track your R Mall orders</h2>
       </div>
       <div class="summary-pill">
         <strong>{{ orders.length }}</strong>

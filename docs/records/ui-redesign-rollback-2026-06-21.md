@@ -10,7 +10,7 @@ This record preserves the UI redesign event and its rollback. The requested outc
 
 ## UI Event Summary
 
-The reverted work was a Vue 2 and Element UI visual redesign for Rufeng Mall. It introduced a warm, Malaysia-friendly storefront theme, responsive layout and empty-state improvements, light administration-side visual polish, a global theme stylesheet, and a small static UI-integrity check script. It also made two UI-adjacent routing hardening changes: unique admin route naming and an error path for the admin role check.
+The reverted work was a Vue 2 and Element UI visual redesign for R Mall. It introduced a warm, Malaysia-friendly storefront theme, responsive layout and empty-state improvements, light administration-side visual polish, a global theme stylesheet, and a small static UI-integrity check script. It also made two UI-adjacent routing hardening changes: unique admin route naming and an error path for the admin role check.
 
 The redesign touched storefront views and shared components, login and registration pages, administration views and components, frontend entry/style files, the router, and the 404 view. Added untracked artifacts were:
 

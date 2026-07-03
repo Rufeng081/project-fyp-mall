@@ -11,7 +11,7 @@
 当前项目的真实完成状态是：
 
 - 项目名称方向：**Development and Network Performance Evaluation of a Cloud-Based Small E-Commerce Platform**
-- 系统名称可写为：**Rufeng Mall**
+- 系统名称可写为：**R Mall**
 - 项目类型：Network Technology FYP，方向属于 Cloud Computing / Network Application / Network Performance Evaluation。
 - 当前实现是一个小型云端电商平台，不是商业级大规模电商，不是微服务，不是 Docker/Kubernetes 项目。
 - 核心技术栈：Vue 2 + Spring Boot 2.5.6 + MyBatis/MyBatis-Plus + MySQL + Redis + Nginx + Google Cloud VM + Apache JMeter。
@@ -59,7 +59,7 @@ PDF 中 D5 叫 **Proposal Report**，主要结构要求如下：
 
 建议在 D5 中统一使用以下定位：
 
-> This project develops and evaluates Rufeng Mall, a cloud-based small e-commerce platform designed for a Network Technology Final Year Project. The platform provides realistic e-commerce user journeys so that client-server-database communication and cloud deployment performance can be tested under controlled simulated user loads.
+> This project develops and evaluates R Mall, a cloud-based small e-commerce platform designed for a Network Technology Final Year Project. The platform provides realistic e-commerce user journeys so that client-server-database communication and cloud deployment performance can be tested under controlled simulated user loads.
 
 不要把项目写成：
 
@@ -372,7 +372,7 @@ Facts：
 - Redis code and cooldown keys are removed if SMTP sending fails.
 - Duplicate email registration is rejected.
 - Password reset only works for an existing email.
-- Email subject: `[FYP-UKM] Rufeng Mall Demo Verification Code`
+- Email subject: `[FYP-UKM] R Mall Demo Verification Code`
 
 This module is a better fit for D5 than old OAuth/WeChat claims. Replace all WeChat OAuth sections with email verification + JWT/Redis session flow.
 
@@ -1044,7 +1044,7 @@ Because D5 is Proposal Report, Chapter 3 can include performance evaluation meth
 
 Use this as content basis, not necessarily exact final wording:
 
-> With the increasing use of cloud-hosted web systems, small e-commerce platforms must provide not only functional shopping features but also stable client-server communication under concurrent access. This project develops Rufeng Mall, a cloud-based small e-commerce platform for a Network Technology Final Year Project. The system supports user registration and login, email verification, product browsing, cart management, order placement, simulated payment, order history, and basic administrator management. It is implemented using Vue 2, Spring Boot, MySQL, Redis, and Nginx, and is deployed on a Google Cloud VM. From the network technology perspective, the project analyses the HTTP request path between the browser, Nginx reverse proxy, Spring Boot application server, MySQL database, and Redis temporary-state service. Apache JMeter is used to evaluate response time, throughput, and error rate under controlled concurrent user loads. The completed testing evidence shows that the deployed prototype can support the selected FYP demonstration workloads with zero recorded JMeter errors, while also revealing multi-second response times under higher browsing loads. The project provides a practical cloud-based e-commerce testbed and demonstrates how network performance evaluation can be integrated into undergraduate web application development.
+> With the increasing use of cloud-hosted web systems, small e-commerce platforms must provide not only functional shopping features but also stable client-server communication under concurrent access. This project develops R Mall, a cloud-based small e-commerce platform for a Network Technology Final Year Project. The system supports user registration and login, email verification, product browsing, cart management, order placement, simulated payment, order history, and basic administrator management. It is implemented using Vue 2, Spring Boot, MySQL, Redis, and Nginx, and is deployed on a Google Cloud VM. From the network technology perspective, the project analyses the HTTP request path between the browser, Nginx reverse proxy, Spring Boot application server, MySQL database, and Redis temporary-state service. Apache JMeter is used to evaluate response time, throughput, and error rate under controlled concurrent user loads. The completed testing evidence shows that the deployed prototype can support the selected FYP demonstration workloads with zero recorded JMeter errors, while also revealing multi-second response times under higher browsing loads. The project provides a practical cloud-based e-commerce testbed and demonstrates how network performance evaluation can be integrated into undergraduate web application development.
 
 Malay abstract should mirror this content and must not mention Docker/OAuth/Alipay/Network_Trace_Log.
 
@@ -1066,7 +1066,7 @@ Write around these problems:
 
 Write around these solution components:
 
-- Build Rufeng Mall as a small cloud e-commerce platform.
+- Build R Mall as a small cloud e-commerce platform.
 - Use Vue frontend and Spring Boot REST backend.
 - Use MySQL and Redis.
 - Add email verification for registration/reset.
@@ -1220,7 +1220,7 @@ database/electronic_mall.sql
 
 You can paste the following instruction together with this context pack:
 
-> Please rewrite my D5 Proposal Report based on the current completed project facts in this context pack. The old D5 contains outdated and unimplemented content such as Docker, OAuth 2.0, Alipay Sandbox, HTTPS comparison, Network_Trace_Log, real-time telemetry, microservices, and secure callback processing; remove or replace those claims. The new D5 should describe Rufeng Mall as a cloud-based small e-commerce platform for a Network Technology FYP, implemented with Vue 2, Spring Boot, MySQL, Redis, Nginx, Google Cloud VM, email verification, simulated payment, and Apache JMeter performance testing. Keep the academic proposal-report structure required by D5: Abstract, Chapter 1 Project Planning, Chapter 2 Literature Review, Chapter 3 Methodology, References, and Appendix. Emphasize network communication through browser, Nginx reverse proxy, backend, database and Redis, and performance metrics including response time, throughput, and error rate. Do not invent HTTPS deployment, real payment, OAuth, Docker/Kubernetes, or commercial-scale performance claims.
+> Please rewrite my D5 Proposal Report based on the current completed project facts in this context pack. The old D5 contains outdated and unimplemented content such as Docker, OAuth 2.0, Alipay Sandbox, HTTPS comparison, Network_Trace_Log, real-time telemetry, microservices, and secure callback processing; remove or replace those claims. The new D5 should describe R Mall as a cloud-based small e-commerce platform for a Network Technology FYP, implemented with Vue 2, Spring Boot, MySQL, Redis, Nginx, Google Cloud VM, email verification, simulated payment, and Apache JMeter performance testing. Keep the academic proposal-report structure required by D5: Abstract, Chapter 1 Project Planning, Chapter 2 Literature Review, Chapter 3 Methodology, References, and Appendix. Emphasize network communication through browser, Nginx reverse proxy, backend, database and Redis, and performance metrics including response time, throughput, and error rate. Do not invent HTTPS deployment, real payment, OAuth, Docker/Kubernetes, or commercial-scale performance claims.
 
 ---
 

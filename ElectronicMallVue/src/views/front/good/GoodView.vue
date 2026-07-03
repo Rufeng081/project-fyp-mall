@@ -6,7 +6,7 @@
       </div>
 
       <div class="detail-box">
-        <span class="product-badge">Rufeng Mall Selection</span>
+        <span class="product-badge">R Mall Selection</span>
         <h2>{{ good.name }}</h2>
         <p class="description">
           {{ good.description || "A selected product prepared for the FYP mall demonstration." }}
