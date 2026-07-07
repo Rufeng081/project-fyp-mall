@@ -40,10 +40,7 @@
 | Figure | Title |
 |---|---|
 | Figure 4.1 | Implemented Cloud Request Architecture |
-| Figure 4.2 | Implemented User Interface Evidence |
-| Figure 4.3 | Core Order Entity Relationship |
-| Figure 4.4 | JMeter P90 Response-Time Chart |
-| Figure 4.5 | JMeter Throughput Chart |
+| Figure 4.2 | Core Order Entity Relationship |
 
 ## LIST OF CODE LISTINGS
 
@@ -160,21 +157,7 @@ Register or login -> Browse products -> View product details -> Add to cart
 -> Place order -> Complete simulated payment -> View order history
 ```
 
-The interface was localised for the demonstration context. Display text is in English, prices use RM, sample addresses follow a Malaysia context, and the payment page clearly indicates simulated payment. These implementation choices keep the user interface aligned with the academic scope of the project.
-
-![Homepage interface](screenshot/main%20page.png)
-
-![Product browsing interface](screenshot/products%20page.png)
-
-![Email-verified registration interface](screenshot/righter%20page.png)
-
-![Administrator interface](screenshot/admin%20page.png)
-
-![Verified order-history interface](../docs/assets/phase-2-order-history-verified.png)
-
-**Figure 4.2: Implemented User Interface Evidence**
-
-For the final Word/PDF version, insert the screenshots manually if Markdown image sizing is not preserved. The required images are the homepage, product browsing page, registration page, administrator page and verified order-history page.
+The interface was localised for the demonstration context. Display text is in English, prices use RM, sample addresses follow a Malaysia context, and the payment page clearly indicates simulated payment. These implementation choices keep the user interface aligned with the academic scope of the project. The interface screenshots are not repeated in this chapter because Chapter 3 already presents the interface design evidence; Chapter 4 instead explains the implemented workflow and the code mechanisms behind it.
 
 ### 4.3.2 Centralised HTTP Communication
 
@@ -466,7 +449,7 @@ erDiagram
     GOOD ||--o{ ORDER_GOODS : purchased_as
 ```
 
-**Figure 4.3: Core Order Entity Relationship**
+**Figure 4.2: Core Order Entity Relationship**
 
 The schema is intentionally compact. It is sufficient for the implemented academic workflow and avoids unsupported commercial modules such as logistics settlement, warehouse management or external payment clearing. Remaining database boundaries include MD5 password compatibility, SQL-script migration discipline and single-VM scale.
 
@@ -582,11 +565,7 @@ The selected testing approach combines white-box component testing, black-box fu
 
 The test data consisted of seeded demo data and controlled mutation data in the `electronic_mall` database. Important data included the demo user account, Malaysia-context products and categories, product variant `good_id=3` with standard `Chair`, Malaysia-format delivery addresses, order states, generated email verification codes and cart/order/stock rows modified during mutation tests.
 
-The live VM database was backed up before mutation testing. The recorded backup path was:
-
-```text
-/opt/project-fyp-mall/backups/electronic_mall_phase6_before_20260616_1452.sql
-```
+The live VM database was backed up before mutation testing. The exact operational backup path is retained in the Phase 6 execution record rather than repeated in the thesis body, because Chapter 4 only needs to establish that backup-first data protection was part of the testing procedure.
 
 ### 4.8.6 Test Completion Criteria
 
@@ -786,15 +765,7 @@ The highest tested concurrency levels give the most useful Network Technology ev
 
 Read-only scenarios were tested up to 200 threads with 0.00% error rate. Login and order history were tested up to 100 threads. Mutation scenarios were limited to 10 threads because they change live demonstration data. The product list and product detail scenarios reached multi-second P90 response times under higher load, so the correct interpretation is controlled academic suitability with optimisation opportunities, not commercial-scale readiness.
 
-![JMeter P90 response-time chart](../docs/testing/jmeter/results/phase6-summary/charts/p90-response-time-ms.svg)
-
-**Figure 4.4: JMeter P90 Response-Time Chart**
-
-![JMeter throughput chart](../docs/testing/jmeter/results/phase6-summary/charts/throughput-per-second.svg)
-
-**Figure 4.5: JMeter Throughput Chart**
-
-If the final Word/PDF conversion does not render SVG charts cleanly, export these two SVG files to PNG and insert the PNG versions manually. The charts should be placed near Table 4.18 because they visualise the same performance evidence.
+The P90 response-time and throughput SVG artefacts are retained in the project repository, but they are not repeated here if Chapter 3 has already displayed them. In Chapter 4, Table 4.18 is the primary testing-result evidence because it reports the same measured values without duplicating earlier design or methodology figures.
 
 ### 4.11.5 Mutation Data Results
 
@@ -837,7 +808,7 @@ The testing results have clear boundaries. The public endpoint used HTTP, not HT
 | Sandbox blocked socket access to the public endpoint. | One-user homepage validation failed with `Operation not permitted`. | JMeter was rerun outside the network sandbox and validation succeeded. |
 | Original JMX files used one thread and had insufficient assertions. | Load results would not be reliable enough for thesis evidence. | All eight plans were parameterised and business-response assertions were added. |
 | Mutation tests changed live demo data. | Cart, order, stock and payment-state records changed. | Mutation was limited to low thread counts, MySQL backup was created and data impact was recorded. |
-| Some read scenarios showed multi-second P90 response times. | The system cannot be described as commercial-scale. | Results were interpreted as academic prototype evidence and optimisation work was listed as future improvement. |
+| Some read scenarios showed multi-second P90 response times. | The system cannot be described as commercial-scale. | Results were interpreted as bounded academic prototype evidence, and the performance boundary was stated explicitly. |
 
 ### 4.12.2 Summary of Development and Testing
 
@@ -847,9 +818,11 @@ The combined evidence supports the Chapter 4 claim. R Mall implements the requir
 
 The chapter also identifies the correct boundary for the final thesis. R Mall is suitable as an academic cloud e-commerce prototype for Network Technology performance evaluation. It is not presented as a commercial production platform, a real payment system, a horizontally scaled architecture or an HTTPS comparison study.
 
-### 4.12.3 Recommended Future Improvements
+### 4.12.3 Overall Thesis Conclusion
 
-Future improvements should follow the evidence. First, HTTPS should be added with a domain and certificate, followed by a new test cycle. Second, longer soak tests could reveal memory, connection or database stability problems that short load tests cannot show. Third, generated users and resettable seed products would make mutation testing cleaner. Fourth, product-list and product-detail response times should be profiled through SQL query analysis, Redis caching strategy and asset optimisation. Fifth, deeper security testing can be performed using OWASP Web Security Testing Guide if the project scope expands beyond basic session and access-control checks.
+Across Chapters 1 to 4, this thesis has moved from project rationale to implementation evidence. Chapter 1 established the problem, objectives, scope and constraints of developing a cloud-based small e-commerce platform for Network Technology evaluation. Chapter 2 justified the technical direction through related work on cloud web applications, HTTP communication, reverse proxy deployment, relational persistence, temporary-state services and performance testing. Chapter 3 converted that direction into requirements, system models, architecture, database design, interface design and the JMeter evaluation method.
+
+Chapter 4 completes the thesis by showing that the proposed system was implemented and tested within that defined scope. The evidence confirms that R Mall supports the required e-commerce workflow, operates through the intended cloud request path, and produces measurable response-time, throughput and error-rate results under controlled JMeter workloads. The final conclusion is therefore bounded: R Mall fulfils the FYP objective as an academic cloud e-commerce prototype and Network Technology performance-evaluation testbed, while its claims remain limited to the implemented HTTP-only, single-VM and simulated-payment environment.
 
 ---
 
@@ -862,8 +835,6 @@ Axios. 2026. *Axios Documentation*. Available at: https://axios-http.com/docs/in
 F5 NGINX. 2026. *NGINX Reverse Proxy Documentation*. F5 NGINX. https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/ [Accessed 7 July 2026].
 
 Google Cloud. 2026. *Compute Engine Documentation*. Google Cloud. https://cloud.google.com/compute/docs [Accessed 7 July 2026].
-
-OWASP Foundation. 2026. *OWASP Web Security Testing Guide*. OWASP Foundation. https://owasp.org/www-project-web-security-testing-guide/ [Accessed 7 July 2026].
 
 Redis. 2026. *Redis Documentation*. Available at: https://redis.io/docs/ [Accessed 7 July 2026].
 
@@ -902,8 +873,8 @@ Project FYP Mall. 2026f. *JMeter Summary Tables and Charts*. Internal project do
 | Nginx configuration | `deploy/nginx/project-fyp-mall.conf` |
 | JMeter plans | `docs/testing/jmeter/01_homepage.jmx` to `docs/testing/jmeter/08_order_history.jmx` |
 | JMeter result summary | `docs/testing/jmeter/results/phase6-summary/summary-tables.md` |
-| JMeter P90 chart | `docs/testing/jmeter/results/phase6-summary/charts/p90-response-time-ms.svg` |
-| JMeter throughput chart | `docs/testing/jmeter/results/phase6-summary/charts/throughput-per-second.svg` |
+| JMeter P90 source SVG artefact | `docs/testing/jmeter/results/phase6-summary/charts/p90-response-time-ms.svg` |
+| JMeter throughput source SVG artefact | `docs/testing/jmeter/results/phase6-summary/charts/throughput-per-second.svg` |
 
 ## APPENDIX 4B: Chapter 4 Self-Audit
 
@@ -917,5 +888,6 @@ Project FYP Mall. 2026f. *JMeter Summary Tables and Charts*. Internal project do
 | Unsupported claims are avoided | Passed. No real payment, HTTPS comparison, Docker deployment, OAuth, telemetry dashboard or commercial-scale claim is made. |
 | Paragraph structure follows general-to-detail logic | Passed. Sections open with the main judgement before details, tables or code. |
 | One paragraph serves one role | Passed. Context, implementation mechanism, testing method, result and limitation paragraphs are separated. |
-| Figures are inserted or identified | Passed. Architecture, UI screenshots, ERD and JMeter charts are inserted; manual Word/PDF insertion notes are included where needed. |
+| Figures are inserted or identified without repetition | Passed. Chapter 4 retains only the architecture and ERD figures needed for implementation explanation; UI screenshots and JMeter charts are not repeated when already shown in Chapter 3. |
+| Final summary closes the thesis | Passed. Section 4.12.3 summarises Chapters 1 to 4 and does not introduce additional work claims. |
 | Appendix supplements rather than repeats the body | Passed. Appendix 4A lists source locations and Appendix 4B records the self-audit. |
