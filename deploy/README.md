@@ -20,6 +20,47 @@ sudo rsync -a --delete ElectronicMallVue/dist/ /var/www/project-fyp-mall/
 sudo chown -R www-data:www-data /var/www/project-fyp-mall
 ```
 
+## 2A. Deploy the video presentation landing page
+
+The standalone presentation page is stored in `LandingPage/` and is served separately from the Vue application. Keeping a dedicated web directory prevents a later Vue `rsync --delete` deployment from removing the presentation files.
+
+Run from the repository root on the VM:
+
+```bash
+sudo mkdir -p /var/www/project-fyp-mall-landing
+sudo rsync -a --delete \
+  --exclude tests \
+  --exclude README.md \
+  LandingPage/ /var/www/project-fyp-mall-landing/
+sudo chown -R www-data:www-data /var/www/project-fyp-mall-landing
+```
+
+The reviewed Nginx configuration provides:
+
+- `/LandingPage` → permanent path redirect to `/LandingPage/`
+- `/LandingPage/` → static files under `/var/www/project-fyp-mall-landing/`
+- `/` → the existing Vue storefront
+- `/api/` → the existing Spring Boot proxy
+
+After copying `deploy/nginx/project-fyp-mall.conf`, validate before reloading:
+
+```bash
+sudo cp deploy/nginx/project-fyp-mall.conf /etc/nginx/sites-available/project-fyp-mall
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+Verify all public routes after deployment:
+
+```bash
+curl -I http://localhost/LandingPage
+curl -I http://localhost/LandingPage/
+curl -I http://localhost/
+curl -I http://localhost/api/api/good
+```
+
+The first response should redirect to the trailing-slash path. The other three routes should remain available. Do not reload Nginx if `nginx -t` reports an error.
+
 ## 3. Build the Spring Boot backend
 
 ```bash

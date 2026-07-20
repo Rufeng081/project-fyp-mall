@@ -144,17 +144,17 @@ if (script && !/IntersectionObserver/.test(script)) {
 const nginxPath = path.join(repoRoot, 'deploy/nginx/project-fyp-mall.conf');
 if (fs.existsSync(nginxPath)) {
   const nginx = fs.readFileSync(nginxPath, 'utf8');
-  if (nginx.includes('location = /LandingPage') || nginx.includes('project-fyp-mall-landing')) {
-    const requiredNginxText = [
-      'location = /LandingPage',
-      'return 301 /LandingPage/;',
-      'location ^~ /LandingPage/',
-      'alias /var/www/project-fyp-mall-landing/;'
-    ];
-    for (const text of requiredNginxText) {
-      if (!nginx.includes(text)) errors.push(`Incomplete Nginx landing-page route: ${text}`);
-    }
+  const requiredNginxText = [
+    'location = /LandingPage',
+    'return 301 /LandingPage/;',
+    'location ^~ /LandingPage/',
+    'alias /var/www/project-fyp-mall-landing/;'
+  ];
+  for (const text of requiredNginxText) {
+    if (!nginx.includes(text)) errors.push(`Incomplete Nginx landing-page route: ${text}`);
   }
+} else {
+  errors.push('Missing Nginx deployment configuration');
 }
 
 if (errors.length) {
