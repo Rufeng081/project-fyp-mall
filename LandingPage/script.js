@@ -14,15 +14,38 @@
     }
   };
 
+  const syncChapterFromScroll = () => {
+    const readingLine = window.scrollY + Math.min(window.innerHeight * 0.28, 240);
+    let activeChapter = chapters[0];
+
+    for (const chapter of chapters) {
+      if (chapter.offsetTop <= readingLine) activeChapter = chapter;
+      else break;
+    }
+
+    setCurrentChapter(activeChapter.id);
+  };
+
+  let scrollFramePending = false;
+  window.addEventListener('scroll', () => {
+    if (scrollFramePending) return;
+    scrollFramePending = true;
+    window.requestAnimationFrame(() => {
+      syncChapterFromScroll();
+      scrollFramePending = false;
+    });
+  }, { passive: true });
+
   const observer = new IntersectionObserver(
     (entries) => {
       const visible = entries
         .filter((entry) => entry.isIntersecting)
         .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-      if (visible[0]) setCurrentChapter(visible[0].target.id);
+      if (visible[0]) syncChapterFromScroll();
     },
-    { rootMargin: '-22% 0px -58% 0px', threshold: [0, 0.2, 0.5] }
+    { rootMargin: '-18% 0px -81% 0px', threshold: 0 }
   );
 
   for (const chapter of chapters) observer.observe(chapter);
+  syncChapterFromScroll();
 })();

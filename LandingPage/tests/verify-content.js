@@ -140,6 +140,12 @@ if (css && !/@media\s*\(prefers-reduced-motion:\s*reduce\)/.test(css)) {
 if (script && !/IntersectionObserver/.test(script)) {
   errors.push('Missing chapter state enhancement');
 }
+if (script && !script.includes("rootMargin: '-18% 0px -81% 0px'")) {
+  errors.push('Chapter observer must use a narrow viewport band');
+}
+if (script && (!script.includes("addEventListener('scroll'") || !script.includes('requestAnimationFrame'))) {
+  errors.push('Chapter state must resynchronize during reverse scrolling');
+}
 
 const nginxPath = path.join(repoRoot, 'deploy/nginx/project-fyp-mall.conf');
 if (fs.existsSync(nginxPath)) {
