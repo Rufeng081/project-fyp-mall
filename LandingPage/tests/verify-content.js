@@ -15,6 +15,21 @@ function readRequired(relativePath) {
   return fs.readFileSync(filePath, 'utf8');
 }
 
+function normalizeVisibleText(source) {
+  return source
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/<(script|style|template|noscript)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, ' ')
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&(nbsp|#160|#xA0);/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 const files = Object.fromEntries(
   requiredFiles.map((relativePath) => [relativePath, readRequired(relativePath)])
 );
@@ -22,6 +37,14 @@ const html = files['index.html'];
 const css = files['styles.css'];
 const script = files['script.js'];
 const combined = `${html}\n${css}\n${script}`;
+const visibleText = normalizeVisibleText(html);
+
+if (
+  normalizeVisibleText('<p>Phase&nbsp;<strong>6</strong></p><script>ignored</script>') !==
+  'Phase 6'
+) {
+  errors.push('Test implementation error: visible-text normalization is broken');
+}
 
 const readme = readRequired('README.md');
 const requiredProvenance = [
@@ -69,7 +92,7 @@ const requiredVisibleContent = [
 ];
 
 for (const text of requiredVisibleContent) {
-  if (html && !html.includes(text)) {
+  if (html && !visibleText.includes(text)) {
     errors.push(`Missing required visible content: ${text}`);
   }
 }
@@ -79,7 +102,6 @@ const prohibitedClaims = [
   '3,197 users',
   'the system has zero errors',
   'supports 200 users',
-  'reproducible response-time',
   'Evidence policy for the final page',
   'Claims that will not be used'
 ];
@@ -90,13 +112,37 @@ for (const claim of prohibitedClaims) {
   }
 }
 
-if (html && /\bPhase 6\b/i.test(html)) {
+if (/\bPhase\s+6\b/i.test(visibleText)) {
   errors.push('Prohibited presentation-phase content found: Phase 6');
 }
 
-const aiSelfReferencePattern =
-  /\b(?:as\s+an?\s+(?:(?:ai|artificial intelligence)(?:\s+(?:assistant|system))?|assistant|system)|(?:i(?:'m| am)|we(?:'re| are))\s+(?:an?\s+)?(?:(?:ai|artificial intelligence)(?:\s+(?:assistant|system))?|assistant|system))\b/i;
-if (aiSelfReferencePattern.test(combined)) {
+if (/\bresponse(?:-|\s+)time\b/i.test(visibleText)) {
+  errors.push('Prohibited presentation-performance wording found: response time');
+}
+
+const aiSelfDeclarationPatterns = [
+  /\bas\s+an?\s+(?:ai|artificial intelligence)\s+(?:assistant|system)\b/i,
+  /\bi(?:'m|’m| am)\s+an?\s+(?:(?:ai|artificial intelligence)\s+(?:assistant|system)|assistant)\b/i,
+  /\bwe\s+are\s+an?\s+(?:(?:ai|artificial intelligence)\s+(?:assistant|system)|assistant)\b/i
+];
+const forbiddenAiDeclarations = [
+  'As an AI assistant, I cannot provide that.',
+  'I am an AI assistant.',
+  'I’m an AI assistant.',
+  'I am an assistant.',
+  'We are an artificial intelligence system.'
+];
+const allowedAiReferences = [
+  'These components work together as a system.',
+  'As an assistant feature, the UI guides users.'
+];
+if (!forbiddenAiDeclarations.every((text) => aiSelfDeclarationPatterns.some((pattern) => pattern.test(text)))) {
+  errors.push('Test implementation error: AI declaration detection misses a forbidden declaration');
+}
+if (allowedAiReferences.some((text) => aiSelfDeclarationPatterns.some((pattern) => pattern.test(text)))) {
+  errors.push('Test implementation error: AI declaration detection rejects an allowed reference');
+}
+if (aiSelfDeclarationPatterns.some((pattern) => pattern.test(visibleText))) {
   errors.push('Prohibited AI/assistant/system self-reference found');
 }
 
