@@ -95,7 +95,7 @@ if (html && /\bPhase 6\b/i.test(html)) {
 }
 
 const aiSelfReferencePattern =
-  /\b(?:i(?:'m| am)|we(?:'re| are)|this (?:is|was))\s+(?:an?\s+)?(?:ai|artificial intelligence|assistant|system)\b/i;
+  /\b(?:as\s+an?\s+(?:(?:ai|artificial intelligence)(?:\s+(?:assistant|system))?|assistant|system)|(?:i(?:'m| am)|we(?:'re| are))\s+(?:an?\s+)?(?:(?:ai|artificial intelligence)(?:\s+(?:assistant|system))?|assistant|system))\b/i;
 if (aiSelfReferencePattern.test(combined)) {
   errors.push('Prohibited AI/assistant/system self-reference found');
 }
