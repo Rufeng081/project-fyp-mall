@@ -60,11 +60,26 @@ for (const claim of requiredClaims) {
   }
 }
 
+const requiredVisibleContent = [
+  'Chapter 4 test summary',
+  'Design and develop a cloud-based small e-commerce platform that supports core online shopping functions.',
+  'Implement and analyse the network communication mechanisms used by the platform in a cloud environment.',
+  'Evaluate the network performance of the deployed platform under different test parameters using Apache JMeter.',
+  'Chapter 4, Tables 4.17 and 4.18'
+];
+
+for (const text of requiredVisibleContent) {
+  if (html && !html.includes(text)) {
+    errors.push(`Missing required visible content: ${text}`);
+  }
+}
+
 const prohibitedClaims = [
   '3,197 test runs',
   '3,197 users',
   'the system has zero errors',
   'supports 200 users',
+  'reproducible response-time',
   'Evidence policy for the final page',
   'Claims that will not be used'
 ];
@@ -73,6 +88,16 @@ for (const claim of prohibitedClaims) {
   if (combined.toLowerCase().includes(claim.toLowerCase())) {
     errors.push(`Prohibited or internal claim found: ${claim}`);
   }
+}
+
+if (html && /\bPhase 6\b/i.test(html)) {
+  errors.push('Prohibited presentation-phase content found: Phase 6');
+}
+
+const aiSelfReferencePattern =
+  /\b(?:i(?:'m| am)|we(?:'re| are)|this (?:is|was))\s+(?:an?\s+)?(?:ai|artificial intelligence|assistant|system)\b/i;
+if (aiSelfReferencePattern.test(combined)) {
+  errors.push('Prohibited AI/assistant/system self-reference found');
 }
 
 const requiredIds = ['main-content', 'overview', 'method', 'architecture', 'results', 'conclusion'];
