@@ -99,7 +99,23 @@ git commit -m "fix: align presentation copy with D8 report"
 
 - [ ] **Step 1: Run the complete local checks**
 
-Run: `node LandingPage/tests/verify-content.js && git diff --check && npm run check:deployment && npm run check:auth && npm run check:homepage-admin && npm run check:catalog && npm run build`
+Run the landing-page checks from the repository root:
+
+```bash
+node LandingPage/tests/verify-content.js
+git diff --check
+```
+
+Then run the existing Vue application checks from its package directory:
+
+```bash
+cd ElectronicMallVue
+npm run check:deployment
+npm run check:auth
+npm run check:homepage-admin
+npm run check:catalog
+npm run build
+```
 
 Expected: all checks exit successfully; the existing Vue build may retain its documented Browserslist and asset-size warnings.
 
