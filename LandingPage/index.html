@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="R Mall project presentation: cloud request architecture and verified Phase 6 performance evidence.">
+  <title>R Mall | Project Evidence</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to presentation</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="wordmark" href="#overview" aria-label="R Mall project evidence home">
+        <span class="wordmark-mark" aria-hidden="true">R</span>
+        <span>R Mall <small>Project Evidence</small></span>
+      </a>
+      <nav class="chapter-nav" aria-label="Presentation chapters">
+        <a href="#overview" aria-current="location"><span>01</span> Overview</a>
+        <a href="#method"><span>02</span> Method</a>
+        <a href="#architecture"><span>03</span> Request path</a>
+        <a href="#results"><span>04</span> Results</a>
+        <a href="#conclusion"><span>05</span> Conclusion</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero chapter" id="overview" aria-labelledby="hero-title">
+      <div class="section-inner hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Cloud e-commerce / Network performance</p>
+          <h1 id="hero-title">Shopping workflows as a measurable cloud network workload.</h1>
+          <p class="hero-summary">R Mall combines a functional storefront, a deployed request path, and controlled performance evidence in one academic prototype.</p>
+          <div class="hero-actions" aria-label="Presentation shortcuts">
+            <a class="text-link" href="#architecture">View request path <span aria-hidden="true">→</span></a>
+            <a class="text-link muted-link" href="#results">Review test evidence <span aria-hidden="true">↓</span></a>
+          </div>
+        </div>
+
+        <aside class="hero-evidence" aria-label="Phase 6 headline evidence">
+          <p class="evidence-kicker">Official Phase 6 summary</p>
+          <p class="evidence-date">16 June 2026</p>
+          <strong class="hero-number">3,197</strong>
+          <p class="hero-number-label">JMeter sampler executions</p>
+          <dl class="hero-facts">
+            <div><dt>Errors</dt><dd>0 JMeter errors observed</dd></div>
+            <div><dt>Coverage</dt><dd>35 summarized result rows</dd></div>
+          </dl>
+          <p class="micro-note">A sampler execution represents one recorded HTTP request step.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="problem-section chapter" aria-labelledby="problem-title">
+      <div class="section-inner">
+        <p class="eyebrow">01 / Why this project</p>
+        <div class="section-heading split-heading">
+          <h2 id="problem-title">From a local feature demonstration to verifiable network evidence.</h2>
+          <p>Student web applications can demonstrate working screens without showing how deployed requests travel or how response behavior changes under concurrent access.</p>
+        </div>
+
+        <div class="objective-grid" aria-label="Project objectives">
+          <article class="problem-card">
+            <p class="card-index">Problem</p>
+            <h3>Function alone does not explain network behavior.</h3>
+            <p>R Mall creates repeatable read, authentication, and transaction requests that can be deployed, observed, and measured.</p>
+          </article>
+          <article class="objective-card">
+            <p class="card-index">Objective 01</p>
+            <h3>Develop</h3>
+            <p>Build a bounded cloud e-commerce platform with realistic customer and administrator workflows.</p>
+          </article>
+          <article class="objective-card">
+            <p class="card-index">Objective 02</p>
+            <h3>Analyse</h3>
+            <p>Explain communication between the browser, reverse proxy, application service, and data services.</p>
+          </article>
+          <article class="objective-card">
+            <p class="card-index">Objective 03</p>
+            <h3>Evaluate</h3>
+            <p>Measure response time, throughput, and observed error rate under controlled concurrent loads.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="method-section chapter" id="method" aria-labelledby="method-title">
+      <div class="section-inner">
+        <p class="eyebrow">02 / Methodology</p>
+        <div class="section-heading split-heading">
+          <h2 id="method-title">Iterative development, followed by controlled evaluation.</h2>
+          <p>Each increment was implemented, verified, and documented before the next layer was added.</p>
+        </div>
+
+        <ol class="method-track">
+          <li><span>01</span><strong>Requirements</strong><p>Define scope, users, network focus, and measurable objectives.</p></li>
+          <li><span>02</span><strong>Development</strong><p>Implement storefront, authentication, cart, orders, and administration.</p></li>
+          <li><span>03</span><strong>Cloud deployment</strong><p>Serve the frontend through Nginx and route API traffic to Spring Boot.</p></li>
+          <li><span>04</span><strong>Verification</strong><p>Check functional, integration, deployment, and database behavior.</p></li>
+          <li><span>05</span><strong>Performance tests</strong><p>Run controlled Apache JMeter scenarios and retain measurable results.</p></li>
+        </ol>
+
+        <div class="workflow-strip" aria-label="Application journeys used as network workloads">
+          <p>Application workloads</p>
+          <ul>
+            <li>Browse products</li>
+            <li>Authenticate</li>
+            <li>Manage cart</li>
+            <li>Place order</li>
+            <li>Simulate payment</li>
+            <li>View order history</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="architecture-section chapter" id="architecture" aria-labelledby="architecture-title">
+      <div class="section-inner">
+        <p class="eyebrow light-eyebrow">03 / Deployed request path</p>
+        <div class="section-heading split-heading architecture-heading">
+          <h2 id="architecture-title">Every shopping action crosses the same observable cloud path.</h2>
+          <p>The storefront is not only an interface. It supplies realistic HTTP reads and writes for network analysis.</p>
+        </div>
+
+        <div class="request-path" role="img" aria-label="Browser sends HTTP requests to Nginx, which routes REST API traffic to Spring Boot. Spring Boot communicates with MySQL for persistent data and Redis for temporary state.">
+          <article>
+            <p>Client</p>
+            <strong>Browser</strong>
+            <small>Vue interface and Axios requests</small>
+          </article>
+          <span class="path-arrow" aria-hidden="true">→</span>
+          <article>
+            <p>Public entry</p>
+            <strong>Nginx</strong>
+            <small>Static delivery and reverse proxy</small>
+          </article>
+          <span class="path-arrow" aria-hidden="true">→</span>
+          <article>
+            <p>Application</p>
+            <strong>Spring Boot</strong>
+            <small>REST endpoints and business logic</small>
+          </article>
+          <span class="path-arrow" aria-hidden="true">→</span>
+          <article class="data-node">
+            <p>Data and state</p>
+            <strong>MySQL / Redis</strong>
+            <small>Persistent records and temporary state</small>
+          </article>
+        </div>
+
+        <div class="innovation-note">
+          <p class="card-index">Project innovation</p>
+          <p>R Mall turns complete customer journeys into a controlled, measurable network workload while keeping the application scope suitable for an academic prototype.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="results-section chapter" id="results" aria-labelledby="results-title">
+      <div class="section-inner">
+        <p class="eyebrow">04 / Performance evidence</p>
+        <div class="section-heading split-heading">
+          <h2 id="results-title">Stable tested journeys, with measurable slowdown under heavier load.</h2>
+          <p>The formal Phase 6 evidence covers smoke, read-only, authenticated, and controlled mutation scenarios.</p>
+        </div>
+
+        <div class="metric-grid" aria-label="Phase 6 summary metrics">
+          <article><strong>3,197</strong><span>Sampler executions</span><small>Across all retained result rows</small></article>
+          <article><strong>0.00%</strong><span>Observed error rate</span><small>0 JMeter errors in the retained results</small></article>
+          <article><strong>200</strong><span>Read-only threads</span><small>Highest tested browsing concurrency</small></article>
+          <article><strong>100</strong><span>Authenticated threads</span><small>Highest tested login and history concurrency</small></article>
+          <article><strong>10</strong><span>Mutation threads</span><small>Highest controlled cart, order, and payment concurrency</small></article>
+        </div>
+
+        <div class="test-matrix" aria-labelledby="matrix-title">
+          <div>
+            <p class="card-index">Controlled test matrix</p>
+            <h3 id="matrix-title">Different workloads used different concurrency boundaries.</h3>
+          </div>
+          <dl>
+            <div><dt>Read-only</dt><dd>10 / 50 / 100 / 200 threads</dd></div>
+            <div><dt>Authenticated</dt><dd>10 / 50 / 100 threads</dd></div>
+            <div><dt>Controlled mutation</dt><dd>1 / 5 / 10 threads</dd></div>
+          </dl>
+        </div>
+
+        <figure class="p90-figure" aria-labelledby="p90-title" aria-describedby="p90-summary">
+          <figcaption>
+            <p class="card-index">P90 response time at highest tested concurrency</p>
+            <h3 id="p90-title">Milliseconds; lower is better.</h3>
+          </figcaption>
+          <p class="sr-only" id="p90-summary">At the highest tested concurrency for each scenario, simulated payment recorded 441 milliseconds, place order 1,882 milliseconds, order history 1,986 milliseconds, homepage 2,457 milliseconds, login 3,116 milliseconds, product list 3,400 milliseconds, and product detail 3,659 milliseconds.</p>
+
+          <div class="bar-chart" aria-hidden="true">
+            <div class="bar-row"><span>Simulated payment <small>10 threads</small></span><div class="bar-track"><i style="--bar-size:12.1%"></i></div><strong>441 ms</strong></div>
+            <div class="bar-row"><span>Place order <small>10 threads</small></span><div class="bar-track"><i style="--bar-size:51.4%"></i></div><strong>1,882 ms</strong></div>
+            <div class="bar-row"><span>Order history <small>100 threads</small></span><div class="bar-track"><i style="--bar-size:54.3%"></i></div><strong>1,986 ms</strong></div>
+            <div class="bar-row"><span>Homepage <small>200 threads</small></span><div class="bar-track"><i style="--bar-size:67.2%"></i></div><strong>2,457 ms</strong></div>
+            <div class="bar-row"><span>Login <small>100 threads</small></span><div class="bar-track"><i style="--bar-size:85.2%"></i></div><strong>3,116 ms</strong></div>
+            <div class="bar-row"><span>Product list <small>200 threads</small></span><div class="bar-track"><i style="--bar-size:92.9%"></i></div><strong>3,400 ms</strong></div>
+            <div class="bar-row"><span>Product detail <small>200 threads</small></span><div class="bar-track"><i style="--bar-size:100%"></i></div><strong>3,659 ms</strong></div>
+          </div>
+
+          <details class="data-table-details">
+            <summary>View exact P90 data as a table</summary>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Scenario</th><th>Threads</th><th>P90 response time</th></tr></thead>
+                <tbody>
+                  <tr><td>Simulated payment</td><td>10</td><td>441 ms</td></tr>
+                  <tr><td>Place order</td><td>10</td><td>1,882 ms</td></tr>
+                  <tr><td>Order history</td><td>100</td><td>1,986 ms</td></tr>
+                  <tr><td>Homepage</td><td>200</td><td>2,457 ms</td></tr>
+                  <tr><td>Login</td><td>100</td><td>3,116 ms</td></tr>
+                  <tr><td>Product list</td><td>200</td><td>3,400 ms</td></tr>
+                  <tr><td>Product detail</td><td>200</td><td>3,659 ms</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </figure>
+
+        <div class="result-reading">
+          <article>
+            <p class="card-index">What the evidence shows</p>
+            <h3>The planned journeys completed without observed JMeter errors.</h3>
+            <p>Read-only scenarios reached 200 threads, authenticated scenarios reached 100 threads, and controlled mutation scenarios reached 10 threads in the stated ramp-up patterns.</p>
+          </article>
+          <article>
+            <p class="card-index">What the evidence also shows</p>
+            <h3>Higher-load browsing produced multi-second P90 response times.</h3>
+            <p>Future work can evaluate caching, asset optimization, query tuning, HTTPS deployment, and additional capacity when the project scope expands.</p>
+          </article>
+        </div>
+
+        <div class="source-note">
+          <p><strong>Evidence source:</strong> Phase 6 aggregate results, summary tables, execution record, and performance evaluation report dated 16 June 2026.</p>
+          <p><strong>Scope:</strong> Results apply to the tested single-VM HTTP academic prototype and the stated concurrency levels; they are not a commercial capacity claim.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="conclusion-section chapter" id="conclusion" aria-labelledby="conclusion-title">
+      <div class="section-inner conclusion-grid">
+        <div>
+          <p class="eyebrow light-eyebrow">05 / Conclusion</p>
+          <h2 id="conclusion-title">A functional platform, an explicit request path, and measurable network evidence.</h2>
+        </div>
+        <ol class="outcome-list">
+          <li><span>01</span>Core customer and administrator workflows were implemented.</li>
+          <li><span>02</span>Cloud request communication was deployed and documented.</li>
+          <li><span>03</span>Controlled tests produced reproducible response-time, throughput, and error-rate evidence.</li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="section-inner">
+      <p>R Mall / Cloud E-Commerce Network Performance Study</p>
+      <a href="#overview">Return to opening <span aria-hidden="true">↑</span></a>
+    </div>
+  </footer>
+</body>
+</html>
