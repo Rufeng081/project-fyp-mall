@@ -59,7 +59,7 @@
         <p class="eyebrow">01 / Why this project</p>
         <div class="section-heading split-heading">
           <h2 id="problem-title">From a local feature demonstration to verifiable network evidence.</h2>
-          <p>Functional correctness alone does not explain the deployed request path or behavior under concurrent access.</p>
+          <p>Functional correctness alone does not explain the deployed request path or behavior across different configured thread settings.</p>
         </div>
 
         <div class="objective-grid" aria-label="Project objectives">
@@ -162,22 +162,22 @@
       <div class="section-inner">
         <p class="eyebrow">04 / Performance evidence</p>
         <div class="section-heading split-heading">
-          <h2 id="results-title">Tested journeys remained executable, while several high-load scenarios recorded multi-second P90 response times.</h2>
+          <h2 id="results-title">Tested journeys remained executable, while several selected scenarios recorded multi-second P90 response times.</h2>
           <p>The Chapter 4 evidence covers smoke, read-only, authenticated, and controlled mutation scenarios.</p>
         </div>
 
         <div class="metric-grid" aria-label="Chapter 4 summary metrics">
           <article><strong>3,197</strong><span>Sampler executions</span><small>Across all retained result rows</small></article>
           <article><strong>0.00%</strong><span>Observed error rate</span><small>0 JMeter errors in the retained results</small></article>
-          <article><strong>200</strong><span>Read-only threads</span><small>Highest tested browsing concurrency</small></article>
-          <article><strong>100</strong><span>Authenticated threads</span><small>Highest tested login and history concurrency</small></article>
-          <article><strong>10</strong><span>Mutation threads</span><small>Highest controlled cart, order, and payment concurrency</small></article>
+          <article><strong>4</strong><span>Read-only settings</span><small>10 / 50 / 100 / 200 threads</small></article>
+          <article><strong>3</strong><span>Authenticated settings</span><small>10 / 50 / 100 threads</small></article>
+          <article><strong>3</strong><span>Controlled mutation settings</span><small>1 / 5 / 10 threads</small></article>
         </div>
 
         <div class="test-matrix" aria-labelledby="matrix-title">
           <div>
             <p class="card-index">Controlled test matrix</p>
-            <h3 id="matrix-title">Different workloads used different concurrency boundaries.</h3>
+            <h3 id="matrix-title">Different workloads used different configured thread settings.</h3>
           </div>
           <dl>
             <div><dt>Read-only</dt><dd>10 / 50 / 100 / 200 threads</dd></div>
@@ -188,10 +188,10 @@
 
         <figure class="p90-figure" aria-labelledby="p90-title" aria-describedby="p90-summary">
           <figcaption>
-            <p class="card-index">P90 response time at highest tested concurrency</p>
+            <p class="card-index">P90 response time for the selected test settings</p>
             <h3 id="p90-title">Milliseconds; lower is better.</h3>
           </figcaption>
-          <p class="sr-only" id="p90-summary">At the highest tested concurrency for each scenario, simulated payment recorded 441 milliseconds, place order 1,882 milliseconds, order history 1,986 milliseconds, homepage 2,457 milliseconds, login 3,116 milliseconds, product list 3,400 milliseconds, and product detail 3,659 milliseconds.</p>
+          <p class="sr-only" id="p90-summary">For the selected thread settings shown, simulated payment recorded 441 milliseconds, place order 1,882 milliseconds, order history 1,986 milliseconds, homepage 2,457 milliseconds, login 3,116 milliseconds, product list 3,400 milliseconds, and product detail 3,659 milliseconds.</p>
 
           <div class="bar-chart" aria-hidden="true">
             <div class="bar-row"><span>Simulated payment <small>10 threads</small></span><div class="bar-track"><i style="--bar-size:12.1%"></i></div><strong>441 ms</strong></div>
@@ -226,7 +226,7 @@
           <article>
             <p class="card-index">What the evidence shows</p>
             <h3>The planned journeys completed without observed JMeter errors.</h3>
-            <p>Read-only scenarios reached 200 threads, authenticated scenarios reached 100 threads, and controlled mutation scenarios reached 10 threads in the stated ramp-up patterns.</p>
+            <p>The configured matrices used 10 / 50 / 100 / 200 threads for read-only scenarios, 10 / 50 / 100 for authenticated scenarios, and 1 / 5 / 10 for controlled mutation scenarios.</p>
           </article>
           <article>
             <p class="card-index">What the evidence also shows</p>
@@ -237,7 +237,7 @@
 
         <div class="source-note">
           <p><strong>Evidence source:</strong> Chapter 4, Tables 4.17 and 4.18, supported by retained aggregate results, summary tables, execution record, and performance evaluation report dated 16 June 2026.</p>
-          <p><strong>Scope:</strong> Results apply to the tested single-VM HTTP academic prototype and the stated concurrency levels; they are not a commercial capacity claim.</p>
+          <p><strong>Scope:</strong> Results apply to the tested single-VM HTTP academic prototype and the stated thread settings; they are not a commercial capacity claim.</p>
         </div>
       </div>
     </section>

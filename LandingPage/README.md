@@ -27,7 +27,7 @@ The quantitative content is derived from retained JMeter evidence supporting the
 
 The aggregate CSV contains 35 summarized result rows, 3,197 total JMeter sampler executions, and 0 observed JMeter errors. A sampler execution is one recorded HTTP request step; it is not one user and is not one complete test run.
 
-The displayed P90 values use the highest tested concurrency retained for each selected scenario:
+The displayed P90 values correspond to the thread settings listed for each selected scenario:
 
 | Scenario | Threads | P90 |
 | --- | ---: | ---: |
