@@ -1,6 +1,6 @@
 # R Mall Video Presentation Landing Page
 
-This directory contains the standalone presentation canvas used for the R Mall innovation video. It summarizes the project problem, objectives, methodology, deployed request path, and verified Phase 6 performance evidence. It does not replace or modify the customer storefront or administrator application.
+This directory contains the standalone presentation canvas used for the R Mall innovation video. It summarizes the project problem, objectives, methodology, deployed request path, and Chapter 4 performance evidence. Its presentation copy aligns with the final D8 report, and it does not replace or modify the customer storefront or administrator application.
 
 ## Local Preview
 
@@ -16,7 +16,7 @@ The page has no external font, analytics, image, stylesheet, or JavaScript depen
 
 ## Evidence Provenance
 
-The quantitative content is derived from the retained Phase 6 JMeter evidence:
+The quantitative content is derived from retained JMeter evidence supporting the Chapter 4 presentation layer, including Tables 4.17 and 4.18:
 
 - `report/thesis-materials/test-results/results/aggregate-results.csv`
 - `report/thesis-materials/test-results/results/summary-tables.md`
@@ -39,7 +39,9 @@ The displayed P90 values use the highest tested concurrency retained for each se
 | Product list | 200 | 3,400 ms |
 | Product detail | 200 | 3,659 ms |
 
-The evidence applies only to the tested single-VM HTTP academic prototype, stated thread levels, ramp-up patterns, and retained Phase 6 runs. It does not establish commercial production capacity.
+The evidence applies only to the tested single-VM HTTP academic prototype, stated thread levels, ramp-up patterns, and retained runs supporting Chapter 4. It does not establish commercial production capacity.
+
+The Chapter 4 tables are the report presentation layer; the retained artifacts listed above provide their supporting evidence. Canonical repository filenames containing `phase-6` remain unchanged because they identify the original evidence files.
 
 ## Verification
 
