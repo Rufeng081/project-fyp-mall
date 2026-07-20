@@ -17,21 +17,60 @@ function readRequired(relativePath) {
 
 function normalizeVisibleText(source) {
   const bodyMatch = source.match(/<body\b[^>]*>([\s\S]*?)<\/body\s*>/i);
-  let body = bodyMatch ? bodyMatch[1] : '';
-  const hiddenElementPattern =
-    /<([a-z][\w:-]*)\b(?=[^>]*(?:\shidden(?:\s|=|>|\/)|\saria-hidden\s*=\s*(?:"true"|'true'|true)))[^>]*>[\s\S]*?<\/\1\s*>/gi;
+  const body = bodyMatch ? bodyMatch[1] : '';
+  const voidElements = new Set([
+    'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta',
+    'param', 'source', 'track', 'wbr'
+  ]);
+  const hiddenElementNames = new Set(['script', 'style', 'template', 'noscript']);
+  const stack = [];
+  const visibleTextParts = [];
+  const tokenPattern = /<!--[\s\S]*?-->|<[^>]*>|[^<]+/g;
 
-  let previousBody;
-  do {
-    previousBody = body;
-    body = body.replace(hiddenElementPattern, ' ');
-  } while (body !== previousBody);
+  function isHiddenElement(tag) {
+    const attributeSource = tag
+      .replace(/^<\s*[a-z][\w:-]*/i, '')
+      .replace(/\/?\s*>$/, '');
+    const attributePattern = /([^\s=/>]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+)))?/g;
+    let match;
 
-  return body
-    .replace(/<!--[\s\S]*?-->/g, ' ')
-    .replace(/<(script|style|template|noscript)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, ' ')
-    .replace(/<[^>]*(?:\shidden(?:\s|=|>|\/)|\saria-hidden\s*=\s*(?:"true"|'true'|true))[^>]*\/?\s*>/gi, ' ')
-    .replace(/<[^>]*>/g, ' ')
+    while ((match = attributePattern.exec(attributeSource))) {
+      const name = match[1].toLowerCase();
+      const value = match[2] ?? match[3] ?? match[4] ?? '';
+      if (name === 'hidden' || (name === 'aria-hidden' && value.toLowerCase() === 'true')) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  for (const token of body.match(tokenPattern) || []) {
+    if (token.startsWith('<!--')) continue;
+    if (!token.startsWith('<')) {
+      if (!stack.at(-1)?.hidden) visibleTextParts.push(token);
+      continue;
+    }
+
+    const closingMatch = token.match(/^<\s*\/\s*([a-z][\w:-]*)\b/i);
+    if (closingMatch) {
+      const closingName = closingMatch[1].toLowerCase();
+      const matchingIndex = stack.map((entry) => entry.name).lastIndexOf(closingName);
+      if (matchingIndex !== -1) stack.splice(matchingIndex);
+      continue;
+    }
+
+    const openingMatch = token.match(/^<\s*([a-z][\w:-]*)\b/i);
+    if (!openingMatch) continue;
+
+    const name = openingMatch[1].toLowerCase();
+    const selfClosing = /\/\s*>$/.test(token) || voidElements.has(name);
+    if (selfClosing) continue;
+
+    const inheritedHidden = stack.at(-1)?.hidden || false;
+    stack.push({ name, hidden: inheritedHidden || hiddenElementNames.has(name) || isHiddenElement(token) });
+  }
+
+  return visibleTextParts.join(' ')
     .replace(/&(nbsp|#160|#xA0);/gi, ' ')
     .replace(/&amp;/gi, '&')
     .replace(/&lt;/gi, '<')
@@ -53,7 +92,7 @@ const visibleText = normalizeVisibleText(html);
 
 if (
   normalizeVisibleText(
-    '<html><head><title>Chapter 4 test summary</title></head><body><p>Phase&nbsp;<strong>6</strong></p><p hidden>Chapter 4 test summary</p><p aria-hidden="true">Also hidden</p><span class="sr-only">Accessible</span><script>ignored</script></body></html>'
+    '<html><head><title>Chapter 4 test summary</title></head><body><p>Phase&nbsp;<strong>6</strong></p><div hidden><div>First</div>Chapter 4 test summary</div><section aria-hidden="true"><span>Chapter 4 test summary</span></section><span class="sr-only">Accessible</span><script>ignored</script></body></html>'
   ) !== 'Phase 6 Accessible'
 ) {
   errors.push('Test implementation error: visible-text normalization is broken');
