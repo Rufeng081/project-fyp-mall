@@ -23,6 +23,21 @@ const css = files['styles.css'];
 const script = files['script.js'];
 const combined = `${html}\n${css}\n${script}`;
 
+const readme = readRequired('README.md');
+const requiredProvenance = [
+  'aggregate-results.csv',
+  'summary-tables.md',
+  'phase-6-jmeter-execution-record-2026-06-16.md',
+  'phase-6-jmeter-performance-evaluation-report.md',
+  'sampler execution',
+  'single-VM HTTP academic prototype'
+];
+for (const text of requiredProvenance) {
+  if (readme && !readme.includes(text)) {
+    errors.push(`README is missing provenance text: ${text}`);
+  }
+}
+
 const requiredClaims = [
   '3,197',
   'JMeter sampler executions',
