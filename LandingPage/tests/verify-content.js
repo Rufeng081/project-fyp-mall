@@ -140,7 +140,9 @@ const requiredVisibleContent = [
   'Design and develop a cloud-based small e-commerce platform that supports core online shopping functions.',
   'Implement and analyse the network communication mechanisms used by the platform in a cloud environment.',
   'Evaluate the network performance of the deployed platform under different test parameters using Apache JMeter.',
-  'Chapter 4, Tables 4.17 and 4.18'
+  'Chapter 4, Tables 4.17 and 4.18',
+  'Different workloads used different configured thread settings.',
+  'P90 response time for the selected test settings'
 ];
 
 for (const text of requiredVisibleContent) {
@@ -166,6 +168,18 @@ for (const claim of prohibitedClaims) {
 
 if (/\bPhase\s+6\b/i.test(visibleText)) {
   errors.push('Prohibited presentation-phase content found: Phase 6');
+}
+
+const misleadingLoadPatterns = [
+  { label: 'concurrency terminology', pattern: /\bconcurren(?:cy|t)\b/i },
+  { label: 'high-load terminology', pattern: /\bhigh(?:-|\s+)load\b/i },
+  { label: 'highest tested or controlled setting', pattern: /\bhighest\s+(?:tested|controlled)\b/i },
+  { label: 'capacity-like reached-thread claim', pattern: /\breached\s+\d[\d,]*\s+threads?\b/i }
+];
+for (const { label, pattern } of misleadingLoadPatterns) {
+  if (pattern.test(visibleText)) {
+    errors.push(`Potentially misleading presentation-load wording found: ${label}`);
+  }
 }
 
 const reproducibleResponseTimePattern = /\breproducible\s+response(?:-|\s+)time\b/i;
