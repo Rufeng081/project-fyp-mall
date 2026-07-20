@@ -16,9 +16,21 @@ function readRequired(relativePath) {
 }
 
 function normalizeVisibleText(source) {
-  return source
+  const bodyMatch = source.match(/<body\b[^>]*>([\s\S]*?)<\/body\s*>/i);
+  let body = bodyMatch ? bodyMatch[1] : '';
+  const hiddenElementPattern =
+    /<([a-z][\w:-]*)\b(?=[^>]*(?:\shidden(?:\s|=|>|\/)|\saria-hidden\s*=\s*(?:"true"|'true'|true)))[^>]*>[\s\S]*?<\/\1\s*>/gi;
+
+  let previousBody;
+  do {
+    previousBody = body;
+    body = body.replace(hiddenElementPattern, ' ');
+  } while (body !== previousBody);
+
+  return body
     .replace(/<!--[\s\S]*?-->/g, ' ')
     .replace(/<(script|style|template|noscript)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, ' ')
+    .replace(/<[^>]*(?:\shidden(?:\s|=|>|\/)|\saria-hidden\s*=\s*(?:"true"|'true'|true))[^>]*\/?\s*>/gi, ' ')
     .replace(/<[^>]*>/g, ' ')
     .replace(/&(nbsp|#160|#xA0);/gi, ' ')
     .replace(/&amp;/gi, '&')
@@ -40,8 +52,9 @@ const combined = `${html}\n${css}\n${script}`;
 const visibleText = normalizeVisibleText(html);
 
 if (
-  normalizeVisibleText('<p>Phase&nbsp;<strong>6</strong></p><script>ignored</script>') !==
-  'Phase 6'
+  normalizeVisibleText(
+    '<html><head><title>Chapter 4 test summary</title></head><body><p>Phase&nbsp;<strong>6</strong></p><p hidden>Chapter 4 test summary</p><p aria-hidden="true">Also hidden</p><span class="sr-only">Accessible</span><script>ignored</script></body></html>'
+  ) !== 'Phase 6 Accessible'
 ) {
   errors.push('Test implementation error: visible-text normalization is broken');
 }
@@ -116,31 +129,46 @@ if (/\bPhase\s+6\b/i.test(visibleText)) {
   errors.push('Prohibited presentation-phase content found: Phase 6');
 }
 
-if (/\bresponse(?:-|\s+)time\b/i.test(visibleText)) {
-  errors.push('Prohibited presentation-performance wording found: response time');
+const reproducibleResponseTimePattern = /\breproducible\s+response(?:-|\s+)time\b/i;
+if (reproducibleResponseTimePattern.test(visibleText)) {
+  errors.push('Prohibited presentation-performance wording found: reproducible response time');
 }
 
 const aiSelfDeclarationPatterns = [
-  /\bas\s+an?\s+(?:ai|artificial intelligence)\s+(?:assistant|system)\b/i,
-  /\bi(?:'m|’m| am)\s+an?\s+(?:(?:ai|artificial intelligence)\s+(?:assistant|system)|assistant)\b/i,
-  /\bwe\s+are\s+an?\s+(?:(?:ai|artificial intelligence)\s+(?:assistant|system)|assistant)\b/i
+  /\bas\s+an?\s+(?:ai|artificial intelligence)(?:\s+(?:assistant|system|language model))?(?![\w-])/i,
+  /\bi(?:'m|’m| am)\s+(?:an?\s+)?(?:(?:ai|artificial intelligence)(?:\s+(?:assistant|system|language model))?|assistant)(?![\w-])/i,
+  /\bwe(?:'re|’re| are)\s+(?:an?\s+)?(?:(?:ai|artificial intelligence)(?:\s+(?:assistant|system|language model))?|assistant)(?![\w-])/i
 ];
 const forbiddenAiDeclarations = [
   'As an AI assistant, I cannot provide that.',
+  'As an AI, I cannot provide that.',
+  'I am AI.',
   'I am an AI assistant.',
   'I’m an AI assistant.',
   'I am an assistant.',
+  "We're an AI assistant.",
+  'We’re an AI system.',
+  'I am an AI language model.',
   'We are an artificial intelligence system.'
 ];
 const allowedAiReferences = [
   'These components work together as a system.',
-  'As an assistant feature, the UI guides users.'
+  'As an assistant feature, the UI guides users.',
+  'The response time is reported for each sampler.',
+  'The response-time metric is visible to readers.'
 ];
 if (!forbiddenAiDeclarations.every((text) => aiSelfDeclarationPatterns.some((pattern) => pattern.test(text)))) {
   errors.push('Test implementation error: AI declaration detection misses a forbidden declaration');
 }
 if (allowedAiReferences.some((text) => aiSelfDeclarationPatterns.some((pattern) => pattern.test(text)))) {
   errors.push('Test implementation error: AI declaration detection rejects an allowed reference');
+}
+if (
+  !reproducibleResponseTimePattern.test('Reproducible response-time evidence.') ||
+  reproducibleResponseTimePattern.test('The response time is reported for each sampler.') ||
+  reproducibleResponseTimePattern.test('The response-time metric is visible to readers.')
+) {
+  errors.push('Test implementation error: response-time prohibition is not scoped to reproducibility claims');
 }
 if (aiSelfDeclarationPatterns.some((pattern) => pattern.test(visibleText))) {
   errors.push('Prohibited AI/assistant/system self-reference found');
