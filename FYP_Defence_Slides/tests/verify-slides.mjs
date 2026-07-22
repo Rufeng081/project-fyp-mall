@@ -34,6 +34,8 @@ const js = readRequired('slides.js');
 const script = readRequired('speaker-script.md');
 const jmeter = readRequired('jmeter-defence-quick-reference.md');
 const readme = readRequired('README.md');
+const nginxPath = path.resolve(root, '..', 'deploy/nginx/project-fyp-mall.conf');
+const nginx = fs.existsSync(nginxPath) ? fs.readFileSync(nginxPath, 'utf8') : '';
 const combined = [html, script, jmeter].join('\n');
 
 const exactTitle = 'DEVELOPMENT AND NETWORK PERFORMANCE EVALUATION OF A CLOUD-BASED SMALL ECOMMERCE PLATFORM';
@@ -120,6 +122,12 @@ for (const term of ['Thread', 'Ramp-up', 'Loop', 'Sampler', 'P90', 'Throughput',
 requireText(readme, 'Arrow keys');
 requireText(readme, 'Fullscreen');
 requireText(readme, 'Live demonstration');
+for (const directive of [
+  'location = /fyp',
+  'return 301 /fyp/;',
+  'location ^~ /fyp/',
+  'alias /var/www/project-fyp-mall-fyp/;'
+]) requireText(nginx, directive, `Nginx deployment directive ${directive}`);
 
 if (failures.length) {
   console.error('FYP defence slide verification failed:');
