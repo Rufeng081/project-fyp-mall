@@ -117,7 +117,7 @@
     <section class="slide slide-architecture" data-slide="6" aria-labelledby="slide-6-title" aria-hidden="true">
       <header class="slide-header compact-header">
         <p class="eyebrow">Deployed request path</p>
-        <h2 id="slide-6-title">Every public request travelled through one documented cloud path.</h2>
+        <h2 id="slide-6-title">Every public request entered through one documented cloud entry path.</h2>
       </header>
       <div class="architecture-path" role="img" aria-label="Browser or JMeter sends HTTP requests to Nginx on a Google Cloud VM. Nginx serves Vue static files or proxies API requests to Spring Boot, which communicates with MySQL and Redis. SMTP supports email verification.">
         <div class="arch-node client"><span>External client</span><strong>Browser / JMeter</strong><small>Public HTTP request</small></div>
@@ -162,7 +162,7 @@
         </article>
         <article>
           <span class="decision-no">03</span>
-          <div><p class="decision-label">Problem</p><h3>Uploaded media disappeared or resolved incorrectly</h3></div>
+          <div><p class="decision-label">Problem</p><h3>Uploaded media paths were not stable after deployment.</h3></div>
           <div><p class="decision-label">Decision</p><p>A persistent upload directory and explicit Nginx resource routing separate data from builds.</p></div>
           <div class="outcome"><p class="decision-label">Verified outcome</p><strong>Stable public product and avatar images</strong></div>
         </article>
@@ -184,9 +184,9 @@
     <section class="slide slide-test-design" data-slide="9" aria-labelledby="slide-9-title" aria-hidden="true">
       <header class="slide-header compact-header">
         <p class="eyebrow">Performance evaluation</p>
-        <h2 id="slide-9-title">Eight scenarios tested three controlled workload types.</h2>
+        <h2 id="slide-9-title">After smoke validation, eight scenarios were tested in three controlled workload groups.</h2>
       </header>
-      <p class="test-purpose">Apache JMeter repeated the same public HTTP journeys with controlled thread, ramp-up and loop parameters.</p>
+      <p class="test-purpose">Apache JMeter first verified each scenario with smoke testing, then repeated the public HTTP journeys using controlled thread, ramp-up and loop parameters.</p>
       <div class="workload-columns">
         <article class="workload read-only"><div class="workload-top"><span>Highest tested</span><strong>200</strong><small>threads</small></div><h3>Read-only</h3><ul><li>Homepage</li><li>Product list</li><li>Product detail</li></ul></article>
         <article class="workload authenticated"><div class="workload-top"><span>Highest tested</span><strong>100</strong><small>threads</small></div><h3>Authenticated</h3><ul><li>Login</li><li>Order history</li></ul></article>
