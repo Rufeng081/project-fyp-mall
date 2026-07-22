@@ -80,7 +80,7 @@ Finally, the administrator interface provides basic management for products, cat
 
 ### Live demonstration fallback
 
-If the public deployment is temporarily unavailable, say: “The live endpoint is currently not responding, so I will continue with the verified workflow shown on this slide. The retained evidence confirms the same sequence: public browsing, authenticated cart access, order placement, simulated payment, order history and administrator management. I will now move to the controlled performance evaluation of that deployed request path.”
+If the public deployment is temporarily unavailable, say: “The live endpoint is currently not responding, so I will continue with the planned workflow sequence shown on this slide. The retained evidence confirms the implemented functions: public browsing, authenticated cart access, order placement, simulated payment, order history and administrator management. I will now move to the controlled performance evaluation of that deployed request path.”
 
 ## Slide 9 — Eight Scenarios, Three Controlled Workload Types
 

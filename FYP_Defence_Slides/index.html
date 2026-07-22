@@ -21,8 +21,8 @@
         </div>
       </div>
       <figure class="cover-visual">
-        <img src="assets/storefront.png" alt="R Mall customer storefront">
-        <figcaption>A deployed e-commerce workflow used as a realistic network workload.</figcaption>
+        <img src="assets/storefront.png" alt="Full R Mall storefront interface">
+        <figcaption>The deployed customer interface used for the demonstration and public-request tests.</figcaption>
       </figure>
       <span class="slide-number">01 / 12</span>
     </section>
@@ -125,16 +125,18 @@
         <div class="cloud-boundary">
           <p class="cloud-label">Google Cloud VM · public entry point</p>
           <div class="arch-node nginx"><span>Reverse proxy</span><strong>Nginx</strong><small>Static files + /api routing</small></div>
+          <div class="flow-branch" aria-hidden="true"><span>↓ static response</span><span>↓ proxy /api</span></div>
           <div class="route-split">
             <div><span>Static</span><b>Vue SPA</b></div>
             <div><span>/api</span><b>Spring Boot</b></div>
           </div>
+          <div class="data-connect" aria-hidden="true"><span>Spring Boot ↓ MySQL + Redis over TCP</span></div>
           <div class="data-row">
             <div><span>Persistent</span><b>MySQL</b></div>
             <div><span>Temporary state</span><b>Redis</b></div>
           </div>
         </div>
-        <div class="smtp-node"><span>Selected flows</span><strong>Brevo SMTP</strong><small>Email verification</small></div>
+        <div class="smtp-node"><div class="smtp-link">Spring Boot → SMTP</div><span>Selected flows</span><strong>Brevo SMTP</strong><small>Email verification</small></div>
       </div>
       <div class="protocol-row"><span>HTTP</span><span>JSON REST</span><span>TCP service communication</span><span>Reverse-proxy routing</span></div>
       <span class="slide-number">06 / 12</span>
@@ -207,15 +209,18 @@
           <p>Observed across 35 retained result rows.</p>
         </div>
         <div class="p90-chart" role="img" aria-label="P90 response time at the highest tested concurrency: Product detail 3,659 milliseconds, Product list 3,400 milliseconds, Login 3,116 milliseconds, Homepage 2,457 milliseconds, Add to cart 2,035 milliseconds, Order history 1,986 milliseconds, Place order 1,882 milliseconds, Simulated payment 441 milliseconds.">
-          <div class="chart-title"><strong>P90 response time</strong><span>Highest tested concurrency · milliseconds</span></div>
+          <div class="chart-title"><strong>P90 response time</strong><span>Interpret within each workload group · milliseconds</span></div>
+          <div class="bar-group-label">Read-only · 200 threads</div>
           <div class="bar-row"><span>Product detail</span><i style="--value:91.5%"></i><b>3,659 ms</b></div>
           <div class="bar-row"><span>Product list</span><i style="--value:85%"></i><b>3,400 ms</b></div>
-          <div class="bar-row"><span>Login</span><i style="--value:77.9%"></i><b>3,116 ms</b></div>
           <div class="bar-row"><span>Homepage</span><i style="--value:61.4%"></i><b>2,457 ms</b></div>
-          <div class="bar-row secondary"><span>Add to cart</span><i style="--value:50.9%"></i><b>2,035 ms</b></div>
-          <div class="bar-row secondary"><span>Order history</span><i style="--value:49.7%"></i><b>1,986 ms</b></div>
-          <div class="bar-row secondary"><span>Place order</span><i style="--value:47.1%"></i><b>1,882 ms</b></div>
-          <div class="bar-row secondary"><span>Simulated payment</span><i style="--value:11%"></i><b>441 ms</b></div>
+          <div class="bar-group-label">Authenticated · 100 threads</div>
+          <div class="bar-row authenticated-bar"><span>Login</span><i style="--value:77.9%"></i><b>3,116 ms</b></div>
+          <div class="bar-row authenticated-bar"><span>Order history</span><i style="--value:49.7%"></i><b>1,986 ms</b></div>
+          <div class="bar-group-label">Controlled mutation · 10 threads</div>
+          <div class="bar-row mutation-bar"><span>Add to cart</span><i style="--value:50.9%"></i><b>2,035 ms</b></div>
+          <div class="bar-row mutation-bar"><span>Place order</span><i style="--value:47.1%"></i><b>1,882 ms</b></div>
+          <div class="bar-row mutation-bar"><span>Simulated payment</span><i style="--value:11%"></i><b>441 ms</b></div>
         </div>
       </div>
       <div class="result-meaning"><strong>Meaning:</strong> the retained workload completed without observed JMeter errors, while multi-second P90 values identify clear optimisation priorities.</div>
@@ -266,6 +271,7 @@
     <button type="button" class="control-button" data-action="fullscreen" aria-label="Enter fullscreen">⛶</button>
     <button type="button" class="control-button" data-action="next" aria-label="Next slide">→</button>
   </nav>
+  <script src="navigation-core.js"></script>
   <script src="slides.js"></script>
 </body>
 </html>

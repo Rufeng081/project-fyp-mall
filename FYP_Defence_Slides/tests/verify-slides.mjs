@@ -1,9 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 
 const testDir = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(testDir, '..');
+const require = createRequire(import.meta.url);
 const failures = [];
 
 function readRequired(relativePath) {
@@ -27,6 +29,7 @@ function rejectText(source, value) {
 
 const html = readRequired('index.html');
 const css = readRequired('styles.css');
+const navigationCore = readRequired('navigation-core.js');
 const js = readRequired('slides.js');
 const script = readRequired('speaker-script.md');
 const jmeter = readRequired('jmeter-defence-quick-reference.md');
@@ -36,6 +39,17 @@ const combined = [html, script, jmeter].join('\n');
 const exactTitle = 'DEVELOPMENT AND NETWORK PERFORMANCE EVALUATION OF A CLOUD-BASED SMALL ECOMMERCE PLATFORM';
 requireText(html, exactTitle, 'exact project title');
 for (const value of ['LI RUFENG', 'A206331']) requireText(html, value);
+for (const value of [
+  'class="flow-branch"',
+  'class="data-connect"',
+  'Spring Boot ↓ MySQL + Redis over TCP',
+  'class="smtp-link"',
+  'Read-only · 200 threads',
+  'Authenticated · 100 threads',
+  'Controlled mutation · 10 threads',
+  'Interpret within each workload group',
+  'Full R Mall storefront interface'
+]) requireText(html, value);
 
 const slides = html.match(/<section\b[^>]*class="[^"]*\bslide\b[^"]*"[^>]*>/g) ?? [];
 if (slides.length !== 12) failures.push(`Expected 12 slides, found ${slides.length}`);
@@ -65,8 +79,24 @@ for (const claim of [
   'commercial-scale capacity'
 ]) rejectText(combined, claim);
 
-for (const hook of ['ArrowLeft', 'ArrowRight', 'Home', 'End', 'requestFullscreen']) {
+for (const hook of ['ArrowLeft', 'ArrowRight', 'Home', 'End', 'requestFullscreen', 'fullscreenchange', 'Exit fullscreen']) {
   requireText(js, hook, `navigation hook ${hook}`);
+}
+
+if (navigationCore) {
+  const { parseSlideHash } = require(path.join(root, 'navigation-core.js'));
+  const hashCases = [
+    ['#slide-1', 12, 0],
+    ['#slide-12', 12, 11],
+    ['#slide-999', 12, 0],
+    ['#slide-0', 12, 0],
+    ['#slide-invalid', 12, 0],
+    ['', 12, 0]
+  ];
+  for (const [hash, count, expected] of hashCases) {
+    const actual = parseSlideHash(hash, count);
+    if (actual !== expected) failures.push(`Hash ${hash || '(empty)'} resolved to ${actual}, expected ${expected}`);
+  }
 }
 
 for (const token of ['--paper:', '--ink:', '--copper:', 'aspect-ratio: 16 / 9', 'prefers-reduced-motion']) {

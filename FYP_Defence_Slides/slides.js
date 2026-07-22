@@ -5,6 +5,7 @@
   const previousButton = document.querySelector('[data-action="previous"]');
   const nextButton = document.querySelector('[data-action="next"]');
   const fullscreenButton = document.querySelector('[data-action="fullscreen"]');
+  const { parseSlideHash } = window.SlideNavigation;
   let currentIndex = 0;
 
   function clamp(index) {
@@ -28,11 +29,6 @@
     if (updateHash) history.replaceState(null, '', `#slide-${humanIndex}`);
   }
 
-  function hashIndex() {
-    const match = window.location.hash.match(/^#slide-(\d+)$/);
-    return match ? Number(match[1]) - 1 : 0;
-  }
-
   function isTypingTarget(target) {
     return target instanceof HTMLElement && (
       target.isContentEditable ||
@@ -46,6 +42,18 @@
     } else if (document.fullscreenElement && document.exitFullscreen) {
       await document.exitFullscreen();
     }
+  }
+
+  function updateFullscreenControl() {
+    const active = Boolean(document.fullscreenElement);
+    fullscreenButton.setAttribute('aria-label', active ? 'Exit fullscreen' : 'Enter fullscreen');
+    fullscreenButton.setAttribute('aria-pressed', String(active));
+  }
+
+  function syncFromHash() {
+    const index = parseSlideHash(window.location.hash, slides.length);
+    const canonicalHash = `#slide-${index + 1}`;
+    showSlide(index, { updateHash: window.location.hash !== canonicalHash });
   }
 
   document.addEventListener('keydown', (event) => {
@@ -72,7 +80,9 @@
   previousButton.addEventListener('click', () => showSlide(currentIndex - 1));
   nextButton.addEventListener('click', () => showSlide(currentIndex + 1));
   fullscreenButton.addEventListener('click', enterFullscreen);
-  window.addEventListener('hashchange', () => showSlide(hashIndex(), { updateHash: false }));
+  document.addEventListener('fullscreenchange', updateFullscreenControl);
+  window.addEventListener('hashchange', syncFromHash);
 
-  showSlide(hashIndex(), { updateHash: false });
+  updateFullscreenControl();
+  syncFromHash();
 })();
