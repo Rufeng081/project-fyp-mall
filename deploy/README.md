@@ -123,3 +123,34 @@ Expected result: no matching JavaScript, CSS, or HTML output. You can also run t
 cd ElectronicMallVue
 npm run check:deployment
 ```
+
+## 9. Deploy the FYP defence slides at `/fyp/`
+
+The defence presentation is a separate static site and must not replace the Vue storefront. Copy only its browser runtime files to a dedicated web directory:
+
+```bash
+sudo mkdir -p /var/www/project-fyp-mall-fyp/assets
+sudo rsync -a --delete FYP_Defence_Slides/assets/ /var/www/project-fyp-mall-fyp/assets/
+sudo install -m 0644 FYP_Defence_Slides/index.html /var/www/project-fyp-mall-fyp/index.html
+sudo install -m 0644 FYP_Defence_Slides/styles.css /var/www/project-fyp-mall-fyp/styles.css
+sudo install -m 0644 FYP_Defence_Slides/navigation-core.js /var/www/project-fyp-mall-fyp/navigation-core.js
+sudo install -m 0644 FYP_Defence_Slides/slides.js /var/www/project-fyp-mall-fyp/slides.js
+sudo chown -R www-data:www-data /var/www/project-fyp-mall-fyp
+```
+
+Install the reviewed Nginx configuration and reload only after validation:
+
+```bash
+sudo cp deploy/nginx/project-fyp-mall.conf /etc/nginx/sites-available/project-fyp-mall
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+The exact `/fyp` path redirects to `/fyp/` so relative CSS, JavaScript and image paths resolve correctly. Verify the presentation without disturbing the storefront or API:
+
+```bash
+curl -I http://34.143.225.11/fyp
+curl -I http://34.143.225.11/fyp/
+curl -I http://34.143.225.11/fyp/styles.css
+curl -I http://34.143.225.11/
+```

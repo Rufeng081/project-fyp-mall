@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f1e9">
+  <title>R Mall — FYP Defence</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="deck" aria-label="FYP defence presentation">
+    <section class="slide slide-cover is-active" data-slide="1" aria-labelledby="slide-1-title">
+      <div class="cover-copy">
+        <p class="eyebrow">Network Technology · Final Year Project</p>
+        <h1 id="slide-1-title">Building, Deploying and Evaluating R Mall.</h1>
+        <div class="copper-rule"></div>
+        <p class="formal-title">DEVELOPMENT AND NETWORK PERFORMANCE EVALUATION OF A CLOUD-BASED SMALL ECOMMERCE PLATFORM</p>
+        <div class="identity-row">
+          <strong>LI RUFENG</strong>
+          <span>A206331</span>
+        </div>
+        <div class="supervisor-line">
+          <span>Supervisor:</span>
+          <strong>Ts. Dr. Nazhatul Hafizah Kamarudin</strong>
+        </div>
+      </div>
+      <figure class="cover-visual">
+        <img src="assets/storefront.png" alt="Full R Mall storefront interface">
+        <figcaption>The deployed customer interface used for the demonstration and public-request tests.</figcaption>
+      </figure>
+      <span class="slide-number">01 / 12</span>
+    </section>
+
+    <section class="slide slide-problem" data-slide="2" aria-labelledby="slide-2-title" aria-hidden="true">
+      <header class="slide-header">
+        <p class="eyebrow">The problem</p>
+        <h2 id="slide-2-title">A working website alone cannot answer a Network Technology question.</h2>
+      </header>
+      <div class="tension-layout">
+        <article class="tension-side muted-side">
+          <p class="side-label">Typical stopping point</p>
+          <p class="tension-claim">“The functions work on localhost.”</p>
+          <ul class="plain-list">
+            <li>One user completes the flow</li>
+            <li>Application logic appears correct</li>
+            <li>Network behaviour remains unknown</li>
+          </ul>
+        </article>
+        <div class="tension-arrow" aria-hidden="true">→</div>
+        <article class="tension-side answer-side">
+          <p class="side-label">The project question</p>
+          <p class="tension-claim">How do public requests travel — and what happens under concurrent access?</p>
+          <div class="question-pair">
+            <span>Trace the deployed path</span>
+            <span>Measure its behaviour</span>
+          </div>
+        </article>
+      </div>
+      <p class="bottom-takeaway">The goal was not a larger store. It was a deployable, explainable and measurable cloud application.</p>
+      <span class="slide-number">02 / 12</span>
+    </section>
+
+    <section class="slide slide-objectives" data-slide="3" aria-labelledby="slide-3-title" aria-hidden="true">
+      <header class="slide-header compact-header">
+        <p class="eyebrow">Objectives & methodology</p>
+        <h2 id="slide-3-title">Three objectives guided one iterative development process.</h2>
+      </header>
+      <div class="objective-row">
+        <article><span class="objective-index">01</span><h3>Build</h3><p>A bounded cloud e-commerce platform with complete customer and administrator workflows.</p></article>
+        <article><span class="objective-index">02</span><h3>Analyse</h3><p>The communication path between browser, reverse proxy, backend and data services.</p></article>
+        <article><span class="objective-index">03</span><h3>Evaluate</h3><p>Network behaviour under controlled test parameters using Apache JMeter.</p></article>
+      </div>
+      <div class="method-line" aria-label="Five iterative increments">
+        <div><span>1</span><strong>Localise</strong><small>Core flow</small></div>
+        <div><span>2</span><strong>Authenticate</strong><small>Email + Redis</small></div>
+        <div><span>3</span><strong>Deploy</strong><small>Cloud VM</small></div>
+        <div><span>4</span><strong>Stabilise</strong><small>Runtime paths</small></div>
+        <div><span>5</span><strong>Evaluate</strong><small>JMeter evidence</small></div>
+      </div>
+      <span class="slide-number">03 / 12</span>
+    </section>
+
+    <section class="slide slide-increments" data-slide="4" aria-labelledby="slide-4-title" aria-hidden="true">
+      <header class="slide-header">
+        <p class="eyebrow">Main development process</p>
+        <h2 id="slide-4-title">Each increment made the next stage testable.</h2>
+      </header>
+      <div class="increment-stair">
+        <article><span>01</span><h3>Stabilise the core flow</h3><p>English interface, RM currency, customer route checks.</p></article>
+        <article><span>02</span><h3>Strengthen account access</h3><p>Email codes, five-minute TTL, resend cooldown and session state.</p></article>
+        <article><span>03</span><h3>Move to the cloud</h3><p>Vue build, Spring Boot service, MySQL, Redis and Nginx on one VM.</p></article>
+        <article><span>04</span><h3>Fix the deployed path</h3><p>API routing, history fallback, media paths and persistent uploads.</p></article>
+        <article><span>05</span><h3>Measure the final system</h3><p>Repeatable scenarios, retained results and bounded interpretation.</p></article>
+      </div>
+      <div class="increment-caption"><strong>Implement</strong><span>→</span><strong>Verify</strong><span>→</span><strong>Correct</strong><span>→</span><strong>Extend</strong></div>
+      <span class="slide-number">04 / 12</span>
+    </section>
+
+    <section class="slide slide-workflow" data-slide="5" aria-labelledby="slide-5-title" aria-hidden="true">
+      <header class="slide-header compact-header">
+        <p class="eyebrow">Implemented system</p>
+        <h2 id="slide-5-title">Real shopping journeys became realistic network workloads.</h2>
+      </header>
+      <div class="workflow-layout">
+        <div class="workflow-copy">
+          <div class="journey-line" aria-label="Customer journey">
+            <span>Register<br><small>/ Login</small></span><b>→</b><span>Browse</span><b>→</b><span>Cart</span><b>→</b><span>Order</span><b>→</b><span>Simulated<br><small>Payment</small></span><b>→</b><span>History</span>
+          </div>
+          <p class="workflow-note">The same golden path exercises public browsing, authenticated APIs, database reads, writes and state changes.</p>
+          <div class="admin-scope"><span>Administrator support</span><p>Users · products · categories · variants · orders · files · carousel records</p></div>
+        </div>
+        <div class="evidence-strip">
+          <figure class="evidence-large"><img src="assets/catalogue.png" alt="R Mall product catalogue"><figcaption>Customer catalogue</figcaption></figure>
+          <figure><img src="assets/cart.png" alt="R Mall shopping cart"><figcaption>Cart and checkout</figcaption></figure>
+          <figure><img src="assets/admin.png" alt="R Mall administrator dashboard"><figcaption>Administrator view</figcaption></figure>
+        </div>
+      </div>
+      <span class="slide-number">05 / 12</span>
+    </section>
+
+    <section class="slide slide-architecture" data-slide="6" aria-labelledby="slide-6-title" aria-hidden="true">
+      <header class="slide-header compact-header">
+        <p class="eyebrow">Deployed request path</p>
+        <h2 id="slide-6-title">Every public request entered through one documented cloud entry path.</h2>
+      </header>
+      <div class="architecture-path" role="img" aria-label="Browser or JMeter sends HTTP requests to Nginx on a Google Cloud VM. Nginx serves Vue static files or proxies API requests to Spring Boot, which communicates with MySQL and Redis. SMTP supports email verification.">
+        <div class="arch-node client"><span>External client</span><strong>Browser / JMeter</strong><small>Public HTTP request</small></div>
+        <div class="arch-link"><b>HTTP :80</b><span>→</span></div>
+        <div class="cloud-boundary">
+          <p class="cloud-label">Google Cloud VM · public entry point</p>
+          <div class="arch-node nginx"><span>Reverse proxy</span><strong>Nginx</strong><small>Static files + /api routing</small></div>
+          <div class="flow-branch" aria-hidden="true"><span>↓ static response</span><span>↓ proxy /api</span></div>
+          <div class="route-split">
+            <div><span>Static</span><b>Vue SPA</b></div>
+            <div><span>/api</span><b>Spring Boot</b></div>
+          </div>
+          <div class="data-connect" aria-hidden="true"><span>Spring Boot ↓ MySQL + Redis over TCP</span></div>
+          <div class="data-row">
+            <div><span>Persistent</span><b>MySQL</b></div>
+            <div><span>Temporary state</span><b>Redis</b></div>
+          </div>
+        </div>
+        <div class="smtp-node"><div class="smtp-link">Spring Boot → SMTP</div><span>Selected flows</span><strong>Brevo SMTP</strong><small>Email verification</small></div>
+      </div>
+      <div class="protocol-row"><span>HTTP</span><span>JSON REST</span><span>TCP service communication</span><span>Reverse-proxy routing</span></div>
+      <span class="slide-number">06 / 12</span>
+    </section>
+
+    <section class="slide slide-decisions" data-slide="7" aria-labelledby="slide-7-title" aria-hidden="true">
+      <header class="slide-header compact-header">
+        <p class="eyebrow">Critical implementation decisions</p>
+        <h2 id="slide-7-title">Three integration problems defined the deployed system.</h2>
+      </header>
+      <div class="decision-list">
+        <article>
+          <span class="decision-no">01</span>
+          <div><p class="decision-label">Problem</p><h3>Local paths broke in production</h3></div>
+          <div><p class="decision-label">Decision</p><p>Nginx owns the public entry point; <code>/api</code> is proxied internally and SPA routes fall back safely.</p></div>
+          <div class="outcome"><p class="decision-label">Verified outcome</p><strong>One consistent public request path</strong></div>
+        </article>
+        <article>
+          <span class="decision-no">02</span>
+          <div><p class="decision-label">Problem</p><h3>Authentication needed short-lived state</h3></div>
+          <div><p class="decision-label">Decision</p><p>Redis stores verification codes, five-minute TTL, cooldown keys and session records.</p></div>
+          <div class="outcome"><p class="decision-label">Verified outcome</p><strong>Repeatable account recovery and access</strong></div>
+        </article>
+        <article>
+          <span class="decision-no">03</span>
+          <div><p class="decision-label">Problem</p><h3>Uploaded media paths were not stable after deployment.</h3></div>
+          <div><p class="decision-label">Decision</p><p>A persistent upload directory and explicit Nginx resource routing separate data from builds.</p></div>
+          <div class="outcome"><p class="decision-label">Verified outcome</p><strong>Stable public product and avatar images</strong></div>
+        </article>
+      </div>
+      <span class="slide-number">07 / 12</span>
+    </section>
+
+    <section class="slide slide-demo" data-slide="8" aria-labelledby="slide-8-title" aria-hidden="true">
+      <div class="demo-center">
+        <p class="eyebrow">Live system</p>
+        <h2 id="slide-8-title">Live Demonstration</h2>
+        <div class="copper-rule centered-rule"></div>
+        <p>One complete customer journey — followed by the administrator view.</p>
+      </div>
+      <div class="demo-path"><span>Browse</span><b>→</b><span>Login</span><b>→</b><span>Cart</span><b>→</b><span>Order</span><b>→</b><span>Payment</span><b>→</b><span>History</span><b>→</b><span>Admin</span></div>
+      <span class="slide-number">08 / 12</span>
+    </section>
+
+    <section class="slide slide-test-design" data-slide="9" aria-labelledby="slide-9-title" aria-hidden="true">
+      <header class="slide-header compact-header">
+        <p class="eyebrow">Performance evaluation</p>
+        <h2 id="slide-9-title">After smoke validation, eight scenarios were tested in three controlled workload groups.</h2>
+      </header>
+      <p class="test-purpose">Apache JMeter first verified each scenario with smoke testing, then repeated the public HTTP journeys using controlled thread, ramp-up and loop parameters.</p>
+      <div class="workload-columns">
+        <article class="workload read-only"><div class="workload-top"><span>Highest tested</span><strong>200</strong><small>threads</small></div><h3>Read-only</h3><ul><li>Homepage</li><li>Product list</li><li>Product detail</li></ul></article>
+        <article class="workload authenticated"><div class="workload-top"><span>Highest tested</span><strong>100</strong><small>threads</small></div><h3>Authenticated</h3><ul><li>Login</li><li>Order history</li></ul></article>
+        <article class="workload mutation"><div class="workload-top"><span>Highest tested</span><strong>10</strong><small>threads</small></div><h3>Controlled mutation</h3><ul><li>Add to cart</li><li>Place order</li><li>Simulated payment</li></ul></article>
+      </div>
+      <p class="boundary-note"><strong>Why only 10 mutation threads?</strong> These requests change live stock, cart and order data, so the workload was deliberately bounded to protect repeatability.</p>
+      <span class="slide-number">09 / 12</span>
+    </section>
+
+    <section class="slide slide-results" data-slide="10" aria-labelledby="slide-10-title" aria-hidden="true">
+      <header class="slide-header compact-header">
+        <p class="eyebrow">Main test results</p>
+        <h2 id="slide-10-title">The tested path completed 3,197 sampler executions with 0 observed JMeter errors.</h2>
+      </header>
+      <div class="result-layout">
+        <div class="headline-metrics">
+          <article><strong>3,197</strong><span>sampler executions</span></article>
+          <article><strong>0</strong><span>observed JMeter errors</span></article>
+          <article><strong>0.00%</strong><span>overall observed error rate</span></article>
+          <p>Observed across 35 retained result rows.</p>
+        </div>
+        <div class="p90-chart" role="img" aria-label="P90 response time at the highest tested concurrency: Product detail 3,659 milliseconds, Product list 3,400 milliseconds, Login 3,116 milliseconds, Homepage 2,457 milliseconds, Add to cart 2,035 milliseconds, Order history 1,986 milliseconds, Place order 1,882 milliseconds, Simulated payment 441 milliseconds.">
+          <div class="chart-title"><strong>P90 response time</strong><span>Interpret within each workload group · milliseconds</span></div>
+          <div class="bar-group-label">Read-only · 200 threads</div>
+          <div class="bar-row"><span>Product detail</span><i style="--value:91.5%"></i><b>3,659 ms</b></div>
+          <div class="bar-row"><span>Product list</span><i style="--value:85%"></i><b>3,400 ms</b></div>
+          <div class="bar-row"><span>Homepage</span><i style="--value:61.4%"></i><b>2,457 ms</b></div>
+          <div class="bar-group-label">Authenticated · 100 threads</div>
+          <div class="bar-row authenticated-bar"><span>Login</span><i style="--value:77.9%"></i><b>3,116 ms</b></div>
+          <div class="bar-row authenticated-bar"><span>Order history</span><i style="--value:49.7%"></i><b>1,986 ms</b></div>
+          <div class="bar-group-label">Controlled mutation · 10 threads</div>
+          <div class="bar-row mutation-bar"><span>Add to cart</span><i style="--value:50.9%"></i><b>2,035 ms</b></div>
+          <div class="bar-row mutation-bar"><span>Place order</span><i style="--value:47.1%"></i><b>1,882 ms</b></div>
+          <div class="bar-row mutation-bar"><span>Simulated payment</span><i style="--value:11%"></i><b>441 ms</b></div>
+        </div>
+      </div>
+      <div class="result-meaning"><strong>Meaning:</strong> the retained workload completed without observed JMeter errors, while multi-second P90 values identify clear optimisation priorities.</div>
+      <span class="slide-number">10 / 12</span>
+    </section>
+
+    <section class="slide slide-achievement" data-slide="11" aria-labelledby="slide-11-title" aria-hidden="true">
+      <header class="slide-header compact-header">
+        <p class="eyebrow">Results against objectives</p>
+        <h2 id="slide-11-title">All three objectives were achieved within clear project boundaries.</h2>
+      </header>
+      <div class="achievement-layout">
+        <div class="achievement-list">
+          <article><span>Build</span><div><strong>Achieved</strong><p>Complete customer and administrator workflows deployed on a cloud VM.</p></div></article>
+          <article><span>Analyse</span><div><strong>Achieved</strong><p>Public HTTP, reverse-proxy and backend-to-data-service paths documented.</p></div></article>
+          <article><span>Evaluate</span><div><strong>Achieved</strong><p>Eight scenarios measured through response time, P90, throughput and error rate.</p></div></article>
+        </div>
+        <aside class="boundary-box">
+          <p class="side-label">Interpret within scope</p>
+          <ul>
+            <li>Single Google Cloud VM</li>
+            <li>HTTP deployment only</li>
+            <li>Simulated payment</li>
+            <li>Bounded academic workload</li>
+          </ul>
+          <p>The evidence supports prototype readiness — not production readiness.</p>
+        </aside>
+      </div>
+      <span class="slide-number">11 / 12</span>
+    </section>
+
+    <section class="slide slide-closing" data-slide="12" aria-labelledby="slide-12-title" aria-hidden="true">
+      <div class="closing-copy">
+        <p class="eyebrow">Project contribution</p>
+        <h2 id="slide-12-title">R Mall turns e-commerce into a measurable network testbed.</h2>
+        <p class="closing-summary">A working application.<br>A documented cloud request path.<br>Evidence that explains how the deployed system behaved.</p>
+        <div class="future-line"><span>Next</span><strong>HTTPS deployment</strong><i>·</i><strong>Database and query optimisation</strong><i>·</i><strong>Broader workload modelling</strong></div>
+      </div>
+      <div class="closing-thanks"><strong>Thank you.</strong><span>Questions?</span></div>
+      <span class="slide-number">12 / 12</span>
+    </section>
+  </main>
+
+  <nav class="deck-controls" aria-label="Presentation controls">
+    <button type="button" class="control-button" data-action="previous" aria-label="Previous slide">←</button>
+    <div class="progress-track" aria-hidden="true"><span class="progress-fill"></span></div>
+    <span class="control-counter" aria-live="polite">1 / 12</span>
+    <button type="button" class="control-button" data-action="fullscreen" aria-label="Enter fullscreen">⛶</button>
+    <button type="button" class="control-button" data-action="next" aria-label="Next slide">→</button>
+  </nav>
+  <script src="navigation-core.js"></script>
+  <script src="slides.js"></script>
+</body>
+</html>

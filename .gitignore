@@ -21,6 +21,8 @@ yarn-error.log*
 
 # Local planning/tool state
 .planning/
+.superpowers/
+.worktrees/
 task_plan.md
 findings.md
 progress.md
