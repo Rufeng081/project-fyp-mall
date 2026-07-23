@@ -40,7 +40,12 @@ const combined = [html, script, jmeter].join('\n');
 
 const exactTitle = 'DEVELOPMENT AND NETWORK PERFORMANCE EVALUATION OF A CLOUD-BASED SMALL ECOMMERCE PLATFORM';
 requireText(html, exactTitle, 'exact project title');
-for (const value of ['LI RUFENG', 'A206331']) requireText(html, value);
+for (const value of [
+  'LI RUFENG',
+  'A206331',
+  'Supervisor:',
+  'Ts. Dr. Nazhatul Hafizah Kamarudin'
+]) requireText(html, value);
 for (const value of [
   'class="flow-branch"',
   'class="data-connect"',
