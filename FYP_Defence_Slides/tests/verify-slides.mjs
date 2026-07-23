@@ -40,6 +40,11 @@ const combined = [html, script, jmeter].join('\n');
 
 const exactTitle = 'DEVELOPMENT AND NETWORK PERFORMANCE EVALUATION OF A CLOUD-BASED SMALL ECOMMERCE PLATFORM';
 requireText(html, exactTitle, 'exact project title');
+requireText(html, 'Building, Deploying and Evaluating R Mall.', 'approved cover narrative title');
+requireText(script, 'Good morning, members of the panel.', 'approved opening greeting');
+requireText(script, 'This presentation explains how I developed R Mall into a deployed and measurable cloud system.', 'approved opening summary');
+rejectText(html, 'From a working store to a measurable cloud system.');
+rejectText(script, 'progressed from a working online store');
 for (const value of [
   'LI RUFENG',
   'A206331',

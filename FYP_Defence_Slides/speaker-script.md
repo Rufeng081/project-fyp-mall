@@ -2,11 +2,11 @@
 
 Target duration: approximately 10 minutes, including a three-minute live demonstration.
 
-## Slide 1 — From a Working Store to a Measurable Cloud System
+## Slide 1 — Building, Deploying and Evaluating R Mall
 
 **Target: 15 seconds**
 
-Good morning, respected panel members. I am Li Rufeng, matric number A206331. My project is titled “Development and Network Performance Evaluation of a Cloud-Based Small Ecommerce Platform.” The system is called R Mall. This presentation explains how it progressed from a working online store into a deployed and measurable cloud system.
+Good morning, members of the panel. I am Li Rufeng, matric number A206331. My project is titled “Development and Network Performance Evaluation of a Cloud-Based Small E-Commerce Platform.” The system is called R Mall. This presentation explains how I developed R Mall into a deployed and measurable cloud system.
 
 ## Slide 2 — A Working Website Is Not Yet a Network Technology Project
 
